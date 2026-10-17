@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 Not Found | Sweet Flypaper Film</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/styles.css">
+
+<script async src="https://tally.so/widgets/embed.js"></script>
+<script src="/script.js" defer></script>
+
+<style>
+  /* 404 FULL-CANVAS DISPLAY CONTROL */
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 404 EMERGENCY / LOST SIGNAL DESIGN TOKENS */
+  #sf-embed {
+    /* 404 Emergency / Lost Signal Palette */
+    --error-crimson: 140, 10, 30;  /* Deep Blood Red */
+    --error-dark: 10, 0, 5;        /* Near Black */
+    
+    /* Alert Radar Ping */
+    --error-alert: 255, 40, 60;    /* Siren Red */
+    
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  /* ── 404 FULL SCREEN HERO ── */
+  #sf-embed .sf-hero {
+    position: relative;
+    width: 100%;
+    flex-grow: 1;
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #050505;
+  }
+  
+  #sf-embed .sf-hero-content { position: relative; z-index: 20; width: 100%; padding: 4rem 0; }
+  #sf-embed .sf-hero-veil { position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.7) 50%, rgba(10,10,10,0.2) 100%); z-index: 15; pointer-events: none; }
+
+  /* LAYER 1: BASE GRAPHIC SYSTEM */
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1; 
+    filter: grayscale(100%) contrast(1.5); 
+    opacity: 0.25; 
+    pointer-events: none;
+    transition: transform 10s ease;
+  }
+  #sf-embed .sf-hero:hover .hero-bg-img { transform: scale(1.04); }
+
+  /* LAYER 2: THE AMBIENT CRIMSON LIGHT GEL SHEET */
+  .pulse-base {
+    position: absolute; 
+    inset: -50px; 
+    z-index: 2; 
+    background-image: 
+      radial-gradient(circle at 30% 50%, rgba(var(--error-crimson), 0.6) 0%, transparent 60%),
+      radial-gradient(circle at 70% 50%, rgba(var(--error-dark), 0.8) 0%, transparent 70%);
+    mix-blend-mode: overlay;
+    animation: baseBreathe 4s ease-in-out infinite alternate;
+  }
+  @keyframes baseBreathe {
+    0%   { transform: scale(0.98); opacity: 0.8; }
+    100% { transform: scale(1.02); opacity: 1; }
+  }
+
+  /* LAYER 3: CONTRAST SIREN RED PERIMETER COMPLEMENTARY LIGHT */
+  .contrast-perimeter {
+    position: absolute;
+    inset: -20px;
+    z-index: 3;
+    background-image: 
+      radial-gradient(circle at 0% 0%, rgba(var(--error-alert), 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(var(--error-alert), 0.2) 0%, transparent 50%);
+    mix-blend-mode: screen;
+    animation: contrastBreathe 3s ease-in-out infinite alternate;
+  }
+  @keyframes contrastBreathe {
+    0%   { opacity: 0.4; }
+    100% { opacity: 0.85; }
+  }
+
+  /* LAYER 4: RADAR SHOCKWAVE SYSTEM SIGNAL PING */
+  .radar-ring { 
+    position: absolute; top: 50%; left: 50%; 
+    width: 150px; height: 150px; 
+    border-radius: 50%; 
+    z-index: 4; 
+    pointer-events: none; 
+    border: 3px solid rgba(var(--error-alert), 0.7);
+    box-shadow: inset 0 0 60px rgba(var(--error-alert), 0.5), 0 0 60px rgba(var(--error-alert), 0.5);
+    animation: deepRadar 6s linear infinite; 
+  }
+  @keyframes deepRadar { 
+    0% { transform: translate(-50%,-50%) scale(0.4); opacity: 0; } 
+    15% { opacity: 0.9; }
+    100% { transform: translate(-50%,-50%) scale(7.5); opacity: 0; } 
+  }
+
+  #sf-embed .sf-hero h1 {
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+  }
+  
+  #sf-embed .sf-hero h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* RESPONSIVE SPECIFICS */
+  @media (max-width: 900px) {
+    #sf-embed .sf-hero { min-height: 65vh; text-align: center; justify-content: center; align-items: center; }
+    #sf-embed .sf-hero-veil { background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.6) 100%); }
+  }
+</style>
+</head>
+<body>
+<div id="sf-embed">
+
+  <div id="nav-placeholder"></div>
+
+  <section class="sf-hero">
+    <img src="images/bb - you're fired - d - 404-image (1).png" alt="Lost Signal" class="hero-bg-img">
+
+    <div class="pulse-base"></div>
+    <div class="contrast-perimeter"></div>
+    <div class="radar-ring"></div>
+    <div class="sf-hero-veil"></div>
+
+    <div class="sf-hero-content">
+      <div class="sf-container">
+        <span class="sf-label reveal">Error Code</span>
+        <h1 class="reveal reveal-d1">404.</h1>
+        <h2 class="reveal reveal-d1">You are not in the right place.</h2>
+        <p class="reveal reveal-d2" style="font-size: 1.15rem; max-width: 500px; margin-bottom: 2.5rem;">The tape ran out. The page you are looking for has been moved, deleted, or never existed in the first place.</p>
+        
+        <div class="reveal reveal-d2">
+          <a href="/" class="sf-btn sf-btn-primary">
+            <i class="fa-solid fa-house"></i> Return to Base
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+</div>
+
+<script src="/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Space | Sweet Flypaper Film</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/styles.css">
+
+<script async src="https://tally.so/widgets/embed.js"></script>
+<script src="/script.js" defer></script>
+
+<style>
+  /* Local Studio Design Tokens */
+  #sf-embed {
+    --studio-orange: 210, 75, 15;   /* Burnt Orange */
+    --studio-green: 40, 70, 45;     /* Moody Olive Green */
+    --blue-contrast: 0, 110, 255;   /* Deep Electric Blue */
+  }
+
+  /* ── DYNAMIC EXTRA-DEPTH HERO BACKGROUND ARCHITECTURE ── */
+  #sf-embed .sf-hero { 
+    position: relative; 
+    width: 100%; 
+    min-height: 80vh; 
+    display: flex; 
+    align-items: flex-end; 
+    overflow: hidden; 
+    border-bottom: 1px solid var(--border-color); 
+    background-color: #050505; 
+  }
+  
+  #sf-embed .sf-hero-content { position: relative; z-index: 20; width: 100%; padding: 8rem 0 6rem; }
+  #sf-embed .sf-hero-veil { position: absolute; bottom: 0; left: 0; right: 0; height: 75%; background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.4) 60%, transparent 100%); z-index: 15; pointer-events: none; }
+
+  /* LAYER 1: BASE GRAPHIC PHOTOGRAPH SYSTEM */
+  #sf-embed .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1; 
+    filter: grayscale(100%) contrast(1.2); 
+    opacity: 0.55; 
+    pointer-events: none;
+    transition: transform 10s ease;
+  }
+  #sf-embed .sf-hero:hover .hero-bg-img { transform: scale(1.04); }
+
+  /* LAYER 2: THE AMBIENT ORANGE/GREEN LIGHT GEL SHEET */
+  #sf-embed .pulse-base {
+    position: absolute; 
+    inset: -50px; 
+    z-index: 2; 
+    background-image: 
+      radial-gradient(circle at 20% 45%, rgba(var(--studio-orange), 0.85) 0%, transparent 70%),
+      radial-gradient(circle at 80% 45%, rgba(var(--studio-green), 0.75) 0%, transparent 70%);
+    mix-blend-mode: overlay;
+    animation: baseBreathe 6s ease-in-out infinite alternate;
+  }
+  @keyframes baseBreathe {
+    0%   { transform: scale(0.96); opacity: 0.75; }
+    100% { transform: scale(1.04); opacity: 1; }
+  }
+
+  /* LAYER 3: BLUE PERIMETER COMPLEMENTARY LIGHT */
+  #sf-embed .blue-perimeter {
+    position: absolute;
+    inset: -20px;
+    z-index: 3;
+    background-image: 
+      radial-gradient(circle at 0% 0%, rgba(var(--blue-contrast), 0.48) 0%, transparent 55%),
+      radial-gradient(circle at 100% 100%, rgba(var(--blue-contrast), 0.45) 0%, transparent 55%),
+      radial-gradient(circle at 100% 10%, rgba(var(--blue-contrast), 0.4) 0%, transparent 50%);
+    mix-blend-mode: screen;
+    animation: blueBreathe 4.5s ease-in-out infinite alternate;
+  }
+  @keyframes blueBreathe {
+    0%   { opacity: 0.55; }
+    100% { opacity: 1; }
+  }
+
+  /* LAYER 4: RADAR SHOCKWAVE SYSTEM SIGNAL PING */
+  #sf-embed .radar-ring { 
+    position: absolute; top: 45%; left: 50%; 
+    width: 150px; height: 150px; 
+    border-radius: 50%; 
+    z-index: 4; 
+    pointer-events: none; 
+    border: 3px solid rgba(var(--blue-contrast), 0.65);
+    box-shadow: inset 0 0 60px rgba(var(--blue-contrast), 0.45), 0 0 60px rgba(var(--blue-contrast), 0.45);
+    animation: deepRadar 8s linear infinite; 
+  }
+  @keyframes deepRadar { 
+    0% { transform: translate(-50%,-50%) scale(0.4); opacity: 0; } 
+    15% { opacity: 0.85; }
+    100% { transform: translate(-50%,-50%) scale(8.5); opacity: 0; } 
+  }
+
+  /* --- USE CASE STRIP --- */
+  #sf-embed .usecase-strip { border-bottom: 1px solid var(--border-color); padding: 3rem 0; background: var(--bg-panel); text-align: center; position: relative; z-index: 10; }
+  #sf-embed .usecase-wrap { position: relative; min-height: 45px; display: flex; align-items: center; justify-content: center; }
+  #sf-embed .usecase-item { position: absolute; font-family: 'Geist Mono', monospace; font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-main); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+  #sf-embed .usecase-item.active { opacity: 1; pointer-events: auto; position: relative; }
+  
+  /* --- STUDIO FEATURES --- */
+  #sf-embed .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; padding: 5rem 0; border-bottom: 1px solid var(--border-color); position: relative; z-index: 10; }
+  #sf-embed .feature-row:last-child { border-bottom: none; }
+  #sf-embed .feature-row.reverse { direction: rtl; }
+  #sf-embed .feature-row.reverse > * { direction: ltr; }
+  
+  #sf-embed .feature-text h2 { font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 1rem; line-height: 1.1; }
+  #sf-embed .feature-text p { color: var(--text-muted) !important; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  
+  #sf-embed .feature-visual { position: relative; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color); background-color: var(--bg-panel); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  #sf-embed .feature-visual img { width: 100%; aspect-ratio: 4/3; object-fit: contain; filter: grayscale(10%); transition: transform 0.6s ease, filter 0.6s ease; }
+  #sf-embed .feature-visual:hover img { transform: scale(1.03); filter: grayscale(0%); }
+
+  /* --- SPECS GRID --- */
+  #sf-embed .specs-section { background-color: var(--bg-panel); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); position: relative; z-index: 10; }
+  #sf-embed .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem 2rem; margin-top: 3rem; }
+  #sf-embed .spec-item { display: flex; align-items: flex-start; gap: 1rem; }
+  #sf-embed .spec-icon { font-size: 1.5rem; color: var(--accent); flex-shrink: 0; margin-top: 0.2rem; }
+  #sf-embed .spec-details h4 { font-family: 'Geist Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; color: var(--text-main) !important; }
+  #sf-embed .spec-details p { color: var(--text-muted) !important; font-size: 0.9rem; line-height: 1.5; }
+
+  /* --- PRICING --- */
+  #sf-embed .pricing-section { padding: 5rem 0; border-bottom: 1px solid var(--border-color); position: relative; z-index: 10; }
+  #sf-embed .pricing-header { margin-bottom: 3rem; }
+  #sf-embed .pricing-header h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+  #sf-embed .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-color); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
+  #sf-embed .pricing-card { background: var(--bg-dark); padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 0.5rem; transition: background 0.2s; }
+  #sf-embed .pricing-card:hover { background: var(--bg-panel); }
+  #sf-embed .pricing-tier { font-family: 'Geist Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  
+  #sf-embed .pricing-rate { display: flex; align-items: flex-start; font-size: 3.5rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1; margin: 0.5rem 0; color: var(--text-main) !important; }
+  #sf-embed .pricing-currency { font-size: 1.25rem; font-weight: 400; color: var(--text-muted); margin-top: 0.4rem; margin-right: 0.2rem; }
+  
+  #sf-embed .pricing-desc { font-size: 0.88rem; color: var(--text-muted) !important; line-height: 1.6; margin-top: 0.5rem; }
+  #sf-embed .pricing-note { margin-top: 1.5rem; font-size: 0.82rem; color: var(--text-muted) !important; font-style: italic; }
+
+  /* --- BOOKING CTA --- */
+  #sf-embed .booking-section { padding: 8rem 0; background: var(--bg-dark); position: relative; z-index: 10; }
+  #sf-embed .booking-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  #sf-embed .booking-text h2 { font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 1rem; line-height: 1.05; }
+  #sf-embed .booking-text p { color: var(--text-muted) !important; font-size: 1rem; line-height: 1.75; }
+  #sf-embed .booking-actions { display: flex; flex-direction: column; gap: 1rem; }
+  #sf-embed .booking-actions .sf-btn { justify-content: space-between; padding: 1.1rem 1.75rem; font-size: 0.88rem; width: 100%; }
+  #sf-embed .booking-divider { display: flex; align-items: center; gap: 1rem; color: var(--text-muted); font-family: 'Geist Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0.5rem 0; }
+  #sf-embed .booking-divider::before, #sf-embed .booking-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
+
+  /* --- MOBILE BREAKPOINTS --- */
+  @media (max-width: 900px) {
+    #sf-embed .sf-hero { min-height: 65vh; }
+    
+    #sf-embed .feature-row, #sf-embed .feature-row.reverse { grid-template-columns: 1fr; gap: 2.5rem; direction: ltr; padding: 4rem 0; }
+    #sf-embed .feature-visual { grid-row: 1; padding: 1.5rem; }
+    #sf-embed .feature-text { grid-row: 2; }
+    
+    #sf-embed .specs-grid { grid-template-columns: 1fr; gap: 2rem; }
+    #sf-embed .pricing-grid { grid-template-columns: 1fr; }
+    #sf-embed .booking-inner { grid-template-columns: 1fr; gap: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="sf-embed">
+
+  <div id="nav-placeholder"></div>
+
+  <section class="sf-hero">
+    <img src="/images/studio.jpg" class="hero-bg-img" alt="Production soundstage lighting setup">
+    
+    <div class="pulse-base"></div>
+    <div class="blue-perimeter"></div>
+    <div class="radar-ring"></div>
+    <div class="sf-hero-veil"></div>
+
+    <div class="sf-hero-content">
+      <div class="sf-container">
+        <div class="reveal">
+          <span class="sf-label">Location | Aurora</span>
+        </div>
+        <h1 class="reveal reveal-d1" style="font-size: clamp(3.5rem, 8vw, 6rem); line-height: 1.05; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: -0.04em;">The Shop</h1>
+        <p class="reveal reveal-d2" style="font-size: 1.15rem; color: var(--text-muted); max-width: 550px; line-height: 1.6; margin-bottom: 2rem;">An intimate, private studio space built specifically for independent creators. Whether you are shooting a documentary interview, a music video, or recording a podcast, our space is ready to go.</p>
+        <div class="reveal reveal-d3">
+          <a href="#pricing" class="sf-btn sf-btn-primary">Check Pricing <i class="fa-solid fa-arrow-down"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="usecase-strip">
+    <div class="sf-container">
+      <span class="sf-label" style="color: var(--text-muted); margin-bottom: 0.5rem; display: block;">Perfect For</span>
+      <div class="usecase-wrap" id="usecaseSlider">
+        <div class="usecase-item active" data-usecase="0">Documentary Interviews</div>
+        <div class="usecase-item" data-usecase="1">Music Videos</div>
+        <div class="usecase-item" data-usecase="2">Podcasts</div>
+        <div class="usecase-item" data-usecase="3">Photo Shoots</div>
+        <div class="usecase-item" data-usecase="4">Voiceover</div>
+        <div class="usecase-item" data-usecase="5">Short Films</div>
+        <div class="usecase-item" data-usecase="6">Corporate Video</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="sf-container" style="padding-top: 2rem;">
+    
+    <div class="feature-row">
+      <div class="feature-text reveal">
+        <span class="sf-label">Production</span>
+        <h2>The Main Stage</h2>
+        <p>Whether you need a clean, infinite white backdrop for a corporate interview, or a haze-filled, dramatic lighting setup for a music video, the main floor is highly adaptable.</p>
+        <p>It’s an intimate but powerful footprint designed to give directors total control over their environment without the massive overhead of a commercial warehouse.</p>
+      </div>
+      <div class="feature-visual reveal reveal-d1">
+        <img src="/images/main.svg" alt="The Main Stage">
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-text reveal">
+        <span class="sf-label">Flexibility</span>
+        <h2>Built for Crews</h2>
+        <p>We know how a set operates. The space is equipped with heavy-duty C-stands, backdrop systems, and enough room for a dedicated camera crew and talent to work comfortably.</p>
+        <p>Need extra gear? Because our rental inventory is housed right here, you can add cinema cameras, Aputure lighting, or grip gear directly to your studio booking.</p>
+      </div>
+      <div class="feature-visual reveal reveal-d1">
+        <img src="/images/crews.svg" alt="Built for Crews">
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-text reveal">
+        <span class="sf-label">Photography</span>
+        <h2>Portrait & Stills</h2>
+        <p>Not shooting motion? The studio is perfectly dialed in for editorial and commercial photography. Control the ambient light completely and utilize our seamless paper backdrops and strobe modifiers to get the perfect shot.</p>
+      </div>
+      <div class="feature-visual reveal reveal-d1">
+        <img src="/images/stills.svg" alt="Portrait & Stills">
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-text reveal">
+        <span class="sf-label">Post-Production</span>
+        <h2>The Editing & Audio Suite</h2>
+        <p>The work doesn't stop when the camera cuts. Our dedicated post-production suite is sound-treated and equipped for high-end editing, color grading, and audio recording.</p>
+        <p>From laying down voiceovers and podcast tracks to cutting your final feature, it's a quiet, creative sanctuary.</p>
+      </div>
+      <div class="feature-visual reveal reveal-d1">
+        <img src="/images/edit.svg" alt="The Editing & Audio Suite">
+      </div>
+    </div>
+
+  </section>
+
+  <section class="specs-section sf-section-padding">
+    <div class="sf-container">
+      <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
+        <span class="sf-label">The Details</span>
+        <h2>Studio Amenities</h2>
+      </div>
+      
+      <div class="specs-grid">
+        <div class="spec-item reveal">
+          <i class="fa-solid fa-ruler-combined spec-icon"></i>
+          <div class="spec-details">
+            <h4>300 Square Feet</h4>
+            <p>An intimate, focused workspace perfect for small to medium-sized independent crews.</p>
+          </div>
+        </div>
+        
+        <div class="spec-item reveal reveal-d1">
+          <i class="fa-solid fa-lightbulb spec-icon"></i>
+          <div class="spec-details">
+            <h4>Controlled Lighting</h4>
+            <p>Total blackout capabilities allowing you to dial in your precise lighting ratios.</p>
+          </div>
+        </div>
+
+        <div class="spec-item reveal reveal-d2">
+          <i class="fa-solid fa-microphone-lines spec-icon"></i>
+          <div class="spec-details">
+            <h4>Sound Treated</h4>
+            <p>Acoustically treated environments ideal for clean dialogue, interviews, and VO.</p>
+          </div>
+        </div>
+
+        <div class="spec-item reveal">
+          <i class="fa-solid fa-couch spec-icon"></i>
+          <div class="spec-details">
+            <h4>Client Holding</h4>
+            <p>Comfortable seating and prep areas for talent, makeup, and clients to relax off-camera.</p>
+          </div>
+        </div>
+
+        <div class="spec-item reveal reveal-d1">
+          <i class="fa-solid fa-wifi spec-icon"></i>
+          <div class="spec-details">
+            <h4>High-Speed Wi-Fi</h4>
+            <p>Fast, reliable internet for uploading dailies, live-streaming, or remote monitoring.</p>
+          </div>
+        </div>
+
+        <div class="spec-item reveal reveal-d2">
+          <i class="fa-solid fa-video spec-icon"></i>
+          <div class="spec-details">
+            <h4>On-Site Rentals</h4>
+            <p>Instant access to our entire Sharegrid inventory of cameras, lenses, and grip gear.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="pricing-section">
+    <div class="sf-container">
+      <div class="pricing-header reveal">
+        <span class="sf-label">Rates</span>
+        <h2>Studio Pricing</h2>
+      </div>
+      <div class="pricing-grid reveal">
+        <div class="pricing-card">
+          <div class="pricing-tier">Hourly</div>
+          <div class="pricing-rate"><span class="pricing-currency">$</span>70</div>
+          <div class="pricing-desc">Ideal for quick interviews, voiceover sessions, or portrait shoots that don't need a full half-day block.</div>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-tier">Half Day <span style="color: var(--text-muted); font-size: 0.7rem;">/ 4 hrs</span></div>
+          <div class="pricing-rate"><span class="pricing-currency">$</span>250</div>
+          <div class="pricing-desc">The most popular option for music videos, podcast recordings, and short-form content shoots.</div>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-tier">Full Day <span style="color: var(--text-muted); font-size: 0.7rem;">/ 8 hrs</span></div>
+          <div class="pricing-rate"><span class="pricing-currency">$</span>400</div>
+          <div class="pricing-desc">Full-day access for larger productions, multi-look shoots, or anything requiring extended setup and breakdown time.</div>
+        </div>
+      </div>
+      <p class="pricing-note reveal">Gear add-ons available at rental rates. Weekend and multi-day discounts available — ask when you book.</p>
+    </div>
+  </section>
+
+  <section id="book" class="booking-section">
+    <div class="sf-container">
+      <div class="booking-inner reveal">
+        
+        <div class="booking-text">
+          <span class="sf-label">Reserve the Space</span>
+          <h2>Two Ways<br>to Book</h2>
+          <p>Sharegrid handles scheduling and payment automatically — fastest way to lock in a date. Prefer to work with us directly? Fill out our booking form and we'll confirm availability within 24 hours.</p>
+        </div>
+        
+        <div class="booking-actions">
+          <a href="https://www.sharegrid.com/denver/l/395279?type=rent" target="_blank" rel="noopener noreferrer" class="sf-btn sf-btn-primary">
+            Book on Sharegrid <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <div class="booking-divider">or</div>
+  <a href="booking.html" class="sf-btn sf-btn-ghost">
+    Book Directly <i class="fa-solid fa-arrow-right"></i>
+  </a>
+</div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+</div>
+
+<script>
+  // Local Use Case Fading Slider Logic
+  (function() {
+    let currentUsecase = 0;
+    const usecases = document.querySelectorAll('.usecase-item');
+    const totalUsecases = usecases.length;
+
+    if (totalUsecases > 0) {
+      setInterval(() => {
+        usecases[currentUsecase].classList.remove('active');
+        currentUsecase = (currentUsecase + 1) % totalUsecases;
+        
+        setTimeout(() => {
+          usecases[currentUsecase].classList.add('active');
+        }, 50);
+      }, 3000);
+    }
+  })();
+</script>
+
+</body>
+</html>

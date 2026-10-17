@@ -1,0 +1,235 @@
+/* ============================================================
+   SWEET FLYPAPER — SHARED STYLESHEET
+   All styles shared across every page of the site.
+   Page-specific styles stay in each page's own <style> block.
+   ============================================================ */
+ 
+/* THE INTENTIONAL WHITE BORDER FRAME */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0a;
+  border: 8px solid #ffffff;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+ 
+/* DESIGN TOKENS & BASE */
+#sf-embed {
+  --bg-dark: #0a0a0a;
+  --bg-panel: #141414;
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+  --border-color: #27272a;
+  --accent: #ffffff;
+  --accent-hover: #e2e8f0;
+  --gold: #D4AF37;
+ 
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Geist', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  display: block;
+}
+ 
+#sf-embed * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+#sf-embed h1, #sf-embed h2, #sf-embed h3, #sf-embed h4 {
+  font-family: 'Geist', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text-main) !important;
+}
+ 
+#sf-embed p { color: var(--text-muted); }
+#sf-embed a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+#sf-embed img { max-width: 100%; height: auto; display: block; }
+ 
+/* LAYOUT UTILITIES */
+#sf-embed .sf-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+#sf-embed .sf-section-padding { padding: 6rem 0; }
+#sf-embed .sf-label { font-family: 'Geist Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted) !important; margin-bottom: 1rem; display: block; }
+ 
+/* BUTTONS */
+#sf-embed .sf-btn { font-family: 'Geist Mono', monospace; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 1.5rem; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.02em; border-radius: 2px; transition: all 0.2s ease; cursor: pointer; border: none; }
+#sf-embed .sf-btn-primary { background-color: var(--accent); color: var(--bg-dark) !important; border: 1px solid var(--accent); }
+#sf-embed .sf-btn-primary:hover { background-color: var(--accent-hover); color: var(--bg-dark) !important; }
+#sf-embed .sf-btn-ghost { background-color: transparent; color: var(--text-main) !important; border: 1px solid rgba(255,255,255,0.5); }
+#sf-embed .sf-btn-ghost:hover { border-color: var(--accent); color: var(--accent) !important; }
+ 
+/* NAVIGATION & STICKY REPAIR ELEMENT BUILD */
+#nav-placeholder {
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  width: 100%;
+}
+#sf-embed .sf-navbar { background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); padding: 0.75rem 0; }
+#sf-embed .sf-nav-inner { display: flex; justify-content: space-between; align-items: center; }
+#sf-embed .sf-nav-logo { display: flex; align-items: center; }
+#sf-embed .sf-nav-text-logo { height: 72px; width: auto; object-fit: contain; filter: invert(1); transition: height 0.2s ease; }
+#sf-embed .sf-nav-menu { display: flex; align-items: center; gap: 1.75rem; list-style: none; }
+#sf-embed .sf-nav-link { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-family: 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-main); }
+#sf-embed .sf-nav-link:hover { color: var(--text-muted); }
+#sf-embed .sf-nav-link i { font-size: 0.85rem; color: var(--text-muted); }
+ 
+/* FLOATING CONTACT BUTTON */
+#sf-embed .sf-floating-contact { position: fixed; bottom: 2rem; right: 2rem; z-index: 99999; background-color: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border-color); padding: 0.75rem 1.25rem; font-family: 'Geist Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 30px; display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.2s ease; }
+#sf-embed .sf-floating-contact:hover { border-color: var(--text-main); background-color: var(--text-main); color: var(--bg-dark) !important; }
+#sf-embed .sf-floating-contact i { font-size: 0.85rem; color: var(--text-muted); transition: color 0.2s ease; }
+#sf-embed .sf-floating-contact:hover i { color: var(--bg-dark); }
+ 
+/* FOOTER */
+#sf-embed .sf-footer { background-color: var(--bg-panel); border-top: 1px solid var(--border-color); padding: 5rem 0 3rem 0; color: var(--text-muted); font-size: 0.9rem; }
+#sf-embed .sf-footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr) 1.2fr; gap: 3rem; align-items: start; }
+#sf-embed .sf-footer-brand p { max-width: 320px; color: var(--text-muted) !important; font-size: 0.85rem; line-height: 1.5; margin-top: 1.25rem; }
+#sf-embed .sf-footer-title { font-family: 'Geist Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-main) !important; margin-bottom: 1.25rem; }
+#sf-embed .sf-footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+#sf-embed .sf-footer-links a { color: var(--text-muted) !important; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+#sf-embed .sf-footer-links a:hover { color: var(--text-main) !important; }
+#sf-embed .sf-footer-graphic-box { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+#sf-embed .sf-footer-butterfly { height: 64px; width: 64px; object-fit: cover; filter: invert(1); border: 1px solid rgba(255,255,255,0.15); border-radius: 2px; transition: border-color 0.3s; }
+#sf-embed .sf-footer-graphic-box:hover .sf-footer-butterfly { border-color: rgba(255,255,255,0.4); }
+#sf-embed .sf-butterfly-caption { font-family: 'Geist Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--text-main); text-transform: lowercase; margin-top: 0.65rem; padding-right: 0.1em; opacity: 0.5; }
+#sf-embed .sf-footer-bottom { border-top: 1px solid var(--border-color); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-family: 'Geist Mono', monospace; font-size: 0.7rem; letter-spacing: 0.02em; }
+ 
+/* FILM GRAIN NOISE OVERLAY */
+#sf-embed::after { content: ''; position: fixed; inset: 0; z-index: 99999; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E"); opacity: 0.12; }
+ 
+/* SCROLL REVEAL */
+#sf-embed .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+#sf-embed .reveal.visible { opacity: 1; transform: translateY(0); }
+#sf-embed .reveal-d1 { transition-delay: 0.1s; }
+#sf-embed .reveal-d2 { transition-delay: 0.2s; }
+#sf-embed .reveal-d3 { transition-delay: 0.3s; }
+ 
+/* MOBILE */
+@media (max-width: 900px) {
+  #sf-embed .sf-section-padding { padding: 4rem 0; }
+ 
+  #sf-embed .sf-navbar { padding: 1rem 0; }
+  #sf-embed .sf-nav-text-logo { height: 48px; }
+  #sf-embed .sf-nav-inner { flex-direction: column; gap: 1.25rem; text-align: center; }
+  #sf-embed .sf-nav-menu { width: 100%; justify-content: center; gap: 1rem; flex-wrap: nowrap; }
+  #sf-embed .sf-nav-link span { display: none; }
+  #sf-embed .sf-nav-link i { font-size: 1.25rem; color: var(--text-main); }
+  #sf-embed .sf-floating-contact { bottom: 1.5rem; right: 1.5rem; padding: 0.65rem 1rem; font-size: 0.75rem; }
+ 
+  #sf-embed .sf-footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  #sf-embed .sf-footer-graphic-box { align-items: center; text-align: center; margin-top: 1rem; }
+  #sf-embed .sf-footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+ 
+  #sf-embed::after { display: none; }
+}
+
+/* ============================================================
+   DIRECT BOOKING SPLASH CARD
+   ============================================================ */
+.sf-splash-card {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 340px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #D4AF37; /* Explicit Gold Border */
+  border-radius: 6px;
+  padding: 2.5rem 1.5rem 2rem; /* Extra padding top to balance the external X */
+  z-index: 99998;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  transform: translateY(150%);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.sf-splash-card.show {
+  transform: translateY(0);
+  opacity: 1;
+  animation: splashPulse 3s infinite alternate ease-in-out;
+}
+
+/* Subtle gold pulse on the shadow, keeping the border solid */
+@keyframes splashPulse {
+  0% { box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+  100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.3); }
+}
+
+/* Move X outside the box as a circular badge */
+.sf-splash-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 28px;
+  height: 28px;
+  background-color: #0a0a0a;
+  border: 1px solid #D4AF37;
+  border-radius: 50%;
+  color: #ffffff !important;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.sf-splash-close:hover {
+  color: #0a0a0a !important;
+  background-color: #D4AF37;
+}
+
+.sf-splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.sf-splash-content h4 {
+  font-family: 'Geist', sans-serif;
+  font-size: 1.3rem; /* Bigger */
+  font-weight: 600;
+  margin: 0;
+  color: #D4AF37 !important; /* Explicit Gold Text */
+  line-height: 1.4;
+  text-align: center;
+}
+
+.sf-splash-card .sf-btn {
+  font-family: 'Geist Mono', monospace;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 0.7rem 1.5rem; /* Smaller button size */
+  border-radius: 4px;
+  text-align: center;
+  display: inline-block;
+  width: auto; /* Forces it to hug the text, not stretch 100% */
+  background-color: transparent !important; /* Transparent background */
+  color: #D4AF37 !important; /* Gold letters */
+  border: 1px solid #D4AF37 !important; /* Gold border */
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.sf-splash-card .sf-btn:hover {
+  background-color: #D4AF37 !important; 
+  color: #0a0a0a !important; 
+}
+
+/* Mobile: Drop down from top */
+@media (max-width: 600px) {
+  .sf-splash-card {
+    bottom: auto;
+    top: 85px; 
+    left: 5%;
+    right: 5%;
+    width: 90%;
+    transform: translateY(-150%);
+  }
+}

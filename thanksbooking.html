@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Received | Sweet Flypaper Film</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet" href="/styles.css">
+
+<script src="/script.js" defer></script>
+
+<style>
+  /* ============================================================
+     THANK YOU PAGE SPECIFIC STYLES 
+     Nested inside #sf-embed to inherit global variables
+     ============================================================ */
+  
+  #sf-embed .thankyou-wrapper {
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── LIGHT GREY SONAR BACKGROUND ── */
+  #sf-embed .thankyou-wrapper::after { 
+    content: ''; 
+    position: absolute; 
+    width: 800px; 
+    height: 800px; 
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 60%); 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1; 
+    pointer-events: none; 
+  }
+
+  #sf-embed .thankyou-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  #sf-embed .thankyou-icon {
+    font-size: 3.5rem;
+    color: #81c784; /* Success Green */
+    margin-bottom: 20px;
+    animation: slideUpFade 0.6s ease forwards;
+  }
+
+  #sf-embed .thankyou-content h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main) !important;
+    animation: slideUpFade 0.6s ease 0.1s forwards;
+    opacity: 0;
+  }
+
+  #sf-embed .thankyou-content p {
+    font-size: 1.1rem;
+    color: var(--text-muted) !important;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    animation: slideUpFade 0.6s ease 0.2s forwards;
+    opacity: 0;
+  }
+
+  #sf-embed .thankyou-actions {
+    margin-top: 30px;
+    animation: slideUpFade 0.6s ease 0.3s forwards;
+    opacity: 0;
+  }
+
+  @keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Fix for specific button colors */
+  #sf-embed .sf-btn-outline { color: var(--text-main) !important; border-color: var(--border-color); }
+</style>
+</head>
+<body>
+
+<div id="sf-embed">
+
+  <div id="nav-placeholder"></div>
+  
+  <div class="thankyou-wrapper">
+    <div class="thankyou-content">
+      
+      <div class="thankyou-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      
+      <h1>Request Received.</h1>
+      <p>Your booking request is officially in our system. We are verifying studio and gear availability right now and will follow up shortly with your confirmation.</p>
+
+      <div class="thankyou-actions">
+        <a href="/" class="sf-btn sf-btn-text"><i class="fa-solid fa-arrow-left"></i> Return Home</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+</div> </body>
+</html>

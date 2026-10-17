@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Script Coverage | Sweet Flypaper Film</title>
+ 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/styles.css">
+ 
+<script async src="https://tally.so/widgets/embed.js"></script>
+<script src="/script.js" defer></script>
+ 
+<style>
+ 
+  /* Coverage-specific design tokens (extend shared #sf-embed vars) */
+  #sf-embed {
+    --chart-green: #10b981;
+    --chart-yellow: #f59e0b;
+    --chart-red: #ef4444;
+ 
+    /* Continuous Ombre Palette - Coverage Page Spectrum */
+    --coverage-green: 40, 70, 45;   /* Moody Olive Green */
+    --coverage-blue: 15, 65, 105;   /* Deep Ocean Blue */
+ 
+    /* Scattered Contrast Accent */
+    --coverage-contrast: 235, 120, 15; /* Cinematic Tungsten Amber */
+  }
+ 
+  /* sf-label link extension (coverage-specific) */
+  #sf-embed .sf-label a { color: var(--text-muted) !important; border-bottom: 1px solid transparent; transition: border-color 0.2s ease, color 0.2s ease; }
+  #sf-embed .sf-label a:hover { color: var(--text-main) !important; border-bottom-color: var(--text-muted); }
+ 
+  /* ── DYNAMIC EXTRA-DEPTH HERO BACKGROUND ARCHITECTURE ── */
+  #sf-embed .sf-hero { 
+    position: relative; 
+    width: 100%; 
+    min-height: 80vh; 
+    display: flex; 
+    align-items: flex-end; 
+    overflow: hidden; 
+    border-bottom: 1px solid var(--border-color); 
+    background-color: #050505; 
+  }
+  
+  #sf-embed .sf-hero-content { position: relative; z-index: 20; width: 100%; padding: 8rem 0 6rem; }
+  #sf-embed .sf-hero-veil { position: absolute; bottom: 0; left: 0; right: 0; height: 75%; background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.4) 60%, transparent 100%); z-index: 15; pointer-events: none; }
+ 
+  /* LAYER 1: BASE GRAPHIC PHOTOGRAPH SYSTEM */
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: right 5% center;
+    z-index: 1; 
+    filter: grayscale(100%) contrast(1.2); 
+    opacity: 0.45; 
+    pointer-events: none;
+    transition: transform 10s ease;
+  }
+  #sf-embed .sf-hero:hover .hero-bg-img { transform: scale(1.04); }
+ 
+  /* LAYER 2: THE AMBIENT OLIVE/BLUE LIGHT GEL SHEET */
+  .pulse-base {
+    position: absolute; 
+    inset: -50px; 
+    z-index: 2; 
+    background-image: 
+      radial-gradient(circle at 20% 45%, rgba(var(--coverage-green), 0.85) 0%, transparent 70%),
+      radial-gradient(circle at 80% 45%, rgba(var(--coverage-blue), 0.75) 0%, transparent 70%);
+    mix-blend-mode: overlay;
+    animation: baseBreathe 6s ease-in-out infinite alternate;
+  }
+  @keyframes baseBreathe {
+    0%   { transform: scale(0.96); opacity: 0.75; }
+    100% { transform: scale(1.04); opacity: 1; }
+  }
+ 
+  /* LAYER 3: TUNGSTEN AMBER PERIMETER COMPLEMENTARY LIGHT */
+  .contrast-perimeter {
+    position: absolute;
+    inset: -20px;
+    z-index: 3;
+    background-image: 
+      radial-gradient(circle at 0% 0%, rgba(var(--coverage-contrast), 0.45) 0%, transparent 55%),
+      radial-gradient(circle at 100% 100%, rgba(var(--coverage-contrast), 0.42) 0%, transparent 55%),
+      radial-gradient(circle at 100% 10%, rgba(var(--coverage-contrast), 0.38) 0%, transparent 50%);
+    mix-blend-mode: screen;
+    animation: contrastBreathe 4.5s ease-in-out infinite alternate;
+  }
+  @keyframes contrastBreathe {
+    0%   { opacity: 0.55; }
+    100% { opacity: 1; }
+  }
+ 
+  /* LAYER 4: RADAR SHOCKWAVE SYSTEM SIGNAL PING */
+  .radar-ring { 
+    position: absolute; top: 45%; left: 50%; 
+    width: 150px; height: 150px; 
+    border-radius: 50%; 
+    z-index: 4; 
+    pointer-events: none; 
+    border: 3px solid rgba(var(--coverage-contrast), 0.65);
+    box-shadow: inset 0 0 60px rgba(var(--coverage-contrast), 0.45), 0 0 60px rgba(var(--coverage-contrast), 0.45);
+    animation: deepRadar 8s linear infinite; 
+  }
+  @keyframes deepRadar { 
+    0% { transform: translate(-50%,-50%) scale(0.4); opacity: 0; } 
+    15% { opacity: 0.85; }
+    100% { transform: translate(-50%,-50%) scale(8.5); opacity: 0; } 
+  }
+ 
+  /* --- EPIC DIVINE MANIFESTO SECTION --- */
+  #sf-embed .sf-manifesto-section { 
+    position: relative;
+    padding: 10rem 0; 
+    border-bottom: 1px solid var(--border-color); 
+    text-align: center; 
+    /* Epic, cinematic god-rays background */
+    background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Parallax effect */
+    z-index: 1;
+  }
+  /* Heavy gradient overlay to keep text readable but let the light shine through */
+  #sf-embed .sf-manifesto-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 50%, rgba(10,10,10,1) 100%);
+    z-index: -1;
+  }
+ 
+  #sf-embed .sf-manifesto-header { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2.5rem; line-height: 1.1; letter-spacing: -0.02em; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+  #sf-embed .sf-manifesto-text { max-width: 750px; margin: 0 auto; color: var(--text-muted); font-size: 1.15rem; line-height: 1.8; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+  #sf-embed .sf-manifesto-text p { margin-bottom: 1.5rem; }
+  #sf-embed .sf-manifesto-text p:last-child { margin-bottom: 0; }
+ 
+  /* FEATURES GRID (WHAT WE PROMISE) */
+  #sf-embed .sf-coverage-features { padding: 8rem 0; background-color: var(--bg-dark); }
+  #sf-embed .sf-features-header { margin-bottom: 4rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  #sf-embed .sf-features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+ 
+  #sf-embed .sf-feature-card { background-color: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 4px; padding: 3rem 2.5rem; transition: transform 0.3s ease, border-color 0.3s ease; display: flex; flex-direction: column; }
+  #sf-embed .sf-feature-card:hover { transform: translateY(-5px); border-color: var(--text-muted); }
+  #sf-embed .sf-feature-icon { font-size: 1.75rem; color: var(--text-main); margin-bottom: 1.5rem; opacity: 0.8; }
+  #sf-embed .sf-feature-card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+  #sf-embed .sf-feature-card p { color: var(--text-muted) !important; font-size: 0.95rem; line-height: 1.7; flex-grow: 1; }
+  #sf-embed .sf-highlight-card { border-color: rgba(255,255,255,0.2); }
+  #sf-embed .sf-highlight-card .sf-feature-icon { color: var(--accent); opacity: 1; }
+ 
+  /* AUDIENCE STRIP */
+  #sf-embed .sf-audience-strip { border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 1.5rem 0; background: var(--bg-panel); }
+  #sf-embed .sf-audience-inner { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  #sf-embed .sf-audience-label { font-family: 'Geist Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); flex-shrink: 0; }
+  #sf-embed .sf-audience-divider { width: 1px; height: 1.2rem; background: var(--border-color); flex-shrink: 0; }
+  #sf-embed .sf-audience-types { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  #sf-embed .sf-audience-type { font-family: 'Geist Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-main); }
+ 
+  /* WHAT'S INCLUDED & DIAGNOSTICS */
+  #sf-embed .sf-included-section { padding: 8rem 0; border-bottom: 1px solid var(--border-color); }
+  #sf-embed .sf-included-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  #sf-embed .sf-included-text h2 { font-size: clamp(2rem, 3.5vw, 3.5rem); margin-bottom: 1.5rem; line-height: 1.05; }
+  #sf-embed .sf-included-text p { color: var(--text-muted) !important; font-size: 1.05rem; line-height: 1.8; margin-bottom: 2.5rem; max-width: 500px; }
+   
+  #sf-embed .sf-included-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
+  #sf-embed .sf-included-item { display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); background: var(--bg-panel); transition: background 0.2s; }
+  #sf-embed .sf-included-item:last-child { border-bottom: none; }
+  #sf-embed .sf-included-item:hover { background: #1a1a1a; }
+  #sf-embed .sf-included-item i { color: var(--text-muted); font-size: 0.85rem; width: 16px; flex-shrink: 0; text-align: center; }
+  #sf-embed .sf-included-item span { font-size: 0.95rem; font-weight: 500; }
+ 
+  /* LIVE CSS DIAGNOSTIC CHART SYSTEM */
+  #sf-embed .sf-live-diagnostic-panel { background: #0c0c0c; border: 1px solid var(--border-color); border-radius: 4px; padding: 3rem 2.5rem; font-family: 'Geist Mono', monospace; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+  #sf-embed .sf-chart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1.25rem; margin-bottom: 2rem; }
+  #sf-embed .sf-chart-header h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-main) !important; }
+  #sf-embed .sf-chart-header span { font-size: 0.7rem; color: var(--text-muted); }
+  #sf-embed .sf-chart-row { margin-bottom: 1.5rem; }
+  #sf-embed .sf-chart-row:last-child { margin-bottom: 0; }
+  #sf-embed .sf-chart-meta { display: flex; justify-content: space-between; font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  #sf-embed .sf-chart-bar-bg { width: 100%; height: 6px; background: #1a1a1a; border-radius: 3px; overflow: hidden; position: relative; }
+  #sf-embed .sf-chart-bar-fill { height: 100%; border-radius: 3px; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  #sf-embed .sf-fill-high { background: var(--chart-green); }
+  #sf-embed .sf-fill-mid { background: var(--chart-yellow); }
+  #sf-embed .sf-fill-low { background: var(--chart-red); }
+ 
+  /* PRICING */
+  #sf-embed .sf-pricing-section { padding: 6rem 0; background: var(--bg-panel); border-bottom: 1px solid var(--border-color); }
+  #sf-embed .sf-pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-color); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; margin-top: 3rem; }
+  #sf-embed .sf-pricing-card { background: var(--bg-dark); padding: 4rem 3rem; display: flex; flex-direction: column; gap: 0.5rem; transition: background 0.2s; }
+  #sf-embed .sf-pricing-card:hover { background: var(--bg-card); }
+  #sf-embed .sf-pricing-tier { font-family: 'Geist Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  #sf-embed .sf-pricing-rate { display: flex; align-items: flex-start; font-size: 4rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1; margin: 1rem 0 0.5rem; color: var(--text-main) !important; }
+  #sf-embed .sf-pricing-currency { font-size: 1.5rem; font-weight: 400; color: var(--text-muted); margin-top: 0.5rem; margin-right: 0.2rem; }
+  #sf-embed .sf-pricing-sub { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+  #sf-embed .sf-pricing-desc { font-size: 0.95rem; color: var(--text-muted) !important; line-height: 1.7; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+ 
+  /* BOOKING CTA */
+  #sf-embed .sf-booking-cta { padding: 8rem 0; background-color: var(--bg-dark); }
+  #sf-embed .sf-booking-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  #sf-embed .sf-booking-text h2 { font-size: clamp(2.5rem, 4vw, 4rem); margin-bottom: 1rem; line-height: 1.05; }
+  #sf-embed .sf-booking-text p { color: var(--text-muted) !important; font-size: 1.1rem; line-height: 1.75; max-width: 500px; }
+  #sf-embed .sf-booking-actions { display: flex; flex-direction: column; gap: 1rem; }
+  #sf-embed .sf-booking-actions .btn { justify-content: space-between; padding: 1.25rem 2rem; font-size: 0.9rem; }
+ 
+  /* RESPONSIVE — COVERAGE PAGE ONLY */
+  @media (max-width: 900px) {
+    #sf-embed .sf-hero { min-height: 65vh; }
+    #sf-embed .sf-manifesto-section { padding: 6rem 0; background-attachment: scroll !important; background-position: center top; }
+    #sf-embed .sf-features-grid { grid-template-columns: 1fr; }
+    #sf-embed .sf-included-grid { grid-template-columns: 1fr; gap: 4rem; }
+    #sf-embed .sf-pricing-grid { grid-template-columns: 1fr; gap: 1px; }
+    #sf-embed .sf-booking-inner { grid-template-columns: 1fr; gap: 3rem; }
+  }
+ 
+</style>
+</head>
+<body>
+ 
+<div id="sf-embed">
+ 
+  <div id="nav-placeholder"></div>
+ 
+  <section class="sf-hero">
+    <img src="/images/glasses.svg" class="hero-bg-img" alt="Script reading glasses illustration">
+ 
+    <div class="pulse-base"></div>
+    <div class="contrast-perimeter"></div>
+    <div class="radar-ring"></div>
+    <div class="sf-hero-veil"></div>
+ 
+    <div class="sf-hero-content">
+      <div class="sf-container">
+        <div class="reveal">
+          <span class="sf-label">Story Studio</span>
+          <h1 style="font-size: clamp(3.5rem, 8vw, 6rem); line-height: 1.05; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: -0.04em;">Script<br>Coverage.</h1>
+          <p style="font-size: 1.15rem; color: var(--text-muted); max-width: 550px; line-height: 1.6; margin-bottom: 2rem;">In the beginning, there is the word. Let our talented readers guide you. Zero AI used, ever.</p>
+          <a href="#submit" class="sf-btn sf-btn-primary">Get Coverage Here <i class="fa-solid fa-arrow-down"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="sf-manifesto-section">
+    <div class="sf-container reveal">
+      <h2 class="sf-manifesto-header">In The Beginning,<br>There Is Only The Word.</h2>
+      <div class="sf-manifesto-text">
+        <p>You started with nothing. Just your imagination and the desire to share it with the world. In the beginning, there is only the word.</p>
+        <p>Before you encounter the notes, the budgets, the premiere, the awards — there is just you and the blank page. We understand the importance of story. We understand how hard you worked, and how hard it is to get the story just right.</p>
+        <p>As script coverage sites go out of business or consolidate, we believe a simple, straightforward approach is key and king.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="sf-coverage-features">
+    <div class="sf-container">
+      
+      <div class="sf-features-header reveal">
+        <span class="sf-label">What We Promise</span>
+        <h2>Five Things.<br>No Exceptions.</h2>
+      </div>
+ 
+      <div class="sf-features-grid">
+        
+        <div class="sf-feature-card reveal">
+          <i class="fa-solid fa-stopwatch sf-feature-icon"></i>
+          <h3>5-Day Turnaround</h3>
+          <p>You can wait for months on some sites. We get it, people are busy. However, we know how frustrating it can be to hand over your script and not receive notes (paid or unpaid). So we promise a 5-Day Turnaround.</p>
+        </div>
+ 
+        <div class="sf-feature-card reveal reveal-d1">
+          <i class="fa-solid fa-pen-nib sf-feature-icon"></i>
+          <h3>High Quality Readers</h3>
+          <p>We are fortunate to have surrounded ourselves with exceptionally talented creatives. Artists who have put in the work and understand storytelling from their own failures and successes.</p>
+        </div>
+ 
+        <div class="sf-feature-card reveal reveal-d2">
+          <i class="fa-solid fa-handshake-angle sf-feature-icon"></i>
+          <h3>Respect</h3>
+          <p>We will critique and comment on your script with the utmost respect. We will be straight, fair, and professional.</p>
+        </div>
+ 
+        <div class="sf-feature-card reveal">
+          <i class="fa-solid fa-scale-balanced sf-feature-icon"></i>
+          <h3>Fair Pay</h3>
+          <p>Without heavy overhead we can ensure our readers are paid as much as bigger Coverage sites. This impacts who we can hire, who we can rely on, and who trusts us to be fair to them. In return, our readers will treat every script with expert consideration.</p>
+        </div>
+ 
+        <div class="sf-feature-card sf-highlight-card reveal reveal-d1">
+          <i class="fa-solid fa-robot sf-feature-icon"></i>
+          <h3>No BS Promises. No AI.</h3>
+          <p>We read, we critique, we compliment, and we help you get better — or tell you your story is already great. No promises of meetings, agents, or ranking systems. We only promise expert guidance. A real human will read and critique your work. AI may be beneficial in some arenas, but an algorithm cannot create or critique art.</p>
+        </div>
+ 
+      </div>
+    </div>
+  </section>
+ 
+  <div class="sf-audience-strip">
+    <div class="sf-container">
+      <div class="sf-audience-inner">
+        <span class="sf-audience-label">Who This Is For</span>
+        <div class="sf-audience-divider"></div>
+        <div class="sf-audience-types">
+          <span class="sf-audience-type">Feature Scripts</span>
+          <span class="sf-audience-type">TV Pilots</span>
+          <span class="sf-audience-type">Short Films</span>
+          <span class="sf-audience-type">Web Series</span>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <section class="sf-included-section">
+    <div class="sf-container sf-included-grid">
+      
+      <div class="reveal">
+        <div class="sf-included-text">
+          <span class="sf-label">The Report</span>
+          <h2>What You<br>Get Back</h2>
+          <p>Coverage isn't just a basic summary—it is an exhaustive diagnostic framework of how your story reads to industry professionals. Every category is accurately calculated across key narrative milestones, tracking structure, character behavior, and pacing metrics.</p>
+        </div>
+        
+        <div class="sf-included-list">
+          <div class="sf-included-item">
+            <i class="fa-solid fa-quote-left"></i>
+            <span>Logline Creation</span>
+          </div>
+          <div class="sf-included-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Character Pass</span>
+          </div>
+          <div class="sf-included-item">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Structure Pass</span>
+          </div>
+          <div class="sf-included-item">
+            <i class="fa-solid fa-comment"></i>
+            <span>Dialogue Pass</span>
+          </div>
+          <div class="sf-included-item">
+            <i class="fa-solid fa-bolt"></i>
+            <span>Strengths / Weakness</span>
+          </div>
+          <div class="sf-included-item">
+            <i class="fa-solid fa-film"></i>
+            <span>Best Moments / Lesser Moments</span>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="reveal reveal-d1" style="position: sticky; top: 120px;">
+        <div class="sf-live-diagnostic-panel">
+          <div class="sf-chart-header">
+            <h4>The Age of 33 - Score Breakdown</h4>
+            <span>Diagnostic Dashboard</span>
+          </div>
+          
+          <div class="sf-chart-row">
+            <div class="sf-chart-meta"><span>The story has a clear setup</span><span>8 / 10</span></div>
+            <div class="sf-chart-bar-bg"><div class="sf-chart-bar-fill sf-fill-high" style="width: 80%;"></div></div>
+          </div>
+ 
+          <div class="sf-chart-row">
+            <div class="sf-chart-meta"><span>Stakes and conflict clear</span><span>6 / 10</span></div>
+            <div class="sf-chart-bar-bg"><div class="sf-chart-bar-fill sf-fill-mid" style="width: 60%;"></div></div>
+          </div>
+ 
+          <div class="sf-chart-row">
+            <div class="sf-chart-meta"><span>Protagonist has a clear goal</span><span>6 / 10</span></div>
+            <div class="sf-chart-bar-bg"><div class="sf-chart-bar-fill sf-fill-mid" style="width: 60%;"></div></div>
+          </div>
+ 
+          <div class="sf-chart-row">
+            <div class="sf-chart-meta"><span>Climax setup & resolution payoff</span><span>8 / 10</span></div>
+            <div class="sf-chart-bar-bg"><div class="sf-chart-bar-fill sf-fill-high" style="width: 80%;"></div></div>
+          </div>
+ 
+          <div class="sf-chart-row">
+            <div class="sf-chart-meta"><span>Every scene is necessary</span><span>5 / 10</span></div>
+            <div class="sf-chart-bar-bg"><div class="sf-chart-bar-fill sf-fill-low" style="width: 50%;"></div></div>
+          </div>
+ 
+          <div class="sf-chart-row">
+            <div class="sf-chart-meta"><span>Overall: Feel / Emotional impact</span><span>5 / 10</span></div>
+            <div class="sf-chart-bar-bg"><div class="sf-chart-bar-fill sf-fill-low" style="width: 50%;"></div></div>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <section class="sf-pricing-section">
+    <div class="sf-container">
+      <div class="reveal" style="text-align: center;">
+        <span class="sf-label">Rates</span>
+        <h2>Simple Pricing</h2>
+      </div>
+      <div class="sf-pricing-grid reveal">
+        <div class="sf-pricing-card">
+          <div class="sf-pricing-tier">Feature Script</div>
+          <div class="sf-pricing-rate"><span class="sf-pricing-currency">$</span>80</div>
+          <div class="sf-pricing-sub">Up to 120 pages &middot; 5-day turnaround</div>
+          <div class="sf-pricing-desc">Full coverage report for feature-length screenplays. Every element evaluated, every note written by a human reader.</div>
+        </div>
+        <div class="sf-pricing-card">
+          <div class="sf-pricing-tier">TV Pilot</div>
+          <div class="sf-pricing-rate"><span class="sf-pricing-currency">$</span>65</div>
+          <div class="sf-pricing-sub">Up to 60 pages &middot; 5-day turnaround</div>
+          <div class="sf-pricing-desc">Full coverage report for one-hour or half-hour pilots. Series premise, pilot structure, and character potential all assessed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="submit" class="sf-booking-cta">
+    <div class="sf-container">
+      <div class="sf-booking-inner reveal">
+        <div class="sf-booking-text">
+          <span class="sf-label">Ready For Notes?</span>
+          <h2>Submit Your<br>Script Today.</h2>
+          <p>Human readers. Five-day turnaround. No AI, no algorithms, no vague promises. Just honest, expert notes from people who understand what it takes to get a story made.</p>
+        </div>
+        <div class="sf-booking-actions">
+          <a href="#" class="sf-btn sf-btn-primary" data-tally-open="KYWv6V" data-tally-hide-title="1" data-tally-emoji-text="👋🏾" data-tally-emoji-animation="wave">
+            Submit Your Script <i class="fa-solid fa-file-arrow-up"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <div id="footer-placeholder"></div>
+ 
+</div>
+ 
+</body>
+</html>

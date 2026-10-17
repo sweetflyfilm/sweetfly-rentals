@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Now | Sweet Flypaper Film</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet" href="/styles.css">
+
+<script src="/script.js" defer></script>
+
+<style>
+  /* ============================================================
+     BOOKING ENGINE SPECIFIC STYLES 
+     Nested inside #sf-embed to inherit global variables
+     ============================================================ */
+  
+  #sf-embed {
+    --color-success: #81c784;
+    --booking-accent: #ffffff; 
+  }
+
+  #sf-booking-app p { color: var(--text-muted) !important; font-size: 1rem; }
+  #sf-booking-app h1, #sf-booking-app h2, #sf-booking-app h3, #sf-booking-app h4 { color: var(--text-main) !important; font-family: 'Geist', sans-serif;}
+
+  /* ── LIGHT GREY SONAR HERO ── */
+  #sf-embed .checkout-hero { 
+    position: relative; 
+    padding: 100px 20px 80px; 
+    text-align: center; 
+    overflow: hidden; 
+    border-bottom: 1px solid var(--border-color); 
+    background: var(--bg-dark); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 40vh;
+  }
+  
+  #sf-embed .checkout-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.2;
+    filter: grayscale(100%) contrast(1.2);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes pulseGlow {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+      100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+  }
+
+  #sf-embed .checkout-hero-glow { 
+    position: absolute; 
+    width: 1000px; 
+    height: 1000px; 
+    background: radial-gradient(circle, rgba(200, 200, 200, 0.08) 0%, transparent 60%); 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1; 
+    pointer-events: none; 
+    animation: pulseGlow 5s ease-in-out infinite alternate;
+  }
+
+  #sf-embed .checkout-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.3), rgba(10,10,10,0.95));
+      z-index: 2;
+      pointer-events: none;
+  }
+  
+  #sf-embed .checkout-hero-content { position: relative; z-index: 3; }
+  #sf-embed .checkout-hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); margin: 0 0 10px; font-weight: 700; letter-spacing: -0.02em; }
+
+  /* ── LAYOUT ARCHITECTURE ── */
+  #sf-embed .app-container { display: flex; min-height: 80vh; transition: padding-right 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
+  #sf-embed .app-container.sidebar-active { padding-right: 400px; }
+  #sf-embed .main-content { flex: 1; padding: 60px 40px 120px; max-width: 1100px; margin: 0 auto; width: 100%; transition: all 0.3s ease; }
+  
+  /* Sidebar Cart */
+  #sf-embed .sidebar { width: 400px; background: var(--bg-panel); border-left: 1px solid var(--border-color); display: flex; flex-direction: column; position: fixed; right: 8px; top: 85px; bottom: 8px; transform: translateX(110%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 10001; box-shadow: -10px 0 30px rgba(0,0,0,0.5); border-radius: 6px; }
+  #sf-embed .sidebar.active { transform: translateX(0); }
+  #sf-embed .sidebar-header { padding: 30px 30px 20px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;}
+  #sf-embed .sidebar-header h2 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+  #sf-embed .sidebar-body { flex: 1; overflow-y: auto; padding: 20px 30px; }
+  
+  #sf-embed .cart-item { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-subtle); animation: fadeIn 0.3s ease; }
+  #sf-embed .cart-item-info h4 { margin: 0 0 4px 0; font-size: 0.95rem; line-height: 1.2;}
+  #sf-embed .cart-item-info ul { margin: 5px 0 0 0; padding-left: 15px; font-size: 0.75rem; color: var(--text-muted); list-style-type: disc;}
+  #sf-embed .cart-item-price { font-weight: 600; font-size: 0.95rem; text-align: right; color: var(--text-main); }
+  #sf-embed .cart-item-price.free { color: var(--color-success); }
+  #sf-embed .cart-item-price .strikethrough { text-decoration: line-through; color: var(--text-muted); font-size: 0.8rem; font-weight: normal; display: block; }
+  
+  #sf-embed .sidebar-footer { padding: 20px 30px 30px; background: var(--bg-dark); border-top: 1px solid var(--border-color); border-radius: 0 0 6px 6px;}
+  #sf-embed .discount-tracker { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 0.85rem; display: flex; gap: 10px; align-items: center; }
+  #sf-embed .discount-tracker i { color: var(--booking-accent); font-size: 1.2rem; }
+  
+  /* Subtotal & Savings Area */
+  #sf-embed .cart-totals-area { margin-bottom: 20px; text-align: right; }
+  #sf-embed .cart-total-us { font-size: 2rem; font-weight: 700; color: var(--booking-accent); line-height: 1; margin-bottom: 5px;}
+  #sf-embed .cart-sg-savings { font-size: 0.8rem; color: var(--color-success); font-weight: 600; }
+  #sf-embed .cart-sg-savings i { margin-right: 4px; }
+
+  /* Mobile Cart Elements */
+  #sf-embed .mobile-cart-toggle { display: none; }
+  #sf-embed .close-sidebar-btn { display: none; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
+
+  @media(max-width: 1024px) {
+      #sf-embed .app-container.sidebar-active { padding-right: 0; }
+      #sf-embed .sidebar { width: 100%; height: 85vh; position: fixed; bottom: 0; left: 0; right: 0; top: auto; transform: translateY(110%); border-radius: 20px 20px 0 0; z-index: 10002;}
+      #sf-embed .sidebar.mobile-open { transform: translateY(0); }
+      #sf-embed .sidebar.active { transform: translateY(110%); }
+      #sf-embed .close-sidebar-btn { display: block; }
+      
+      #sf-embed .main-content { padding: 40px 20px 120px; }
+      
+      /* New Mobile Action Bar */
+      #sf-embed .mobile-cart-toggle { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(10px); border-top: 1px solid var(--border-color); padding: 15px 20px; justify-content: space-between; align-items: center; z-index: 10000; box-shadow: 0 -10px 20px rgba(0,0,0,0.5); }
+      #sf-embed .mct-info { display: flex; flex-direction: column; cursor: pointer; }
+      #sf-embed .mct-total { font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
+      #sf-embed .mct-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;}
+  }
+
+  /* Responsive Nav Header Fix */
+  @media(max-width: 600px) {
+      #sf-embed .nav-header { flex-wrap: wrap; justify-content: center; text-align: center; gap: 10px;}
+      #sf-embed .nav-header > div:first-child { order: 2; width: 100%; justify-content: center; margin-top: 10px;}
+      #sf-embed #stepIndicator { order: 1; width: 100%; text-align: center; display: block; }
+      #sf-embed .nav-header > div:last-child { display: none; }
+  }
+
+  /* ── WIZARD PANELS ── */
+  #sf-embed .wizard-step { display: none; animation: fadeIn 0.4s ease; }
+  #sf-embed .wizard-step.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  #sf-embed .step-header { text-align: center; margin-bottom: 3rem; }
+  #sf-embed .step-title { font-size: 2.5rem; margin: 0 0 10px; font-weight: 600; letter-spacing: -0.02em; }
+  #sf-embed .step-desc { max-width: 650px; margin: 0 auto; color: var(--text-muted) !important;}
+
+  /* ── LEAN STUDIO CARDS ── */
+  #sf-embed .lean-studio-grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
+  #sf-embed .lean-studio-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 6px; padding: 20px 25px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  #sf-embed .lean-studio-card:hover { border-color: var(--text-muted); transform: translateY(-2px); }
+  #sf-embed .lean-studio-card.selected { border-color: var(--booking-accent); background: rgba(255, 255, 255, 0.03); }
+  
+  #sf-embed .lsc-left { display: flex; align-items: flex-start; gap: 20px; flex: 1;}
+  #sf-embed .lsc-radio { margin-top: 2px; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  #sf-embed .lean-studio-card.selected .lsc-radio { border-color: var(--booking-accent); background: var(--booking-accent); }
+  #sf-embed .lean-studio-card.selected .lsc-radio::after { content: ''; width: 8px; height: 8px; background: var(--bg-dark); border-radius: 50%; }
+  
+  #sf-embed .lsc-info h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main) !important;}
+  #sf-embed .lsc-bullets { list-style: none; padding: 0; margin: 0; }
+  #sf-embed .lsc-bullets li { font-size: 0.85rem; color: var(--text-muted) !important; position: relative; padding-left: 12px; margin-bottom: 4px; }
+  #sf-embed .lsc-bullets li::before { content: '•'; position: absolute; left: 0; color: var(--booking-accent); }
+  
+  #sf-embed .lsc-price { font-size: 1.5rem; font-weight: 700; color: var(--booking-accent); white-space: nowrap; }
+
+  @media(max-width: 600px) {
+      #sf-embed .lean-studio-card { flex-direction: column; align-items: flex-start; }
+      #sf-embed .lsc-price { align-self: flex-end; font-size: 1.25rem; margin-top: -10px; }
+  }
+
+  /* ── RICH SALES CARDS (GEAR & KITS) ── */
+  #sf-embed .alc-section { margin-bottom: 60px; transition: opacity 0.3s; }
+  #sf-embed .alc-section.dimmed { opacity: 0.3; pointer-events: none; filter: grayscale(50%); }
+  #sf-embed .alc-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px; }
+  #sf-embed .alc-number { width: 30px; height: 30px; background: var(--text-main); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+  #sf-embed .alc-header h2 { margin: 0; font-size: 1.5rem; font-weight: 600; }
+
+  #sf-embed .rich-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  
+  #sf-embed .rich-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; transition: all 0.2s ease; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+  #sf-embed .rich-card:hover { border-color: var(--text-muted); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+  #sf-embed .rich-card.selected { border-color: var(--booking-accent); background: rgba(255, 255, 255, 0.03); }
+  
+  #sf-embed .rc-img-wrap { width: 100%; aspect-ratio: 16/10; background: radial-gradient(circle at center, #3a3a42 0%, #111113 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; border-bottom: 1px solid var(--border-color); }
+  #sf-embed .rc-img-wrap img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.5)); transition: transform 0.5s ease; }
+  #sf-embed .rich-card:hover .rc-img-wrap img { transform: scale(1.05); }
+  #sf-embed .rc-badge { position: absolute; top: 15px; right: 15px; background: var(--text-main); color: var(--bg-dark); font-family: 'Geist Mono', monospace; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 2px; letter-spacing: 0.05em; z-index: 2; }
+  
+  #sf-embed .rc-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+  #sf-embed .rc-info h3 { font-family: 'Geist Mono', monospace; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; line-height: 1.4; color: var(--text-main) !important;}
+  #sf-embed .rc-meta { font-size: 0.85rem; color: var(--text-muted) !important; margin-bottom: 10px;}
+  #sf-embed .rc-meta strong { color: var(--text-main); }
+  
+  #sf-embed .card-details { display: none; animation: fadeIn 0.3s ease; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; margin-top: 10px;}
+  #sf-embed .rich-card.selected .card-details { display: block; }
+  #sf-embed .contents-list { list-style: none; padding: 0; margin: 0; text-align: left; }
+  #sf-embed .contents-list li { font-size: 0.85rem; color: var(--text-muted) !important; position: relative; padding-left: 15px; margin-bottom: 6px; line-height: 1.4; }
+  #sf-embed .contents-list li::before { content: '•'; position: absolute; left: 0; color: var(--text-main); font-weight: bold; top: -1px; }
+
+  /* Selection Indicator */
+  #sf-embed .select-circle { position: absolute; top: 15px; left: 15px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s; opacity: 0; z-index: 2; background: rgba(0,0,0,0.6);}
+  #sf-embed .rich-card.selected .select-circle { background: var(--text-main); border-color: var(--text-main); opacity: 1;}
+  #sf-embed .rich-card.selected .select-circle i { color: #000; font-size: 12px;}
+
+  /* Bridge Card */
+  #sf-embed .bridge-card { background: transparent; border: 1px dashed var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; border-radius: 4px; cursor: pointer; transition: all 0.2s; height: 100%; min-height: 250px;}
+  #sf-embed .bridge-card:hover { border-color: var(--text-main); background: rgba(255,255,255,0.02); transform: translateY(-4px); }
+
+  /* ── INLINE FREE LENS MODAL ── */
+  #sf-embed .free-lens-banner { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 4px; padding: 30px; margin: 30px 0; display: none; animation: fadeIn 0.4s ease; text-align: center; }
+  #sf-embed .free-lens-banner h3 { color: var(--text-main) !important; margin: 0 0 10px 0; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  #sf-embed .free-lens-banner p { color: var(--text-muted) !important;}
+
+  /* ── MISC UTILS ── */
+  #sf-embed .mode-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; margin-bottom: 30px; }
+  #sf-embed .mode-cards .rich-card { border-radius: 6px; padding: 40px;} 
+  #sf-embed .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); }
+  #sf-embed .form-input { width: 100%; background: var(--bg-dark); border: 1px solid var(--border-color); color: var(--text-main); padding: 15px; border-radius: 6px; font-family: 'Geist', sans-serif; font-size: 1rem; outline: none; appearance: none; -webkit-appearance: none; margin-bottom: 15px;}
+  #sf-embed .form-input:focus { border-color: var(--text-main); }
+
+  /* EXPLICIT BUTTON STYLING */
+  #sf-embed .header-btn-muted { background-color: #0a0a0a !important; color: #ffffff !important; border: 1px solid #94a3b8 !important; }
+  #sf-embed .header-btn-muted:hover { border-color: #ffffff !important; }
+  #sf-embed .header-btn-text-muted { background-color: transparent !important; color: #ffffff !important; border: 1px solid #94a3b8 !important; }
+  #sf-embed .header-btn-text-muted:hover { background: rgba(255,255,255,0.05) !important; }
+
+  #sf-embed .btn-standard-checkout {
+      background-color: #0a0a0a !important;
+      color: #ffffff !important;
+      border: 1px solid #94a3b8 !important;
+  }
+  #sf-embed .btn-standard-checkout:hover {
+      background-color: #141414 !important;
+      border-color: #ffffff !important;
+  }
+  
+  #sf-embed .gold-checkout-btn {
+      background-color: #0a0a0a !important;
+      color: #D4AF37 !important;
+      border: 2px solid #D4AF37 !important;
+      transition: all 0.3s ease;
+  }
+  #sf-embed .gold-checkout-btn:hover {
+      background-color: #D4AF37 !important;
+      color: #0a0a0a !important;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3) !important;
+  }
+</style>
+</head>
+<body>
+
+<div id="sf-embed">
+
+  <div id="nav-placeholder"></div>
+
+  <div id="sf-booking-app">
+
+      <div class="checkout-hero">
+          <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=2056&auto=format&fit=crop" class="checkout-hero-bg" alt="Production Studio Setup">
+          <div class="checkout-hero-glow"></div>
+          <div class="checkout-hero-overlay"></div>
+
+          <div class="checkout-hero-content">
+              <h1>Book Now.</h1>
+              <p>Bypass the middleman. Claim your space and build your gear package direct.</p>
+          </div>
+      </div>
+
+      <div class="app-container" id="appContainer">
+
+          <div class="main-content">
+              
+              <div class="nav-header" id="navHeader" style="display:none;">
+                  <div style="display:flex; gap: 10px;">
+                      <button class="sf-btn header-btn-muted" style="padding: 8px 16px; font-size: 0.8rem;" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                      <button class="sf-btn header-btn-text-muted" style="padding: 8px 16px; font-size: 0.8rem;" onclick="resetToGateway()"><i class="fa-solid fa-rotate-left"></i> Start Over</button>
+                  </div>
+                  <span style="font-family: 'Geist Mono'; color: var(--text-muted); font-size: 0.85rem; font-weight:600; letter-spacing:1px;" id="stepIndicator">Step 1 of 3</span>
+                  <div style="width: 150px;"></div>
+              </div>
+
+              <div id="booking-wizard">
+
+                  <div class="wizard-step active" id="step-gateway">
+                      <div class="step-header">
+                          <span class="sf-label" style="text-align: center;">Sweet Flypaper Film</span>
+                          <h1 class="step-title">How do you want to build your shoot?</h1>
+                          <p class="step-desc">Select an option below to begin customizing your booking flow.</p>
+                      </div>
+                      
+                      <div class="mode-cards" style="max-width: 1000px; margin: 0 auto;">
+                          <div class="rich-card" onclick="startFlow('full')" style="text-align: center; align-items: center;">
+                              <div style="background: rgba(255,255,255,0.05); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-film" style="font-size: 2rem;"></i></div>
+                              <h3 style="font-size: 1.3rem; margin-bottom: 10px;">I Need Space & Gear</h3>
+                              <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Book the studio and build a custom equipment package. The ultimate production experience.</p>
+                          </div>
+                          
+                          <div class="rich-card" onclick="startFlow('studio')" style="text-align: center; align-items: center;">
+                              <div style="background: rgba(255,255,255,0.05); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-warehouse" style="font-size: 2rem;"></i></div>
+                              <h3 style="font-size: 1.3rem; margin-bottom: 10px;">I Just Need Space</h3>
+                              <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Secure a Half-Day, Full-Day, or Full Access studio block without building a gear list.</p>
+                          </div>
+
+                          <div class="rich-card" onclick="window.open('https://www.sharegrid.com/p/sweetfly', '_blank')" style="text-align: center; align-items: center; border-style: dashed;">
+                              <div style="background: rgba(255,255,255,0.02); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 2rem; color:var(--text-muted);"></i></div>
+                              <h3 style="font-size: 1.3rem; margin-bottom: 10px;">I Just Need Gear</h3>
+                              <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Taking our equipment off-site? Browse our entire inventory directly on Sharegrid.</p>
+                          </div>
+                      </div>
+
+                      <div style="text-align: center; margin-top: 20px;">
+                          <button class="sf-btn header-btn-text-muted" style="padding: 10px 15px; border-radius: 6px; text-transform: none; font-size: 0.85rem;" onclick="quickJumpToKits()">Pro? Jump straight to Pre-Made Kits <i class="fa-solid fa-arrow-right"></i></button>
+                      </div>
+                  </div>
+
+                  <div class="wizard-step" id="step-studio">
+                      <div class="step-header">
+                          <h1 class="step-title">Pick Your Studio Block</h1>
+                          <p class="step-desc">All bookings include access to the main stage, sound-treated editing suite, and client area.</p>
+                      </div>
+                      
+                      <div class="lean-studio-grid" id="grid-studio"></div>
+                  </div>
+
+                  <div class="wizard-step" id="step-gear-mode">
+                      <div class="step-header">
+                          <h1 class="step-title">How do you want to handle gear?</h1>
+                          <p class="step-desc">Pick a fast, pre-made bundle or hand-pick every item yourself.</p>
+                      </div>
+                      <div class="mode-cards" style="max-width: 800px; margin: 0 auto; grid-template-columns: 1fr 1fr;">
+                          <div class="rich-card" onclick="selectGearMode('kits')" style="align-items: center; text-align: center;">
+                              <i class="fa-solid fa-box-open" style="font-size: 3rem; margin-bottom: 15px; color: var(--text-main);"></i>
+                              <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Curated Kits</h3>
+                              <p style="color: var(--text-muted) !important; margin: 0;">Turn-key bundles ready to shoot.</p>
+                          </div>
+                          <div class="rich-card" onclick="selectGearMode('alacarte')" style="align-items: center; text-align: center;">
+                              <i class="fa-solid fa-screwdriver-wrench" style="font-size: 3rem; margin-bottom: 15px; color: var(--text-main);"></i>
+                              <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Build A-La-Carte</h3>
+                              <p style="color: var(--text-muted) !important; margin: 0;">Hand-pick exactly what you need.</p>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="wizard-step" id="step-kits">
+                      <div class="step-header">
+                          <h1 class="step-title">Select a Pre-Made Kit</h1>
+                          <p class="step-desc">Grab a curated bundle, or click the card at the end to build your own from scratch.</p>
+                      </div>
+                      <div class="rich-grid" id="grid-kits"></div>
+                  </div>
+
+                  <div class="wizard-step" id="step-alacarte">
+                      <div class="step-header" style="margin-bottom: 50px;">
+                          <h1 class="step-title">Build Your Setup</h1>
+                          <p class="step-desc">Let's craft the perfect rig. Start with your camera.</p>
+                      </div>
+
+                      <div class="alc-section active" id="alc-sec-cam">
+                          <div class="alc-header"><div class="alc-number">1</div><h2>Choose Your Camera</h2></div>
+                          <div class="rich-grid" id="grid-alc-cam"></div>
+                          
+                          <div class="free-lens-banner" id="free-lens-promo">
+                              <h3><i class="fa-solid fa-gift"></i> Boom. Rokinon 3-Lens Kit Added.</h3>
+                              <p style="color: var(--text-muted) !important; margin:0;">Every camera body automatically includes our Rokinon Cine 3-Lens Kit (14mm, 24mm, 35mm) entirely for free.</p>
+                          </div>
+                      </div>
+
+                      <div class="alc-section dimmed" id="alc-sec-lens">
+                          <div class="alc-header"><div class="alc-number">2</div><h2>Specialty Lens Add-ons</h2></div>
+                          <p style="color: var(--text-muted) !important; margin-bottom: 20px;">Your 3-Lens Kit is already included. Need extra focal lengths?</p>
+                          <div class="rich-grid" id="grid-alc-lens"></div>
+                          <div style="text-align: right; margin-top: 25px;"><button class="sf-btn header-btn-muted" style="padding: 10px 20px;" onclick="unlockSection('alc-sec-light')">Continue to Lighting <i class="fa-solid fa-arrow-down"></i></button></div>
+                      </div>
+
+                      <div class="alc-section dimmed" id="alc-sec-light">
+                          <div class="alc-header"><div class="alc-number">3</div><h2>Lighting</h2></div>
+                          <div class="rich-grid" id="grid-alc-light"></div>
+                          <div style="text-align: right; margin-top: 25px;"><button class="sf-btn header-btn-muted" style="padding: 10px 20px;" onclick="unlockSection('alc-sec-grip')">Continue to Support & Grip <i class="fa-solid fa-arrow-down"></i></button></div>
+                      </div>
+
+                      <div class="alc-section dimmed" id="alc-sec-grip">
+                          <div class="alc-header"><div class="alc-number">4</div><h2>Support & Transmission</h2></div>
+                          <div class="rich-grid" id="grid-alc-grip"></div>
+                      </div>
+                  </div>
+
+                  <div class="wizard-step" id="step-review">
+                      <div class="step-header">
+                          <h1 class="step-title">Final Details</h1>
+                          <p class="step-desc">Enter your shoot dates below to finalize your booking request.</p>
+                      </div>
+                      
+                      <div style="background: var(--bg-panel); padding: 40px; border-radius: 6px; border: 1px solid var(--border-color); max-width: 600px; margin: 0 auto;">
+                          <div style="display: flex; gap: 20px; flex-direction: column;">
+                              <div>
+                                  <label style="display:block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Start Date</label>
+                                  <input type="date" id="shootDate" class="form-input">
+                              </div>
+                              <div>
+                                  <label style="display:block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; font-weight: 600;">Duration</label>
+                                  <select id="shootDays" class="form-input" onchange="updateCart()">
+                                      <option value="1">1 Day</option>
+                                      <option value="2">2 Days (5% Off Total)</option>
+                                      <option value="3">3 Days (10% Off Total)</option>
+                                      <option value="4">4 Days (15% Off Total)</option>
+                                      <option value="5">5 Days (4 Day Rate)</option>
+                                      <option value="7">7 Days (5 Day Rate)</option>
+                                      <option value="14">14 Days (5% Off Week Rate)</option>
+                                      <option value="21">21 Days (10% Off Week Rate)</option>
+                                      <option value="28">28 Days (20% Off Week Rate)</option>
+                                  </select>
+                                  <p style="font-size: 0.75rem; color: var(--text-muted) !important; margin-top: 8px;"><i class="fa-solid fa-circle-info"></i> Standard studio weekends & holidays subject to availability.</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="sidebar" id="sidebarCart">
+              <div class="sidebar-header">
+                  <h2><i class="fa-solid fa-clipboard-list"></i> Your Shoot</h2>
+                  <button class="close-sidebar-btn" onclick="document.getElementById('sidebarCart').classList.remove('mobile-open')"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              
+              <div class="sidebar-body" id="cartItems">
+                  <div style="text-align:center; color: var(--text-muted); margin-top: 40px; font-style: italic;">
+                      Your cart is empty.<br>Select a studio block to begin.
+                  </div>
+              </div>
+
+              <div class="sidebar-footer">
+                  
+                  <div class="discount-tracker" id="discountTracker">
+                      <i class="fa-solid fa-unlock-keyhole"></i>
+                      <div style="line-height: 1.3;">
+                          <strong style="color:var(--text-main); display:block;">Build Your Bundle</strong>
+                          <span style="color:var(--text-muted) !important;">Add 5 items for 20% off gear.</span>
+                      </div>
+                  </div>
+
+                  <div class="cart-totals-area">
+                      <div class="cart-total-us" id="cartTotalUs">$0</div>
+                      <div class="cart-sg-savings" id="sgSavingsText">You saved an estimated $0 by booking direct</div>
+                  </div>
+                  
+                  <button class="sf-btn btn-standard-checkout" id="btnSidebarNext" style="width: 100%; padding: 18px;" onclick="navNext()">Select Space to Continue</button>
+              </div>
+          </div>
+
+          <div class="mobile-cart-toggle" id="mobileCartToggle">
+              <div class="mct-info" onclick="document.getElementById('sidebarCart').classList.add('mobile-open')" style="cursor: pointer; display: flex; flex-direction: column; justify-content: center;">
+                  <div class="mct-label">Cart Total <i class="fa-solid fa-chevron-up" style="margin-left: 4px; font-size: 10px;"></i></div>
+                  <div class="mct-total" id="mobileCartTotal">$0</div>
+              </div>
+              <button class="sf-btn btn-standard-checkout" id="btnMobileNext" style="padding: 10px 20px;" onclick="navNext()">Select Space</button>
+          </div>
+
+      </div>
+  </div> 
+
+  <div id="footer-placeholder"></div>
+
+</div> <script>
+  // --- BULLETED DATA MODELS ---
+  const studios = [
+    { id: 'stu_half', name: 'Half-Day Block', price: 250, features: ['4 Hours of Studio Use', 'Bring Your Own Gear', 'Sound-Treated Edit Suite Included'] },
+    { id: 'stu_full', name: 'Full-Day Block', price: 400, features: ['8 Hours of Studio Use', 'Bring Your Own Gear', 'Sound-Treated Edit Suite Included'] },
+    { id: 'stu_srv', name: 'The All-Access Pass (Indie)', price: 560, features: ['8 Hours of Studio Use', 'All Studio Gear & Lighting Included', 'Blackmagic 6K Pro Included', 'Studio Manager On-site'] },
+    { id: 'stu_srv_comm', name: 'The All-Access Pass (Cinema)', price: 750, features: ['8 Hours of Studio Use', 'All Studio Gear & Lighting Included', 'RED Dragon 6K Included', 'Studio Manager On-site'] }
+  ];
+
+  const packages = [
+    { id: 'pkg_interview', name: 'Interview Kit', price: 95, items: ['cam_bmpcc', 'lens_set', 'light_gvm_pro3', 'grip_pyro'], image: '/images/bm.svg' },
+    { id: 'pkg_doc', name: 'Documentary Kit', price: 196, items: ['cam_bmpcc', 'lens_set', 'light_ap_80c', 'light_gvm_pro3', 'grip_pyro'], image: '/images/80.svg' },
+    { id: 'pkg_indie', name: 'Indie Cinema Kit', price: 302, items: ['cam_red', 'lens_set', 'light_ap_300d', 'light_ap_80c', 'grip_pyro', 'grip_dana'], image: '/images/red.svg' },
+    { id: 'pkg_comm', name: 'Commercial Kit', price: 442, items: ['cam_red', 'lens_set', 'light_ap_600d', 'light_ap_300d', 'grip_pyro', 'grip_dana'], image: '/images/600.svg' },
+    { id: 'pkg_aputure', name: 'Aputure Lighting Package', price: 121, items: ['light_ap_600d', 'light_ap_300d', 'light_ap_80c'], image: '/images/300.svg' },
+    { id: 'pkg_gvm', name: 'GVM Lighting Package', price: 24, items: ['light_gvm_pro3', 'light_gvm_sd500w', 'light_gvm_b200c'], image: '/images/gvm.svg' }
+  ];
+
+  const cameras = [
+    { id: 'cam_bmpcc', name: 'Blackmagic Pocket 6K Pro', price: 91, image: '/images/bm.svg', features: ['Incredible dynamic range', 'Built-in ND filters', 'Includes 3-Lens Kit'], bestFor: 'Run-and-gun, documentaries, indie films' },
+    { id: 'cam_red', name: 'RED DSMC Epic Dragon 6K', price: 190, image: '/images/red.svg', features: ['Unmatched skin tones', 'Industry standard resolution', 'Includes 3-Lens Kit'], bestFor: 'High-end commercial and narrative work' }
+  ];
+
+  const lenses = [
+    { id: 'lens_set', name: 'Rokinon Cine 3-Lens Kit', price: 22, icon: 'fa-layer-group', isBaseKit: true, features: ['14mm T3.1', '24mm T1.5', '35mm T1.5'] },
+    { id: 'lens_canon1635', name: 'Canon EF 16-35mm f/2.8L', price: 25, icon: 'fa-camera', features: ['Versatile wide angle', 'Constant f/2.8 aperture', 'L-Series glass'], bestFor: 'Gimbals, tight spaces, sweeping shots' },
+    { id: 'lens_helios', name: 'Helios 44M-6 58mm f/2', price: 15, icon: 'fa-camera', features: ['Swirly bokeh', 'Vintage Russian glass', 'EF mount adapted'], bestFor: 'Music videos, dream sequences, creative portraits' }
+  ];
+
+  const lights = [
+    { id: 'light_ap_600d', name: 'Aputure LS 600d w/ Fresnel', price: 51, image: '/images/600.svg', features: ['Turn night into day', 'Punch through windows', 'Includes F10 Fresnel'], bestFor: 'Blasting through windows, bouncing for massive soft light' },
+    { id: 'light_ap_300d', name: 'Aputure Light Storm 300d', price: 40, image: '/images/300.svg', features: ['The perfect key light', 'Industry standard workhorse', 'Great for interviews'], bestFor: 'Key lighting for interviews or narrative scenes' },
+    { id: 'light_ap_80c', name: 'Aputure Storm 80c', price: 30, image: '/images/80.svg', features: ['Punchy & portable', 'Great for tight spaces', 'Includes CF4 Fresnel'], bestFor: 'Hair lights, background accents, tight spaces' },
+    { id: 'light_gvm_pro3', name: 'GVM 3 Light Kit', price: 24, image: '/images/gvm.svg', features: ['Fast & versatile', 'Includes Softbox', 'Includes 2 Lanterns'], bestFor: 'Quick 3-point lighting setups' },
+    { id: 'light_gvm_sd500w', name: 'GVM SD500W Softbox', price: 24, icon: 'fa-sun', features: ['Daylight accurate', 'High output', 'Includes Softbox'], bestFor: 'Daylight balanced key light' },
+    { id: 'light_gvm_b200c', name: 'GVM B200C RGB Panel', price: 28, icon: 'fa-palette', features: ['Full RGBWW', 'Panel form factor', 'Soft output'], bestFor: 'Color washing walls, soft fill' },
+    { id: 'light_gvm_sd200b', name: 'GVM Pro SD200B', price: 10, icon: 'fa-bolt', features: ['Bi-color', 'Compact size', 'Bowens mount'], bestFor: 'Hair light, background accent' },
+    { id: 'light_gvm_sd500b', name: 'GVM SD500B Bi-color', price: 20, icon: 'fa-bolt', features: ['Bi-color flexibility', 'High output', 'Bowens mount'], bestFor: 'Adjustable temperature key light' }
+  ];
+
+  const grip = [
+    { id: 'grip_dana', name: 'Dana Dolly Kit', price: 56, image: '/images/dana.svg', features: ['Silky smooth moves', 'Includes Combo Lowboy', 'Includes 6ft Speed Rail'], bestFor: 'Smooth, repeatable tracking shots' },
+    { id: 'grip_pyro', name: 'Hollyland Wireless Pyro S', price: 31, image: '/images/holly.svg', features: ['Zero latency wireless', 'Crystal clear video', 'Clean up your set'], bestFor: 'Director monitors, Video Village' }
+  ];
+
+  const allItemsData = [...cameras, ...lenses, ...lights, ...grip];
+
+  // --- APP STATE ---
+  let currentStep = 'gateway'; 
+  let historyTracker = []; 
+
+  let cart = {
+      studio: null,
+      activePackage: null,
+      items: new Set(),
+      days: 1,
+      isSpaceOnly: false
+  };
+
+  // --- NAVIGATION CONTROLLER ---
+  function goBack() {
+      if(historyTracker.length === 0) return;
+      currentStep = historyTracker.pop();
+      renderCurrentStep();
+  }
+
+  function navigateTo(stepId) {
+      if(currentStep !== 'gateway') historyTracker.push(currentStep);
+      currentStep = stepId;
+      renderCurrentStep();
+  }
+
+  function resetToGateway() {
+      historyTracker = [];
+      cart.studio = null;
+      cart.activePackage = null;
+      cart.items.clear();
+      cart.days = 1;
+      document.getElementById('shootDays').value = 1;
+      currentStep = 'gateway';
+      renderCurrentStep();
+      updateCart(); 
+  }
+
+  function renderCurrentStep() {
+      document.querySelectorAll('#sf-booking-app .wizard-step').forEach(el => el.classList.remove('active'));
+      document.getElementById(`step-${currentStep}`).classList.add('active');
+
+      const navHeader = document.getElementById('navHeader');
+      if(currentStep === 'gateway') navHeader.style.display = 'none';
+      else navHeader.style.display = 'flex';
+
+      const stepText = document.getElementById('stepIndicator');
+      if(currentStep === 'studio') stepText.innerText = 'Step 1: Space';
+      if(currentStep === 'gear-mode' || currentStep === 'alacarte' || currentStep === 'kits') stepText.innerText = 'Step 2: Gear';
+      if(currentStep === 'review') stepText.innerText = 'Step 3: Dates';
+
+      const sidebar = document.getElementById('sidebarCart');
+      const appContainer = document.getElementById('appContainer');
+      const mobileToggle = document.getElementById('mobileCartToggle');
+
+      if(currentStep !== 'gateway') {
+          sidebar.classList.add('active');
+          appContainer.classList.add('sidebar-active');
+          if(window.innerWidth <= 1024) mobileToggle.style.display = 'flex';
+      } else {
+          sidebar.classList.remove('active');
+          appContainer.classList.remove('sidebar-active');
+          mobileToggle.style.display = 'none';
+          sidebar.classList.remove('mobile-open');
+      }
+
+      if(currentStep === 'studio') renderStudio();
+      if(currentStep === 'alacarte') renderAlacarte();
+      if(currentStep === 'kits') renderKits();
+      
+      updateCart();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function startFlow(type) {
+      cart.studio = null;
+      cart.items.clear();
+      cart.activePackage = null;
+      historyTracker = ['gateway']; 
+      document.getElementById('shootDate').valueAsDate = new Date();
+      
+      if(type === 'studio') cart.isSpaceOnly = true;
+      else cart.isSpaceOnly = false;
+      
+      navigateTo('studio');
+  }
+
+  function quickJumpToKits() {
+      cart.studio = null;
+      cart.items.clear();
+      cart.activePackage = null;
+      historyTracker = ['gateway'];
+      cart.isSpaceOnly = false;
+      navigateTo('kits');
+  }
+
+  function navNext() {
+      if(currentStep === 'studio') {
+          const isFullService = cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm';
+          if(isFullService || cart.isSpaceOnly) navigateTo('review');
+          else navigateTo('gear-mode');
+      } 
+      else if(currentStep === 'gear-mode' || currentStep === 'alacarte' || currentStep === 'kits') {
+          navigateTo('review');
+      }
+      else if(currentStep === 'review') {
+          requestBooking();
+      }
+  }
+
+  function selectGearMode(mode) {
+      if(mode === 'alacarte') navigateTo('alacarte');
+      if(mode === 'kits') navigateTo('kits');
+  }
+
+  function switchToAlacarte() {
+      cart.activePackage = null;
+      cart.items.clear();
+      historyTracker.pop();
+      navigateTo('alacarte');
+  }
+
+  // --- TALLY FORM INTEGRATION ---
+  function requestBooking() {
+      const baseUrl = "https://tally.so/r/b56lO7"; 
+      
+      const params = new URLSearchParams();
+      params.append('total', document.getElementById('cartTotalUs').innerText.replace('$',''));
+      params.append('days', document.getElementById('shootDays').options[document.getElementById('shootDays').selectedIndex].text);
+      
+      const dateVal = document.getElementById('shootDate').value;
+      if (dateVal) {
+          params.append('date', dateVal);
+      }
+
+      const s = studios.find(x => x.id === cart.studio);
+      params.append('studio', s ? s.name : 'None');
+      
+      let gearList = [];
+      if(cart.activePackage) {
+          const pkg = packages.find(p => p.id === cart.activePackage);
+          gearList.push("Package: " + pkg.name);
+      }
+      
+      let customGear = [];
+      cart.items.forEach(id => {
+          const item = allItemsData.find(x => x.id === id);
+          if(item) customGear.push(item.name);
+      });
+
+      if(customGear.length > 0) gearList.push("Items: " + customGear.join(', '));
+      
+      params.append('gear', gearList.join(' | ') || 'None');
+
+      // Go to Tally Link
+      window.location.href = baseUrl + "?" + params.toString();
+  }
+
+  // --- VIEW RENDERERS ---
+
+  function renderStudio() {
+      const container = document.getElementById('grid-studio');
+      container.innerHTML = '';
+      
+      studios.forEach(item => {
+          const isSelected = cart.studio === item.id;
+          const featuresList = item.features.map(f => `<li>${f}</li>`).join('');
+          
+          const card = document.createElement('div');
+          card.className = `lean-studio-card ${isSelected ? 'selected' : ''}`;
+          card.innerHTML = `
+              <div class="lsc-left">
+                  <div class="lsc-radio"></div>
+                  <div class="lsc-info">
+                      <h3>${item.name}</h3>
+                      <ul class="lsc-bullets">${featuresList}</ul>
+                  </div>
+              </div>
+              <div class="lsc-price">$${item.price}</div>
+          `;
+          card.onclick = () => {
+              if (cart.studio === item.id) {
+                  cart.studio = null; 
+              } else {
+                  if ((item.id === 'stu_srv' || item.id === 'stu_srv_comm') && (cart.items.size > 0 || cart.activePackage)) {
+                      if(!confirm("Switching to an All-Access Pass will clear your current gear selections (since gear is included). Continue?")) {
+                          return;
+                      }
+                  }
+                  cart.studio = item.id;
+                  if(cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm') {
+                      cart.items.clear();
+                      cart.activePackage = null;
+                  }
+              }
+              renderStudio(); 
+              updateCart();
+          };
+          container.appendChild(card);
+      });
+  }
+
+  function renderKits() {
+      const grid = document.getElementById('grid-kits');
+      grid.innerHTML = '';
+      
+      packages.forEach(pkg => {
+          const isSelected = cart.activePackage === pkg.id;
+          const itemsList = pkg.items.map(id => allItemsData.find(i=>i.id===id).name).map(n => `<li>${n}</li>`).join('');
+
+          let upgradeHtml = '';
+          if (pkg.items.includes('cam_bmpcc')) {
+              if (cart.items.has('cam_red')) {
+                  upgradeHtml = `<button class="sf-btn header-btn-muted" style="width:100%; margin: 10px 0; border-color:var(--color-success) !important; color:var(--color-success) !important; pointer-events:none;"><i class="fa-solid fa-check"></i> RED Dragon Upgrade Added</button>`;
+              } else {
+                  upgradeHtml = `<button onclick="upgradeKitToRED(event)" class="sf-btn header-btn-muted" style="width:100%; margin: 10px 0;"><i class="fa-solid fa-arrow-trend-up"></i> Upgrade to RED (+ $99)</button>`;
+              }
+          }
+
+          let addonsHtml = '';
+          const commonAddons = [
+              { id: 'grip_dana', label: '+ Dana Dolly Add-on ($56)' },
+              { id: 'light_ap_600d', label: '+ Aputure 600d Add-on ($51)' },
+              { id: 'grip_pyro', label: '+ Hollyland Wireless Add-on ($31)' }
+          ];
+          commonAddons.forEach(addon => {
+              if (!pkg.items.includes(addon.id) && !cart.items.has(addon.id)) {
+                  addonsHtml += `<button onclick="addKitAddon('${addon.id}', event)" class="sf-btn header-btn-muted" style="width:100%; text-align:left; padding: 10px 15px; margin-bottom:5px; text-transform:none; font-size: 0.85rem;">${addon.label}</button>`;
+              } else if (cart.items.has(addon.id) && !pkg.items.includes(addon.id)) {
+                  addonsHtml += `<div style="color:var(--color-success); font-size:0.85rem; margin: 8px 0; padding-left: 10px;"><i class="fa-solid fa-check"></i> ${addon.label.split(' Add-on')[0]} added</div>`;
+              }
+          });
+
+          const detailsHtml = `
+              <div class="card-details">
+                  <ul class="contents-list">${itemsList}</ul>
+                  ${upgradeHtml}
+                  ${addonsHtml ? `<div style="margin-top:20px; font-size:0.75rem; text-transform:uppercase; font-weight:bold; margin-bottom: 10px; letter-spacing: 1px; text-align:left;">Suggested Add-ons</div>${addonsHtml}` : ''}
+              </div>
+          `;
+
+          const visualHtml = pkg.image 
+              ? `<img src="${pkg.image}" alt="${pkg.name}">` 
+              : `<i class="fa-solid ${pkg.icon} placeholder-icon" style="font-size: 3rem; color: rgba(255,255,255,0.15);"></i>`;
+
+          const card = document.createElement('div');
+          card.className = `rich-card ${isSelected ? 'selected' : ''}`;
+          card.innerHTML = `
+              <div class="select-circle"><i class="fa-solid fa-check"></i></div>
+              <div class="rc-img-wrap">
+                  ${visualHtml}
+              </div>
+              <div class="rc-badge">$${pkg.price} / DAY</div>
+              <div class="rc-info">
+                  <h3>${pkg.name}</h3>
+                  ${detailsHtml}
+              </div>
+          `;
+          card.onclick = () => {
+              if(cart.activePackage === pkg.id) {
+                  cart.activePackage = null;
+                  cart.items.clear();
+              } else {
+                  cart.activePackage = pkg.id;
+                  cart.items.clear();
+                  pkg.items.forEach(i => cart.items.add(i));
+              }
+              renderKits();
+              updateCart();
+          };
+          grid.appendChild(card);
+      });
+
+      const bridge = document.createElement('div');
+      bridge.innerHTML = `
+          <div class="bridge-card" onclick="switchToAlacarte()">
+              <i class="fa-solid fa-screwdriver-wrench" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 15px;"></i>
+              <h3 style="margin: 0 0 10px 0; color: var(--text-main);">Don't see what you want?</h3>
+              <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted) !important;">Build your setup A La Carte</p>
+          </div>
+      `;
+      grid.appendChild(bridge.firstElementChild);
+  }
+
+  function upgradeKitToRED(e) {
+      e.stopPropagation();
+      cart.items.delete('cam_bmpcc');
+      cart.items.add('cam_red');
+      renderKits();
+      updateCart();
+  }
+
+  function addKitAddon(id, e) {
+      e.stopPropagation();
+      cart.items.add(id);
+      renderKits();
+      updateCart();
+  }
+
+  function renderAlacarteItem(item, gridId) {
+      const grid = document.getElementById(gridId);
+      const isSelected = cart.items.has(item.id);
+      const featuresList = item.features.map(f => `<li>${f}</li>`).join('');
+      
+      const visualHtml = item.image 
+          ? `<img src="${item.image}" alt="${item.name}">` 
+          : `<i class="fa-solid ${item.icon} placeholder-icon" style="font-size: 3rem; color: rgba(255,255,255,0.15);"></i>`;
+
+      const card = document.createElement('div');
+      card.className = `rich-card ${isSelected ? 'selected' : ''}`;
+      card.innerHTML = `
+          <div class="select-circle"><i class="fa-solid fa-check"></i></div>
+          <div class="rc-img-wrap">
+              ${visualHtml}
+          </div>
+          <div class="rc-badge">$${item.price} / DAY</div>
+          <div class="rc-info">
+              <h3>${item.name}</h3>
+              <div class="rc-meta" style="margin-top:5px; padding-top:0; border:none; margin-bottom:10px;"><strong>Best for:</strong> ${item.bestFor}</div>
+              <div class="card-details"><ul class="contents-list">${featuresList}</ul></div>
+          </div>
+      `;
+      
+      card.onclick = () => {
+          if (item.id.startsWith('cam_')) {
+              if (cart.items.has(item.id)) {
+                  cart.items.delete(item.id);
+                  cart.items.delete('lens_set');
+                  document.getElementById('free-lens-promo').style.display = 'none';
+              } else {
+                  cameras.forEach(c => cart.items.delete(c.id));
+                  cart.items.add(item.id);
+                  cart.items.add('lens_set');
+                  document.getElementById('free-lens-promo').style.display = 'block';
+                  unlockSection('alc-sec-lens');
+              }
+          } else {
+              if(cart.items.has(item.id)) cart.items.delete(item.id);
+              else cart.items.add(item.id);
+          }
+          renderAlacarte();
+          updateCart();
+      };
+      grid.appendChild(card);
+  }
+
+  function renderAlacarte() {
+      document.getElementById('grid-alc-cam').innerHTML = '';
+      cameras.forEach(cam => renderAlacarteItem(cam, 'grid-alc-cam'));
+
+      document.getElementById('grid-alc-lens').innerHTML = '';
+      lenses.filter(l => !l.isBaseKit).forEach(l => renderAlacarteItem(l, 'grid-alc-lens'));
+
+      document.getElementById('grid-alc-light').innerHTML = '';
+      lights.forEach(light => renderAlacarteItem(light, 'grid-alc-light'));
+
+      document.getElementById('grid-alc-grip').innerHTML = '';
+      grip.forEach(g => renderAlacarteItem(g, 'grid-alc-grip'));
+  }
+
+  function unlockSection(id) {
+      document.getElementById(id).classList.remove('dimmed');
+  }
+
+  // --- STRICT DURATION PRICING CALCULATOR ---
+  function calculateDurationPricing(dailySubtotal, selectValue) {
+      const val = parseInt(selectValue);
+      const rawTotal = dailySubtotal * val;
+      
+      let finalTotal = rawTotal;
+      
+      switch(val) {
+          case 1: finalTotal = dailySubtotal; break;
+          case 2: finalTotal = dailySubtotal * 2 * 0.95; break;
+          case 3: finalTotal = dailySubtotal * 3 * 0.90; break;
+          case 4: finalTotal = dailySubtotal * 4 * 0.85; break;
+          case 5: finalTotal = dailySubtotal * 4; break;
+          case 7: finalTotal = dailySubtotal * 5; break;
+          case 14: finalTotal = (dailySubtotal * 5 * 2) * 0.95; break;
+          case 21: finalTotal = (dailySubtotal * 5 * 3) * 0.90; break;
+          case 28: finalTotal = (dailySubtotal * 5 * 4) * 0.80; break;
+      }
+      
+      return {
+          rawTotal: rawTotal,
+          finalTotal: Math.round(finalTotal),
+          discountAmt: rawTotal - Math.round(finalTotal)
+      };
+  }
+
+  // --- CART MATH & SIDEBAR UPDATER ---
+  function updateCart() {
+      const sBody = document.getElementById('cartItems');
+      const btnNext = document.getElementById('btnSidebarNext');
+      const btnMobileNext = document.getElementById('btnMobileNext');
+      
+      let durVal = parseInt(document.getElementById('shootDays').value);
+      cart.days = isNaN(durVal) ? 1 : durVal;
+
+      // Update button state based on Step
+      if(currentStep === 'studio') {
+          btnNext.disabled = !cart.studio;
+          const isFullService = cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm';
+          
+          if (!cart.studio) btnNext.innerText = "Select Space to Continue";
+          else if (isFullService || cart.isSpaceOnly) btnNext.innerText = "Continue to Checkout";
+          else btnNext.innerText = "Continue to Gear";
+          
+          btnNext.className = "sf-btn btn-standard-checkout";
+      } else if (currentStep === 'review') {
+          btnNext.disabled = false;
+          btnNext.innerText = "Request Booking";
+          btnNext.className = "sf-btn gold-checkout-btn"; // Applies the Gold UI
+      } else {
+          btnNext.disabled = false;
+          btnNext.innerText = "Continue to Checkout";
+          btnNext.className = "sf-btn btn-standard-checkout";
+      }
+
+      // Sync Mobile Button
+      if(btnMobileNext) {
+          btnMobileNext.disabled = btnNext.disabled;
+          btnMobileNext.innerText = btnNext.innerText;
+          btnMobileNext.className = btnNext.className;
+      }
+
+      if(!cart.studio && cart.items.size === 0 && !cart.activePackage) {
+          sBody.innerHTML = '<div style="text-align:center; color: var(--text-muted); margin-top: 40px; font-style: italic;">Your cart is empty.</div>';
+          document.getElementById('cartTotalUs').innerText = '$0';
+          document.getElementById('sgSavingsText').innerHTML = '';
+          document.getElementById('mobileCartTotal').innerText = '$0';
+          document.getElementById('discountTracker').innerHTML = `<i class="fa-solid fa-unlock-keyhole"></i> <div style="line-height:1.3;"><strong style="color:var(--text-main); display:block;">Build Your Bundle</strong><span style="color:var(--text-muted) !important;">Add 5 items for 20% off gear.</span></div>`;
+          return;
+      }
+
+      let html = '';
+      let dailyStudio = 0;
+      let dailyGear = 0;
+      let gearCount = 0;
+
+      const isFullService = cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm';
+      const hasCamBody = [...cart.items].some(id => cameras.some(c => c.id === id));
+
+      if(cart.studio) {
+          const s = studios.find(x => x.id === cart.studio);
+          dailyStudio += s.price;
+          const sBullets = s.features.map(f => `<li>${f}</li>`).join('');
+          html += `
+              <div class="cart-item">
+                  <div class="cart-item-info">
+                      <h4 style="color:var(--text-main);"><i class="fa-solid ${s.icon}"></i> ${s.name}</h4>
+                      <ul>${sBullets}</ul>
+                  </div>
+                  <div class="cart-item-price">$${s.price}</div>
+              </div>
+          `;
+      }
+
+      if(isFullService) {
+          const includedCam = cart.studio === 'stu_srv_comm' ? "RED Dragon 6K" : "Blackmagic 6K Pro";
+          html += `
+              <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 20px 0 10px;">All-Access Manifest</div>
+              <div class="cart-item" style="padding-bottom: 8px; border-bottom: none; margin-bottom: 0;"><div class="cart-item-info"><h4><i class="fa-solid fa-video"></i> ${includedCam}</h4></div><div class="cart-item-price free">INCLUDED</div></div>
+              <div class="cart-item" style="padding-bottom: 8px; border-bottom: none; margin-bottom: 0;"><div class="cart-item-info"><h4><i class="fa-solid fa-layer-group"></i> Rokinon 3-Lens Kit</h4></div><div class="cart-item-price free">INCLUDED</div></div>
+              <div class="cart-item" style="padding-bottom: 8px; border-bottom: none; margin-bottom: 0;"><div class="cart-item-info"><h4><i class="fa-solid fa-lightbulb"></i> All Studio Lighting</h4></div><div class="cart-item-price free">INCLUDED</div></div>
+              <div class="cart-item" style="padding-bottom: 15px;"><div class="cart-item-info"><h4><i class="fa-solid fa-arrows-left-right"></i> All Grip & Support</h4></div><div class="cart-item-price free">INCLUDED</div></div>
+          `;
+      } else {
+          if (cart.activePackage) {
+              const pkg = packages.find(p => p.id === cart.activePackage);
+              dailyGear += pkg.price;
+              const pBullets = pkg.items.map(id => `<li>${allItemsData.find(i=>i.id===id).name}</li>`).join('');
+              
+              html += `
+                  <div class="cart-item">
+                      <div class="cart-item-info">
+                          <h4><i class="fa-solid fa-box-open"></i> ${pkg.name}</h4>
+                          <ul>${pBullets}</ul>
+                      </div>
+                      <div class="cart-item-price">$${pkg.price}</div>
+                  </div>
+              `;
+
+              if (cart.items.has('cam_red') && pkg.items.includes('cam_bmpcc')) {
+                  dailyGear += 99; 
+                  html += `<div class="cart-item"><div class="cart-item-info"><h4>RED Upgrade</h4></div><div class="cart-item-price">+$99</div></div>`;
+              }
+              
+              [...cart.items].forEach(id => {
+                  if (!pkg.items.includes(id) && id !== 'cam_red' && id !== 'cam_bmpcc') {
+                      const item = allItemsData.find(x => x.id === id);
+                      dailyGear += item.price;
+                      html += `<div class="cart-item"><div class="cart-item-info"><h4>${item.name}</h4><p>Add-on</p></div><div class="cart-item-price">$${item.price}</div></div>`;
+                  }
+              });
+
+          } else {
+              [...cart.items].forEach(id => {
+                  const item = allItemsData.find(x => x.id === id);
+                  let isFree = false;
+                  
+                  if (item.isBaseKit && hasCamBody) isFree = true;
+                  
+                  if (!isFree) {
+                      dailyGear += item.price;
+                      gearCount++;
+                  }
+
+                  const itemBullets = item.features ? item.features.map(f => `<li>${f}</li>`).join('') : '';
+
+                  html += `
+                      <div class="cart-item">
+                          <div class="cart-item-info">
+                              <h4>${item.name}</h4>
+                              ${itemBullets ? `<ul>${itemBullets}</ul>` : ''}
+                          </div>
+                          <div class="cart-item-price ${isFree?'free':''}">${isFree ? '<span class="strikethrough">$'+item.price+'</span>FREE' : '$'+item.price}</div>
+                      </div>
+                  `;
+              });
+          }
+      }
+
+      sBody.innerHTML = html;
+
+      const tracker = document.getElementById('discountTracker');
+      let discountedDailyGear = dailyGear;
+      
+      if (isFullService) {
+          tracker.innerHTML = `<i class="fa-solid fa-check-circle" style="color:var(--color-success);"></i> <div style="line-height:1.3;"><strong style="color:var(--text-main); display:block;">Maximum Value</strong><span style="color:var(--text-muted) !important;">Gear closet unlocked.</span></div>`;
+      } else if (cart.activePackage) {
+          tracker.innerHTML = `<i class="fa-solid fa-box-open"></i> <div style="line-height:1.3;"><strong style="color:var(--text-main); display:block;">Kit Discount Applied</strong><span style="color:var(--text-muted) !important;">Bundles are pre-discounted.</span></div>`;
+      } else {
+          let bundlePct = 0;
+          if(gearCount >= 5) bundlePct = 20;
+          else if(gearCount >= 4) bundlePct = 15;
+          else if(gearCount >= 3) bundlePct = 10;
+          else if(gearCount >= 2) bundlePct = 5;
+
+          if (bundlePct > 0) {
+              let gearSubtotal = 0;
+              [...cart.items].forEach(id => { 
+                  const item = allItemsData.find(x => x.id === id);
+                  if(!item.isBaseKit) gearSubtotal += item.price; 
+              });
+              
+              const discount = Math.round(gearSubtotal * (bundlePct/100));
+              discountedDailyGear -= discount;
+              tracker.innerHTML = `<i class="fa-solid fa-tag"></i> <div style="line-height:1.3;"><strong style="color:var(--color-success); display:block;">${bundlePct}% Gear Discount Applied!</strong><span style="color:var(--text-muted) !important;">You built a custom bundle.</span></div>`;
+          } else {
+              const needed = 2 - gearCount;
+              tracker.innerHTML = `<i class="fa-solid fa-unlock-keyhole"></i> <div style="line-height:1.3;"><strong style="color:var(--text-main); display:block;">Build Your Bundle</strong><span style="color:var(--text-muted) !important;">Add ${needed > 0 ? needed : ''} more items for 5% off.</span></div>`;
+          }
+      }
+
+      const totalDaily = dailyStudio + discountedDailyGear;
+      const durationMath = calculateDurationPricing(totalDaily, cart.days);
+
+      const sgPlatformFee = Math.round(durationMath.finalTotal * 0.12);
+      const sgProcessingFee = Math.round(durationMath.finalTotal * 0.0245 + 0.30);
+      const sgFinal = durationMath.finalTotal + sgPlatformFee + sgProcessingFee;
+      const savings = sgFinal - durationMath.finalTotal;
+
+      document.getElementById('cartTotalUs').innerText = `$${durationMath.finalTotal}`;
+      document.getElementById('mobileCartTotal').innerText = `$${durationMath.finalTotal}`;
+      if (savings > 0) {
+          document.getElementById('sgSavingsText').innerHTML = `<i class="fa-solid fa-scale-balanced"></i> You saved an estimated $${savings} by booking direct`;
+      } else {
+          document.getElementById('sgSavingsText').innerHTML = '';
+      }
+  }
+
+</script>
+</body>
+</html>
