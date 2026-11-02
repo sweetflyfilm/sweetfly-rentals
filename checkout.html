@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart | SweetFly Shop</title>
+<meta name="description" content="Pick your dates and gear, see the total with tax, and request your rental from SweetFly Shop. Your card is held, not charged, until we confirm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/styles.css">
+<script src="/script.js?v=rental-cart-v1" defer></script>
+<link rel="stylesheet" href="/light.css?v=rental-shopmark-v1">
+<link rel="stylesheet" href="/gear-page.css?v=13">
+<style>
+  #sf-embed [hidden] { display: none !important; }
+  #sf-embed .co-wrap { padding: 7rem 0 6rem; }
+  #sf-embed .co-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 2rem; align-items: start; }
+  #sf-embed .co-col { display: grid; gap: 2rem; }
+  #sf-embed .co-panel { background: #2c2d31; border: 1px solid #46474c; padding: 1.5rem; }
+  #sf-embed .co-panel h2 { margin: 0 0 1rem; font-size: 1.1rem; font-weight: 500; }
+  #sf-embed .co-panel .co-sub { margin: -.5rem 0 1rem; font-size: .85rem; color: #b8b8b8; }
+  #sf-embed .co-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  #sf-embed .co-field label { display: block; font-family: 'Geist Mono', monospace; font-size: .75rem; color: #b8b8b8; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
+  #sf-embed .co-field input:not([type=file]):not([type=radio]):not([type=checkbox]), #sf-embed .co-field textarea { width: 100%; min-height: 48px; box-sizing: border-box; background: #242528; color: #f0eadf; border: 1px solid #46474c; padding: .7rem .8rem; font: inherit; border-radius: 0; }
+  #sf-embed .co-field textarea { min-height: 96px; }
+  #sf-embed .co-field input:focus, #sf-embed .co-field textarea:focus { outline: 2px solid #368a81; outline-offset: 0; }
+  #sf-embed .co-group { margin: 1.5rem 0 .5rem; font-family: 'Geist Mono', monospace; font-size: .75rem; color: #b89b43; text-transform: uppercase; letter-spacing: .08em; }
+  #sf-embed .co-details { border-top: 1px solid #46474c; }
+  #sf-embed .co-details > summary { display: flex; justify-content: space-between; align-items: center; min-height: 52px; cursor: pointer; font-family: 'Geist Mono', monospace; font-size: .8rem; color: #b89b43; text-transform: uppercase; letter-spacing: .08em; list-style: none; }
+  #sf-embed .co-details > summary::-webkit-details-marker { display: none; }
+  #sf-embed .co-details > summary::after { content: '+'; font-size: 1.2rem; color: #b8b8b8; }
+  #sf-embed .co-details[open] > summary::after { content: '\2212'; }
+  #sf-embed .co-group-count { margin-left: auto; margin-right: 1rem; color: #f0eadf; text-transform: none; letter-spacing: 0; }
+  #sf-embed .co-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem 1rem; align-items: center; padding: .9rem 0; border-top: 1px solid #46474c; }
+  #sf-embed .co-item-name { font-weight: 500; }
+  #sf-embed .co-item-rate { display: block; font-family: 'Geist Mono', monospace; font-size: .8rem; color: #b8b8b8; margin-top: .2rem; }
+  #sf-embed .co-item-flag { display: none; grid-column: 1 / -1; color: #e2a07a; font-size: .85rem; }
+  #sf-embed .co-item.is-unavail .co-item-flag { display: block; }
+  #sf-embed .co-item.is-unavail .co-item-name { color: #b8b8b8; }
+  #sf-embed .co-qty { display: flex; align-items: center; gap: .25rem; }
+  #sf-embed .co-qty button { width: 48px; height: 48px; background: #242528; color: #f0eadf; border: 1px solid #46474c; font-size: 1.3rem; cursor: pointer; }
+  #sf-embed .co-qty button:hover { border-color: #368a81; }
+  #sf-embed .co-qty output { min-width: 40px; text-align: center; font-family: 'Geist Mono', monospace; }
+  #sf-embed .co-choice { display: flex; gap: .8rem; align-items: flex-start; padding: .9rem 1rem; border: 1px solid #46474c; margin-bottom: .6rem; cursor: pointer; min-height: 48px; }
+  #sf-embed .co-choice input { margin-top: .25rem; width: 20px; height: 20px; accent-color: #368a81; flex: none; }
+  #sf-embed .co-choice strong { display: block; font-weight: 500; }
+  #sf-embed .co-choice span { display: block; font-size: .85rem; color: #b8b8b8; margin-top: .15rem; }
+  #sf-embed .co-choice:has(input:checked) { border-color: #368a81; }
+  #sf-embed .co-choice.is-disabled { opacity: .55; cursor: not-allowed; }
+  #sf-embed .co-file { margin: .4rem 0 .2rem; }
+  #sf-embed .co-file input { width: 100%; box-sizing: border-box; padding: .8rem; background: #242528; color: #f0eadf; border: 1px dashed #b89b43; font: inherit; }
+  #sf-embed .co-hint { font-size: .8rem; color: #b8b8b8; margin: .5rem 0 0; }
+  #sf-embed .co-notice { margin: 1rem 0 0; padding: .8rem 1rem; border-left: 2px solid #b89b43; background: #242528; font-size: .85rem; color: #d8d2c4; }
+  #sf-embed .co-summary { position: sticky; top: 6rem; }
+  #sf-embed .co-lines { list-style: none; margin: 0 0 1rem; padding: 0; font-size: .9rem; }
+  #sf-embed .co-lines li { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid #46474c; }
+  #sf-embed .co-lines .co-empty { color: #b8b8b8; border-top: 0; }
+  #sf-embed .co-lines .co-deposit { color: #b8b8b8; }
+  #sf-embed .co-total { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #b89b43; padding-top: 1rem; margin-bottom: .4rem; font-family: 'Geist Mono', monospace; }
+  #sf-embed .co-total strong { font-size: 1.6rem; font-weight: 500; }
+  #sf-embed .co-total-note { margin: 0 0 1.25rem; font-size: .8rem; color: #b8b8b8; }
+  #sf-embed .co-meta { font-family: 'Geist Mono', monospace; font-size: .8rem; color: #b8b8b8; margin: 0 0 1rem; }
+  #sf-embed .co-contact { display: grid; gap: .9rem; }
+  #sf-embed .co-terms { display: flex; gap: .7rem; align-items: flex-start; margin: 0 0 1rem; font-size: .85rem; min-height: 44px; }
+  #sf-embed .co-terms input { width: 22px; height: 22px; accent-color: #368a81; flex: none; margin-top: .1rem; }
+  #sf-embed .co-terms a { color: #b89b43; }
+  #sf-embed .co-submit { width: 100%; min-height: 52px; justify-content: center; cursor: pointer; }
+  #sf-embed .co-submit[disabled] { opacity: .6; cursor: wait; }
+  #sf-embed .co-note { font-size: .8rem; color: #b8b8b8; margin: .9rem 0 0; }
+  #sf-embed .co-error { color: #e2a07a; font-size: .9rem; min-height: 1.2em; margin: 0 0 .75rem; }
+  #sf-embed .co-steps { margin: .9rem 0 0; padding-left: 1.1rem; font-size: .8rem; color: #b8b8b8; }
+  @media (max-width: 900px) {
+    #sf-embed .co-wrap { padding: 6rem 0 5rem; }
+    #sf-embed .co-grid { grid-template-columns: 1fr; }
+    #sf-embed .co-summary { position: static; }
+  }
+  @media (max-width: 540px) { #sf-embed .co-dates { grid-template-columns: 1fr; } #sf-embed .co-panel { padding: 1.1rem; } }
+</style>
+</head>
+<body class="basecamp-page">
+<div id="sf-embed">
+  <div id="nav-placeholder"></div>
+
+  <main class="co-wrap">
+    <div class="sf-container">
+      <span class="sf-label">The Shop / Cart</span>
+      <h1 style="margin:.5rem 0 .75rem">Your cart</h1>
+      <p style="margin:0 0 2rem;color:#b8b8b8;max-width:46rem">Your card is held, not charged. We confirm the gear is free for your dates, usually within 24 hours. Without insurance we then charge it; with insurance we charge it the day before pickup. If we can’t confirm, the hold is released.</p>
+
+      <form class="co-grid" id="coForm" novalidate>
+        <div class="co-col">
+          <div class="co-panel">
+            <h2>1. Dates and gear</h2>
+            <div class="co-dates">
+              <div class="co-field"><label for="coStart">Pick up (after <span class="co-pt">12 PM</span>)</label><input type="date" id="coStart" required></div>
+              <div class="co-field"><label for="coEnd">Return (before <span class="co-rt">12 PM</span>)</label><input type="date" id="coEnd" required></div>
+            </div>
+            <div id="coItems"></div>
+          </div>
+
+          <div class="co-panel">
+            <h2>2. Insurance</h2>
+            <p class="co-sub">Upload a certificate of insurance, or add our damage waiver.</p>
+            <label class="co-choice" id="coInsHave">
+              <input type="radio" name="ins" value="have">
+              <div><strong>I have rental insurance</strong><span>No waiver fee and no deposit. Your card is held now and charged the day before pickup.</span></div>
+            </label>
+            <div class="co-file" id="coFileWrap" hidden>
+              <input type="file" id="coFile" accept=".pdf,image/jpeg,image/png" aria-label="Certificate of insurance">
+              <p class="co-hint">PDF, JPG or PNG under 8 MB. It should cover equipment for your rental dates and name Sweet Flypaper of Film as additional insured and loss payee. Your insurance agent can usually email one the same day.</p>
+            </div>
+            <label class="co-choice" id="coInsNone">
+              <input type="radio" name="ins" value="none" checked>
+              <div><strong>I don’t have insurance</strong><span id="coInsNoneText">Adds a damage waiver fee and a larger deposit.</span></div>
+            </label>
+            <p class="co-notice" id="coInsNotice" hidden></p>
+          </div>
+
+          <div class="co-panel">
+            <h2>3. Your details</h2>
+            <div class="co-contact">
+              <div class="co-field"><label for="coName">Name (as on your ID)</label><input id="coName" autocomplete="name" required></div>
+              <div class="co-field"><label for="coEmail">Email</label><input id="coEmail" type="email" autocomplete="email" required></div>
+              <div class="co-field"><label for="coPhone">Phone</label><input id="coPhone" type="tel" autocomplete="tel"></div>
+              <div class="co-field"><label for="coNotes">Notes</label><textarea id="coNotes"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="co-panel co-summary" aria-live="polite">
+          <h2>Your request</h2>
+          <p class="co-meta" id="coDays">Pick dates</p>
+          <ul class="co-lines" id="coLines"></ul>
+          <ul class="co-lines co-sums">
+            <li><span>Subtotal</span><span id="coSubtotal">$0.00</span></li>
+            <li id="coWaiverRow" hidden><span>Damage waiver</span><span id="coWaiver">$0.00</span></li>
+            <li id="coTaxRow"><span id="coTaxLabel">Sales tax</span><span id="coTax">$0.00</span></li>
+            <li class="co-deposit" id="coDepositRow"><span>Refundable deposit</span><span id="coDeposit">$0.00</span></li>
+          </ul>
+          <div class="co-total"><span>Held on card</span><strong id="coTotal">$0.00</strong></div>
+          <p class="co-total-note" id="coTotalNote">Charged only when we confirm. The deposit is refunded after the gear comes back clean.</p>
+          <label class="co-terms"><input type="checkbox" id="coTerms"><span>I agree to the <a href="/rental-terms.html" target="_blank" rel="noopener">rental terms</a>.</span></label>
+          <div id="coTs"></div>
+          <p class="co-error" id="coError" role="alert"></p>
+          <button type="submit" class="sf-btn sf-btn-primary co-submit" id="coPay">Request to book <span aria-hidden="true">&rarr;</span></button>
+          <ol class="co-steps">
+            <li>Enter a card to hold the amount (Apple Pay and Google Pay work).</li>
+            <li>Verify your ID with a quick license scan and selfie.</li>
+            <li>We confirm availability and charge the card (insured renters: the day before pickup). Pick up in Aurora / Denver.</li>
+          </ol>
+        </aside>
+      </form>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+</div>
+
+<script type="module">
+import { quote, todayDenver } from '/pricing.js';
+
+const catalog = await (await fetch('/catalog.json')).json();
+const el = (id) => document.getElementById(id);
+const money = (c) => '$' + (c / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const today = todayDenver();
+const CONTACT = 'sf_shop_contact';
+const cart = window.SFCart;
+
+const qty = {}, rows = {}, byId = {};
+let unavailable = [], availTimer = 0, tsToken = '', busy = false;
+
+// ---- gear list (each group folds so ~50 items stay scannable on a phone)
+const wrap = el('coItems');
+const groupEls = [];
+catalog.groups.forEach((g, gi) => {
+  const det = document.createElement('details'); det.className = 'co-details';
+  if (gi < 2) det.open = true;
+  const sum = document.createElement('summary');
+  sum.innerHTML = '<span class="co-group-name"></span><span class="co-group-count"></span>';
+  sum.querySelector('.co-group-name').textContent = g.group;
+  det.appendChild(sum);
+  groupEls.push({ det, g, count: sum.querySelector('.co-group-count') });
+  g.items.forEach((it) => {
+    byId[it.id] = it; qty[it.id] = 0;
+    const row = document.createElement('div'); row.className = 'co-item';
+    row.innerHTML = '<div><span class="co-item-name"></span><span class="co-item-rate"></span></div>' +
+      '<div class="co-qty"><button type="button" aria-label="Remove one" data-d="-1">&minus;</button><output></output><button type="button" aria-label="Add one" data-d="1">+</button></div>' +
+      '<div class="co-item-flag"></div>';
+    row.querySelector('.co-item-name').textContent = it.name;
+    const per = it.unit === 'week' ? 'week' : 'day';
+    row.querySelector('.co-item-rate').textContent = '$' + it.rate + ' / ' + per + (it.note ? ' · ' + it.note : '');
+    row.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
+      qty[it.id] = Math.max(0, Math.min(20, qty[it.id] + Number(b.dataset.d)));
+      render(); checkAvailability();
+    }));
+    rows[it.id] = row;
+    det.appendChild(row);
+  });
+  wrap.appendChild(det);
+});
+
+const nextDay = (iso) => new Date(Date.parse(iso + 'T00:00:00Z') + 864e5).toISOString().slice(0, 10);
+document.querySelector('.co-pt').textContent = catalog.pickupTime;
+document.querySelector('.co-rt').textContent = catalog.returnTime;
+el('coStart').min = today; el('coEnd').min = nextDay(today);
+el('coTaxLabel').textContent = 'Sales tax (' + (catalog.taxRate * 100).toFixed(2).replace(/\.?0+$/, '') + '%)';
+el('coInsNoneText').textContent = 'Adds a ' + Math.round(catalog.waiverRate * 100) + '% damage waiver and a larger deposit.';
+
+// Why is this item flagged? Either the cart asks for the same gear twice (a package already
+// includes it), or someone else has it booked for these dates.
+function flagText(id) {
+  const need = {};
+  Object.keys(qty).forEach((k) => { if (qty[k]) Object.entries(byId[k].uses || {}).forEach(([r, n]) => { need[r] = (need[r] || 0) + n * qty[k]; }); });
+  const clash = Object.keys(byId[id].uses || {}).filter((r) => need[r] > (catalog.stock[r] || 0));
+  if (clash.length) {
+    const other = Object.keys(qty).filter((k) => k !== id && qty[k] && Object.keys(byId[k].uses || {}).some((r) => clash.includes(r)));
+    if (other.length) return 'Overlaps with ' + other.map((k) => byId[k].name).join(' and ') + ' in your cart. They share the same gear, so you can’t rent both. Remove one.';
+  }
+  return 'Already booked for these dates. Try different days.';
+}
+
+const insurance = () => document.querySelector('input[name=ins]:checked').value;
+const hasHighValue = () => Object.keys(qty).some((id) => qty[id] && byId[id].highValue);
+
+function current() {
+  return quote(catalog, { items: qty, start: el('coStart').value, end: el('coEnd').value, hasCoi: insurance() === 'have', today });
+}
+
+function render() {
+  // High-value gear can't go without a certificate.
+  const needCoi = hasHighValue();
+  const none = document.querySelector('input[name=ins][value=none]');
+  if (needCoi && none.checked) document.querySelector('input[name=ins][value=have]').checked = true;
+  none.disabled = needCoi;
+  el('coInsNone').classList.toggle('is-disabled', needCoi);
+  const notice = el('coInsNotice');
+  notice.hidden = !needCoi;
+  notice.innerHTML = 'Camera, lighting and full packages need a certificate of insurance. No certificate? <a href="https://tally.so/r/ODPpg7" target="_blank" rel="noopener">Use our contact form</a> and we’ll work something out.';
+  el('coFileWrap').hidden = insurance() !== 'have';
+
+  const q = current();
+  el('coDays').textContent = q.days ? q.days + (q.days === 1 ? ' day' : ' days') + ' · pickup after ' + catalog.pickupTime + ', return before ' + catalog.returnTime : 'Pick dates';
+  const ul = el('coLines'); ul.innerHTML = '';
+  if (!q.lines.length) ul.innerHTML = '<li class="co-empty">Your cart is empty. <a href="/#packages">Browse packages</a> or <a href="/gear.html#inventory">individual gear</a>.</li>';
+  q.lines.forEach((l) => {
+    const li = document.createElement('li');
+    const a = document.createElement('span'); a.textContent = l.qty + ' x ' + l.name;
+    const b = document.createElement('span'); b.textContent = q.days ? money(l.cents) : '';
+    li.append(a, b); ul.appendChild(li);
+  });
+  el('coSubtotal').textContent = money(q.subtotal);
+  el('coWaiverRow').hidden = !q.waiver;
+  el('coWaiver').textContent = money(q.waiver);
+  el('coTaxRow').hidden = !catalog.taxRate;
+  el('coTax').textContent = money(q.tax);
+  el('coDeposit').textContent = money(q.deposit);
+  el('coDepositRow').hidden = !q.deposit;
+  el('coTotalNote').textContent = q.deferred
+    ? 'Held, not charged. We charge this to your card the day before pickup. No deposit because you have insurance.'
+    : 'Charged only when we confirm. The deposit is refunded after the gear comes back clean.';
+  el('coTotal').textContent = money(q.dueNow);
+  groupEls.forEach(({ det, g, count }) => {
+    const n = g.items.filter((i) => qty[i.id] > 0).length;
+    count.textContent = n ? n + ' selected' : '';
+    if (n && g.items.some((i) => qty[i.id] > 0 && unavailable.includes(i.id))) det.open = true;
+  });
+  Object.keys(rows).forEach((id) => {
+    rows[id].querySelector('output').textContent = qty[id];
+    const bad = unavailable.includes(id) && qty[id] > 0;
+    rows[id].classList.toggle('is-unavail', bad);
+    if (bad) rows[id].querySelector('.co-item-flag').textContent = flagText(id);
+  });
+  el('coPay').firstChild.textContent = q.ok ? 'Request to book · hold ' + money(q.dueNow) + ' ' : 'Request to book ';
+  cart.write({ qty, s: el('coStart').value, e: el('coEnd').value });
+  try { sessionStorage.setItem(CONTACT, JSON.stringify({ n: el('coName').value, m: el('coEmail').value, p: el('coPhone').value })); } catch {}
+}
+
+// ---- live availability (server is the authority; this only warns early)
+function checkAvailability() {
+  clearTimeout(availTimer);
+  availTimer = setTimeout(async () => {
+    const s = el('coStart').value, e = el('coEnd').value;
+    const items = Object.keys(qty).filter((id) => qty[id]).map((id) => id + ':' + qty[id]).join(',');
+    if (!s || !e || e < s || !items) { unavailable = []; render(); return; }
+    try {
+      const r = await fetch('/api/availability?start=' + s + '&end=' + e + '&items=' + encodeURIComponent(items));
+      unavailable = (await r.json()).unavailable || [];
+    } catch { unavailable = []; }
+    render();
+  }, 250);
+}
+
+['coStart', 'coEnd'].forEach((id) => el(id).addEventListener('change', () => {
+  const s0 = el('coStart').value;
+  // Noon to noon: the earliest return is the morning after pickup.
+  el('coEnd').min = s0 ? nextDay(s0) : nextDay(today);
+  if (s0 && el('coEnd').value && el('coEnd').value <= s0) el('coEnd').value = nextDay(s0);
+  render(); checkAvailability();
+}));
+document.querySelectorAll('input[name=ins]').forEach((r) => r.addEventListener('change', render));
+['coName', 'coEmail', 'coPhone'].forEach((id) => el(id).addEventListener('input', render));
+
+// ---- restore: saved cart, then ?add= links
+{
+  const saved = cart.read();
+  Object.keys(saved.qty).forEach((id) => { if (id in qty) qty[id] = saved.qty[id]; });
+  el('coStart').value = saved.s; el('coEnd').value = saved.e;
+  if (saved.s) el('coEnd').min = nextDay(saved.s);
+}
+try {
+  const who = JSON.parse(sessionStorage.getItem(CONTACT) || 'null');
+  if (who) { el('coName').value = who.n || ''; el('coEmail').value = who.m || ''; el('coPhone').value = who.p || ''; }
+} catch {}
+const params = new URLSearchParams(location.search);
+params.getAll('add').forEach((id) => { if (id in qty && !qty[id]) qty[id] = 1; });
+groupEls.forEach(({ det, g }) => { if (g.items.some((i) => qty[i.id] > 0)) det.open = true; });
+if (params.get('cancelled')) el('coError').textContent = 'Card step cancelled. Your cart is still here when you’re ready.';
+render(); checkAvailability();
+
+// ---- optional bot check
+if (catalog.turnstileSiteKey) {
+  const s = document.createElement('script');
+  s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async = true;
+  s.onload = () => window.turnstile.render('#coTs', { sitekey: catalog.turnstileSiteKey, callback: (t) => { tsToken = t; } });
+  document.head.appendChild(s);
+}
+
+// ---- pay
+el('coForm').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  if (busy) return;
+  const err = (m) => { el('coError').textContent = m; };
+  const q = current();
+  const file = el('coFile').files[0];
+  if (!q.ok) return err(q.errors[0].message);
+  const badId = unavailable.find((id) => qty[id]);
+  if (badId) return err(byId[badId].name + ': ' + flagText(badId));
+  if (insurance() === 'have' && !file) return err('Upload your certificate of insurance, or choose “I don’t have insurance”.');
+  if (file && file.size > 8 * 1024 * 1024) return err('That file is over 8 MB. Upload a PDF, JPG or PNG under 8 MB.');
+  if (!el('coName').value.trim()) return err('Add your name.');
+  if (!/^\S+@\S+\.\S+$/.test(el('coEmail').value.trim())) return err('Add a valid email.');
+  if (!el('coTerms').checked) return err('Please accept the rental terms.');
+  if (catalog.turnstileSiteKey && !tsToken) return err('Please complete the check above.');
+  err('');
+
+  busy = true; el('coPay').disabled = true;
+  const label = el('coPay').innerHTML;
+  el('coPay').textContent = 'Taking you to the card step…';
+  const body = new FormData();
+  body.append('payload', JSON.stringify({
+    items: qty, start: el('coStart').value, end: el('coEnd').value, insurance: insurance(),
+    name: el('coName').value, email: el('coEmail').value, phone: el('coPhone').value, notes: el('coNotes').value,
+    terms: true, turnstile: tsToken
+  }));
+  if (insurance() === 'have' && file) body.append('coi', file);
+  try {
+    const res = await fetch('/api/checkout', { method: 'POST', body });
+    const data = await res.json();
+    if (res.ok && data.url) { try { sessionStorage.setItem('sf_shop_submitted', '1'); } catch {} location.href = data.url; return; }
+    if (data.unavailable) { unavailable = data.unavailable; render(); }
+    err(data.message || 'Something went wrong. Please try again.');
+  } catch {
+    err('We couldn’t reach the server. Check your connection and try again.');
+  }
+  busy = false; el('coPay').disabled = false; el('coPay').innerHTML = label; render();
+});
+</script>
+</body>
+</html>
