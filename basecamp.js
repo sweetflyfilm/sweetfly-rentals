@@ -1,7 +1,7 @@
 /* One card per product family; selection changes only the reference image and details. */
 const tentVariants = {
   open: { image: '/images/field-village-canopy.png', alt: 'Eurmax 10 by 10 foot open canopy tent', rate: '$35 / day', details: 'Open 10 × 10 ft canopy. One available.' },
-  covered: { image: '/images/tent-10x10-covered.jpg', alt: 'Eurmax 10 by 10 foot canopy with sidewall enclosure', rate: '$35 / day', details: 'Covered 10 × 10 ft canopy with sidewall enclosure. One available.' },
+  covered: { image: '/images/tent-10x10-covered.jpg?v=20261109-grant-photo', alt: 'Eurmax 10 by 10 foot canopy with sidewalls', rate: '$35 / day', details: 'Covered 10 × 10 ft canopy with sidewall enclosure. One available.' },
   large: { image: '/images/tent-10x20.jpg', alt: 'Eurmax 10 by 20 foot open canopy tent', rate: 'Contact Us for rate', details: 'Larger 10 × 20 ft canopy. One available. Swap it into the Basecamp package for +$20 / day ($130 / day total).' },
 };
 const tableVariants = {
@@ -19,7 +19,7 @@ function bindVariant(selectId, imageId, detailsId, variants, rateId) {
     if (!variant) return;
     image.src = variant.image;
     image.alt = variant.alt;
-    image.classList.toggle('basecamp-reference-photo', variant.image.endsWith('.jpg'));
+    image.classList.toggle('basecamp-reference-photo', variant.image.split('?')[0].endsWith('.jpg'));
     details.textContent = variant.details;
     if (rateId) document.getElementById(rateId).textContent = variant.rate;
   };
