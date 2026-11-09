@@ -1,0 +1,378 @@
+/* ============================================================
+   SWEET FLYPAPER RENT — LIGHT THEME
+   Loaded after styles.css and each page's inline <style>.
+   Overrides the dark tokens and hardcoded dark surfaces.
+   ============================================================ */
+
+html body {
+  background-color: #d7d1c5;
+  border-color: #c7bfb1;
+}
+
+html body #sf-embed {
+  --bg-dark: #d7d1c5;
+  --bg-panel: #ebe5da;
+  --text-main: #222326;
+  --text-muted: #5f625f;
+  --border-color: #aaa295;
+  --accent: #252628;
+  --accent-hover: #404144;
+  --gold: #b8902a;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+}
+
+/* Logos were inverted to white for the dark theme */
+html body #sf-embed .sf-nav-text-logo,
+html body #sf-embed .sf-footer-brand img,
+html body #sf-embed .sf-footer-butterfly { filter: none !important; }
+
+html body #sf-embed .sf-navbar { background: rgba(215, 209, 197, 0.95); }
+html body #sf-embed .sf-footer { background-color: #c9c1b3; }
+html body #sf-embed::after { display: none; }
+
+html body #sf-embed .sf-btn-ghost { border-color: rgba(27, 28, 31, 0.45); }
+html body #sf-embed .sf-floating-contact { box-shadow: 0 10px 30px rgba(27, 28, 31, 0.15); }
+html body #sf-embed .sf-footer-butterfly { border-color: rgba(27, 28, 31, 0.15); }
+html body #sf-embed .sf-butterfly-caption { color: var(--text-main); }
+
+/* Hero: soft light wash instead of near-black */
+html body #sf-embed .sf-hero { background-color: #cfc7b8; }
+html body #sf-embed .sf-hero-veil {
+  background: linear-gradient(to top, rgba(215,209,197,1) 0%, rgba(215,209,197,0.68) 55%, transparent 100%);
+}
+html body #sf-embed .hero-bg-img { opacity: 0.3; filter: grayscale(100%) contrast(1.05); }
+html body #sf-embed .pulse-base,
+html body #sf-embed .cyan-perimeter,
+html body #sf-embed .blue-perimeter { opacity: 0.35; mix-blend-mode: soft-light; animation: none; }
+html body #sf-embed .radar-ring { display: none; }
+
+/* Hairlines that were white-on-dark */
+html body #sf-embed .sf-gear-desc-block,
+html body #sf-embed .sf-gear-kit-list,
+html body #sf-embed .sf-gear-book-link { border-top-color: var(--border-color); }
+html body #sf-embed .sf-testimonial-rented { border-bottom-color: rgba(27, 28, 31, 0.2); }
+html body #sf-embed .sf-gear-img-wrap { background: radial-gradient(circle at center, #f0eadf 0%, #c5bcad 100%); }
+html body #sf-embed .sf-gear-img-wrap img { filter: drop-shadow(0 10px 18px rgba(27, 28, 31, 0.18)); }
+
+/* Landing page (index.html) */
+html body #sf-embed .rent-card {
+  display: flex; flex-direction: column; background: var(--bg-panel);
+  border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden;
+  transition: all 0.3s ease;
+}
+html body #sf-embed .rent-card:hover { border-color: var(--text-muted); transform: translateY(-4px); box-shadow: 0 14px 30px rgba(27, 28, 31, 0.08); }
+html body #sf-embed .rent-card-img { aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--border-color); }
+html body #sf-embed .rent-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+html body #sf-embed .rent-card:hover .rent-card-img img { transform: scale(1.04); }
+html body #sf-embed .rent-card-body { padding: 1.75rem 1.75rem 2rem; display: flex; flex-direction: column; gap: 0.75rem; flex-grow: 1; }
+html body #sf-embed .rent-card-body h3 { font-size: 1.5rem; }
+html body #sf-embed .rent-card-body p { font-size: 0.95rem; }
+html body #sf-embed .rent-card-link { margin-top: auto; padding-top: 1rem; font-family: 'Geist Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; }
+html body #sf-embed .rent-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+html body #sf-embed .rent-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+html body #sf-embed .rent-strip { border-top: 1px solid var(--border-color); background: var(--bg-panel); }
+html body #sf-embed .rent-mini { padding: 2rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); display: block; }
+html body #sf-embed .rent-mini:hover { border-color: var(--text-muted); }
+html body #sf-embed .rent-mini h3 { font-size: 1.2rem; margin: 0.4rem 0; }
+
+@media (max-width: 900px) {
+  html body #sf-embed .rent-grid-2,
+  html body #sf-embed .rent-grid-3 { grid-template-columns: 1fr; }
+}
+
+/* Warm charcoal treatment for the rental home and gear pages. */
+html body.rental-home,
+html body.gear-page,
+html body.basecamp-page {
+  background-color: #242528;
+  border-color: #242528;
+}
+
+html body.rental-home #sf-embed,
+html body.gear-page #sf-embed,
+html body.basecamp-page #sf-embed {
+  --bg-dark: #242528;
+  --bg-panel: #2c2d31;
+  --text-main: #f2ede3;
+  --text-muted: #c8c3b7;
+  --border-color: #46474c;
+  --accent: #f2ede3;
+  --accent-hover: #ded7cb;
+  --gold: #b8902a;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+}
+
+html body.rental-home #sf-embed .sf-navbar,
+html body.gear-page #sf-embed .sf-navbar,
+html body.basecamp-page #sf-embed .sf-navbar {
+  background: rgba(36, 37, 40, 0.98);
+  border-bottom-color: rgba(242, 237, 227, 0.2);
+}
+
+html body.rental-home #sf-embed .sf-nav-text-logo,
+html body.gear-page #sf-embed .sf-nav-text-logo,
+html body.rental-home #sf-embed .sf-footer-brand img,
+html body.gear-page #sf-embed .sf-footer-brand img,
+html body.rental-home #sf-embed .sf-footer-butterfly,
+html body.gear-page #sf-embed .sf-footer-butterfly {
+  filter: invert(1) !important;
+}
+
+html body.basecamp-page #sf-embed .sf-nav-text-logo,
+html body.basecamp-page #sf-embed .sf-footer-brand img,
+html body.basecamp-page #sf-embed .sf-footer-butterfly {
+  filter: invert(1) !important;
+}
+
+html body #sf-embed .sf-nav-text-logo.sf-shop-wordmark {
+  width: min(164px, 14.3vw);
+  height: auto;
+  max-height: 27px;
+  filter: none !important;
+}
+
+html body #sf-embed .sf-footer-brand img.sf-shop-wordmark {
+  display: block;
+  width: min(100%, 210px);
+  height: auto;
+  filter: none !important;
+}
+
+html body.rental-home #sf-embed .sf-nav-link,
+html body.gear-page #sf-embed .sf-nav-link {
+  color: #f2ede3;
+}
+
+html body.basecamp-page #sf-embed .sf-nav-link {
+  color: #f2ede3;
+}
+
+html body.rental-home #sf-embed .sf-nav-link i,
+html body.gear-page #sf-embed .sf-nav-link i {
+  color: #c8c3b7;
+}
+
+html body.basecamp-page #sf-embed .sf-nav-link i {
+  color: #c8c3b7;
+}
+
+html body.rental-home #sf-embed .sf-nav-link:hover,
+html body.gear-page #sf-embed .sf-nav-link:hover,
+html body.basecamp-page #sf-embed .sf-nav-link:hover {
+  color: #b89b43;
+}
+
+html body.rental-home #sf-embed .sf-hero,
+html body.gear-page #sf-embed .gear-hero,
+html body.basecamp-page #sf-embed .gear-hero,
+html body.basecamp-page #sf-embed .sf-hero {
+  --text-main: #f2ede3;
+  --text-muted: #c8c3b7;
+  background-color: #242528;
+  color: var(--text-main);
+}
+
+html body.rental-home #sf-embed .sf-hero {
+  background-image: none;
+}
+
+html body.rental-home #sf-embed .sf-hero-veil,
+html body.basecamp-page #sf-embed .sf-hero-veil {
+  background: linear-gradient(to top, rgba(36, 37, 40, 1) 0%, rgba(36, 37, 40, 0.58) 58%, rgba(36, 37, 40, 0.12) 100%);
+}
+
+html body.rental-home #sf-embed .hero-bg-img,
+html body.basecamp-page #sf-embed .hero-bg-img {
+  opacity: 0.48;
+  filter: sepia(12%) saturate(0.72) brightness(0.62) contrast(1.05);
+}
+
+html body.rental-home #sf-embed .sf-hero .sf-btn-primary,
+html body.gear-page #sf-embed .gear-hero .sf-btn-primary,
+html body.basecamp-page #sf-embed .gear-hero .sf-btn-primary {
+  background-color: #f0eadf;
+  border-color: #f0eadf;
+  color: #252628 !important;
+}
+
+html body.rental-home #sf-embed .sf-hero .sf-btn-ghost,
+html body.gear-page #sf-embed .gear-hero .sf-btn-ghost,
+html body.basecamp-page #sf-embed .gear-hero .sf-btn-ghost {
+  border-color: rgba(242, 237, 227, 0.65);
+  color: #f2ede3 !important;
+}
+
+html body.rental-home #sf-embed .sf-hero .sf-btn-ghost:hover,
+html body.gear-page #sf-embed .gear-hero .sf-btn-ghost:hover,
+html body.basecamp-page #sf-embed .gear-hero .sf-btn-ghost:hover {
+  border-color: #b89b43;
+  color: #f2ede3 !important;
+}
+
+html body.gear-page #sf-embed .gear-hero,
+html body.basecamp-page #sf-embed .gear-hero {
+  border-bottom-color: #888;
+  background-image: none;
+}
+
+html body.basecamp-page #sf-embed .sf-hero {
+  background-image: none;
+}
+
+html body.rental-home #sf-embed .hero-bg-img,
+html body.basecamp-page #sf-embed .hero-bg-img {
+  filter: sepia(12%) saturate(0.72) brightness(0.62) contrast(1.05);
+}
+
+/* Every product photo sits in the same bone well as the gear cards. */
+html body.gear-page #sf-embed .gear-hero-image,
+html body.basecamp-page #sf-embed .gear-hero-image {
+  aspect-ratio: 4 / 3;
+  background: radial-gradient(circle at center, #f0eadf 0%, #c5bcad 100%);
+}
+
+html body.gear-page #sf-embed .gear-hero-image img,
+html body.basecamp-page #sf-embed .gear-hero-image img {
+  height: 100%;
+  object-fit: contain;
+  object-position: left bottom;
+  filter: drop-shadow(0 10px 18px rgba(27, 28, 31, 0.18));
+}
+
+/* A whole product (not a cropped rig) sits centered with room around it. */
+html body.basecamp-page #sf-embed .gear-hero-product {
+  padding: 2.5rem;
+}
+
+html body.basecamp-page #sf-embed .gear-hero-product img {
+  width: 100%;
+  object-position: center;
+}
+
+html body.gear-page #sf-embed .gear-hero-image figcaption {
+  position: absolute;
+  left: 0;
+  top: 100%;
+}
+
+html body.rental-home #sf-embed .sf-footer,
+html body.gear-page #sf-embed .sf-footer,
+html body.basecamp-page #sf-embed .sf-footer,
+html body.gear-page #sf-embed .sf-testimonial-strip {
+  background-color: #242528;
+  color: #c8c3b7;
+}
+
+html body.rental-home #sf-embed .sf-footer-title,
+html body.gear-page #sf-embed .sf-footer-title,
+html body.rental-home #sf-embed .sf-footer-brand p,
+html body.gear-page #sf-embed .sf-footer-brand p,
+html body.rental-home #sf-embed .sf-footer-links a,
+html body.gear-page #sf-embed .sf-footer-links a,
+html body.basecamp-page #sf-embed .sf-footer-title,
+html body.basecamp-page #sf-embed .sf-footer-brand p,
+html body.basecamp-page #sf-embed .sf-footer-links a,
+html body.rental-home #sf-embed .sf-butterfly-caption,
+html body.gear-page #sf-embed .sf-butterfly-caption,
+html body.basecamp-page #sf-embed .sf-butterfly-caption,
+html body.gear-page #sf-embed .sf-testimonial-quote {
+  color: #f2ede3 !important;
+}
+
+html body.rental-home #sf-embed .sf-footer-bottom,
+html body.gear-page #sf-embed .sf-footer-bottom,
+html body.basecamp-page #sf-embed .sf-footer-bottom,
+html body.gear-page #sf-embed .sf-testimonial-rented,
+html body.gear-page #sf-embed .sf-testimonial-author {
+  border-color: #888;
+  color: #c8c3b7;
+}
+
+html body.rental-home #sf-embed .sf-gear-img-wrap,
+html body.gear-page #sf-embed .sf-gear-img-wrap {
+  background: radial-gradient(circle at center, #f0eadf 0%, #c5bcad 100%);
+}
+
+html body.rental-home #sf-embed .sf-gear-img-wrap img,
+html body.gear-page #sf-embed .sf-gear-img-wrap img {
+  filter: drop-shadow(0 10px 18px rgba(27, 28, 31, 0.18));
+}
+
+html body.rental-home #sf-embed .rent-strip,
+html body.rental-home #sf-embed .home-packages,
+html body.gear-page #sf-embed .sf-how-strip,
+html body.gear-page #sf-embed .sf-gear-section,
+html body.gear-page #sf-embed .sf-testimonial-strip {
+  background-color: #242528;
+}
+
+html body.rental-home #sf-embed .sf-footer,
+html body.gear-page #sf-embed .sf-footer,
+html body.basecamp-page #sf-embed .sf-footer {
+  background-color: #242528;
+}
+
+html body #sf-embed .sf-nav-text-logo.sf-shop-wordmark {
+  height: auto;
+}
+
+html body.rental-home #sf-embed .rent-card-img {
+  aspect-ratio: 16 / 10;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #f0eadf 0%, #c5bcad 100%);
+}
+
+html body.rental-home #sf-embed .rent-card-img img {
+  width: 100%;
+  height: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(27, 28, 31, 0.18));
+}
+
+/* Quieter card edges on the darker ground. */
+html body.rental-home #sf-embed .rent-card,
+html body.rental-home #sf-embed .rent-mini,
+html body.gear-page #sf-embed .sf-gear-card {
+  border-color: #46474c;
+}
+
+html body.gear-page #sf-embed .sf-gear-img-wrap,
+html body.rental-home #sf-embed .rent-card-img {
+  border-bottom: 0;
+}
+
+html body.rental-home #sf-embed .rent-card-body {
+  background: #2c2d31;
+}
+
+@media (max-width: 900px) {
+  html body #sf-embed .sf-nav-text-logo.sf-shop-wordmark {
+    width: min(122px, 34.4vw);
+    max-height: 20px;
+  }
+}
+
+/* Thin strip back to sweetflyfilm.com — mirrors the Shop strip on the main site. */
+html body #sf-embed { padding-bottom: 44px; }
+html body #sf-embed .sf-site-runner {
+  position: fixed; bottom: 0; left: 8px; right: 8px; min-height: 44px; z-index: 9000;
+  display: flex; justify-content: center;
+  background: var(--bg-panel); border-top: 1px solid var(--text-muted);
+}
+html body #sf-embed .sf-site-runner a {
+  min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+  padding: 0.5rem 1rem; color: var(--text-muted); font-size: 0.75rem; font-family: 'Geist Mono', monospace; text-align: center; flex-wrap: wrap;
+}
+html body #sf-embed .sf-site-runner strong { font-weight: 500; color: var(--text-main); }
+html body #sf-embed .sf-site-runner a:hover { color: var(--text-main); }
+
+html body #sf-embed .sf-footer-grid { grid-template-columns: 2fr repeat(2, 1fr); }
+@media (max-width: 900px) {
+  html body #sf-embed .sf-footer-grid { grid-template-columns: 1fr; }
+}

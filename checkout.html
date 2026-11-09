@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cart | SweetFly Shop</title>
-<meta name="description" content="Pick your dates and gear, see the total with tax, and request your rental from SweetFly Shop. Your card is held, not charged, until we confirm.">
+<title>Contact SweetFly Shop | Rentals</title>
+<meta name="description" content="Contact SweetFly Shop about equipment rentals in Aurora and Denver, Colorado.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="/styles.css">
 <script src="/script.js?v=rental-cart-v1" defer></script>
-<link rel="stylesheet" href="/light.css?v=rental-shopmark-v1">
+<link rel="stylesheet" href="/light.css?v=dark-20261104">
 <link rel="stylesheet" href="/gear-page.css?v=13">
 <style>
   #sf-embed [hidden] { display: none !important; }
@@ -25,7 +25,7 @@
   #sf-embed .co-field label { display: block; font-family: 'Geist Mono', monospace; font-size: .75rem; color: #b8b8b8; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
   #sf-embed .co-field input:not([type=file]):not([type=radio]):not([type=checkbox]), #sf-embed .co-field textarea { width: 100%; min-height: 48px; box-sizing: border-box; background: #242528; color: #f0eadf; border: 1px solid #46474c; padding: .7rem .8rem; font: inherit; border-radius: 0; }
   #sf-embed .co-field textarea { min-height: 96px; }
-  #sf-embed .co-field input:focus, #sf-embed .co-field textarea:focus { outline: 2px solid #368a81; outline-offset: 0; }
+  #sf-embed .co-field input:focus, #sf-embed .co-field textarea:focus { outline: 2px solid #766137; outline-offset: 0; }
   #sf-embed .co-group { margin: 1.5rem 0 .5rem; font-family: 'Geist Mono', monospace; font-size: .75rem; color: #b89b43; text-transform: uppercase; letter-spacing: .08em; }
   #sf-embed .co-details { border-top: 1px solid #46474c; }
   #sf-embed .co-details > summary { display: flex; justify-content: space-between; align-items: center; min-height: 52px; cursor: pointer; font-family: 'Geist Mono', monospace; font-size: .8rem; color: #b89b43; text-transform: uppercase; letter-spacing: .08em; list-style: none; }
@@ -41,13 +41,13 @@
   #sf-embed .co-item.is-unavail .co-item-name { color: #b8b8b8; }
   #sf-embed .co-qty { display: flex; align-items: center; gap: .25rem; }
   #sf-embed .co-qty button { width: 48px; height: 48px; background: #242528; color: #f0eadf; border: 1px solid #46474c; font-size: 1.3rem; cursor: pointer; }
-  #sf-embed .co-qty button:hover { border-color: #368a81; }
+  #sf-embed .co-qty button:hover { border-color: #766137; }
   #sf-embed .co-qty output { min-width: 40px; text-align: center; font-family: 'Geist Mono', monospace; }
   #sf-embed .co-choice { display: flex; gap: .8rem; align-items: flex-start; padding: .9rem 1rem; border: 1px solid #46474c; margin-bottom: .6rem; cursor: pointer; min-height: 48px; }
-  #sf-embed .co-choice input { margin-top: .25rem; width: 20px; height: 20px; accent-color: #368a81; flex: none; }
+  #sf-embed .co-choice input { margin-top: .25rem; width: 20px; height: 20px; accent-color: #766137; flex: none; }
   #sf-embed .co-choice strong { display: block; font-weight: 500; }
   #sf-embed .co-choice span { display: block; font-size: .85rem; color: #b8b8b8; margin-top: .15rem; }
-  #sf-embed .co-choice:has(input:checked) { border-color: #368a81; }
+  #sf-embed .co-choice:has(input:checked) { border-color: #766137; }
   #sf-embed .co-choice.is-disabled { opacity: .55; cursor: not-allowed; }
   #sf-embed .co-file { margin: .4rem 0 .2rem; }
   #sf-embed .co-file input { width: 100%; box-sizing: border-box; padding: .8rem; background: #242528; color: #f0eadf; border: 1px dashed #b89b43; font: inherit; }
@@ -56,7 +56,8 @@
   #sf-embed .co-summary { position: sticky; top: 6rem; }
   #sf-embed .co-lines { list-style: none; margin: 0 0 1rem; padding: 0; font-size: .9rem; }
   #sf-embed .co-lines li { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid #46474c; }
-  #sf-embed .co-lines .co-empty { color: #b8b8b8; border-top: 0; }
+  #sf-embed .co-lines .co-empty { display: block; color: #b8b8b8; border-top: 0; }
+  #sf-embed .co-lines .co-empty a { text-decoration: underline; }
   #sf-embed .co-lines .co-deposit { color: #b8b8b8; }
   #sf-embed .co-total { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #b89b43; padding-top: 1rem; margin-bottom: .4rem; font-family: 'Geist Mono', monospace; }
   #sf-embed .co-total strong { font-size: 1.6rem; font-weight: 500; }
@@ -64,8 +65,8 @@
   #sf-embed .co-meta { font-family: 'Geist Mono', monospace; font-size: .8rem; color: #b8b8b8; margin: 0 0 1rem; }
   #sf-embed .co-contact { display: grid; gap: .9rem; }
   #sf-embed .co-terms { display: flex; gap: .7rem; align-items: flex-start; margin: 0 0 1rem; font-size: .85rem; min-height: 44px; }
-  #sf-embed .co-terms input { width: 22px; height: 22px; accent-color: #368a81; flex: none; margin-top: .1rem; }
-  #sf-embed .co-terms a { color: #b89b43; }
+  #sf-embed .co-terms input { width: 22px; height: 22px; accent-color: #766137; flex: none; margin-top: .1rem; }
+  #sf-embed .co-terms a { color: #b89b43; text-decoration: underline; }
   #sf-embed .co-submit { width: 100%; min-height: 52px; justify-content: center; cursor: pointer; }
   #sf-embed .co-submit[disabled] { opacity: .6; cursor: wait; }
   #sf-embed .co-note { font-size: .8rem; color: #b8b8b8; margin: .9rem 0 0; }
@@ -78,16 +79,26 @@
   }
   @media (max-width: 540px) { #sf-embed .co-dates { grid-template-columns: 1fr; } #sf-embed .co-panel { padding: 1.1rem; } }
 </style>
+<link rel="stylesheet" href="/showroom.css?v=20261109-contact-us">
 </head>
 <body class="basecamp-page">
 <div id="sf-embed">
   <div id="nav-placeholder"></div>
 
-  <main class="co-wrap">
+  <main class="co-wrap cart-paused-note">
+    <div class="sf-container">
+      <span class="sf-label">The Shop / Rentals</span>
+      <h1 style="margin:.5rem 0 .75rem">Contact Us</h1>
+      <p>Online booking is paused for now. Contact us with your shoot dates and equipment needs, and we’ll follow up about availability.</p>
+      <a class="sf-btn sf-btn-primary" href="https://tally.so/r/ODPpg7" data-tally-open="ODPpg7" data-tally-hide-title="1" data-tally-emoji-text="👋🏾" data-tally-emoji-animation="wave">Contact Us <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </main>
+
+  <main class="co-wrap cart-control-hidden">
     <div class="sf-container">
       <span class="sf-label">The Shop / Cart</span>
       <h1 style="margin:.5rem 0 .75rem">Your cart</h1>
-      <p style="margin:0 0 2rem;color:#b8b8b8;max-width:46rem">Your card is held, not charged. We confirm the gear is free for your dates, usually within 24 hours. Without insurance we then charge it; with insurance we charge it the day before pickup. If we can’t confirm, the hold is released.</p>
+      <p style="margin:0 0 2rem;color:var(--text-muted);max-width:46rem">Your card is held, not charged. We confirm the gear is free for your dates, usually within 24 hours. Without insurance we then charge it; with insurance we charge it the day before pickup. If we can’t confirm, the hold is released.</p>
 
       <form class="co-grid" id="coForm" novalidate>
         <div class="co-col">

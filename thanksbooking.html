@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request Received | Sweet Flypaper Film</title>
+<title>Your Booking | SweetFly Shop</title>
+<meta name="robots" content="noindex">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,6 +92,17 @@
 
   /* Fix for specific button colors */
   #sf-embed .sf-btn-outline { color: var(--text-main) !important; border-color: var(--border-color); }
+
+  /* Booking status checklist */
+  #sf-embed .tb-steps { list-style: none; margin: 0 0 10px; padding: 0; text-align: left; opacity: 1 !important; }
+  #sf-embed .tb-steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 4px 12px; padding: 16px 0; border-top: 1px solid var(--border-color); }
+  #sf-embed .tb-steps .tb-dot { font-size: 1.1rem; color: var(--text-muted); text-align: center; }
+  #sf-embed .tb-steps li.done .tb-dot { color: #81c784; }
+  #sf-embed .tb-steps li.todo .tb-dot { color: #D4AF37; }
+  #sf-embed .tb-steps strong { font-weight: 500; color: var(--text-main); }
+  #sf-embed .tb-steps small { grid-column: 2; font-size: .9rem; color: var(--text-muted); line-height: 1.5; }
+  #sf-embed .tb-steps .sf-btn { grid-column: 2; justify-self: start; margin-top: 8px; min-height: 48px; cursor: pointer; }
+  #sf-embed .tb-ref { font-family: 'Geist Mono', monospace; font-size: .85rem; color: var(--text-muted); margin-bottom: 20px !important; }
 </style>
 </head>
 <body>
@@ -102,12 +114,14 @@
   <div class="thankyou-wrapper">
     <div class="thankyou-content">
       
-      <div class="thankyou-icon">
+      <div class="thankyou-icon" id="tbIcon">
         <i class="fa-solid fa-circle-check"></i>
       </div>
-      
-      <h1>Request Received.</h1>
-      <p>Your booking request is officially in our system. We are verifying studio and gear availability right now and will follow up shortly with your confirmation.</p>
+
+      <h1 id="tbTitle">Request Received.</h1>
+      <p id="tbLead">Your booking request is officially in our system. We are verifying gear availability right now and will follow up shortly with your confirmation.</p>
+      <p class="tb-ref" id="tbRef" hidden></p>
+      <ol class="tb-steps" id="tbSteps" hidden></ol>
 
       <div class="thankyou-actions">
         <a href="/" class="sf-btn sf-btn-text"><i class="fa-solid fa-arrow-left"></i> Return Home</a>
@@ -118,5 +132,171 @@
 
   <div id="footer-placeholder"></div>
 
-</div> </body>
+</div>
+<script>
+try { if (sessionStorage.getItem('sf_shop_submitted')) { sessionStorage.removeItem('sf_shop_submitted'); if (window.SFCart) window.SFCart.clear(); else localStorage.removeItem('sf_shop_cart'); } } catch (e) {}
+(function () {
+  var q = new URLSearchParams(location.search), id = q.get('b'), t = q.get('t');
+  if (!id || !t) return; // plain thank-you for the older request form
+  try { sessionStorage.removeItem('sf_shop_cart'); } catch (e) {}
+  var $ = function (i) { return document.getElementById(i); };
+  var money = function (c) { return '$' + (c / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+  var tries = 0;
+
+  function step(cls, icon, title, body, btn) {
+    var li = document.createElement('li'); li.className = cls;
+    var d = document.createElement('span'); d.className = 'tb-dot'; d.innerHTML = '<i class="fa-solid ' + icon + '"></i>';
+    var s = document.createElement('strong'); s.textContent = title;
+    var m = document.createElement('small'); m.textContent = body;
+    li.append(d, s, m);
+    if (btn) li.appendChild(btn);
+    return li;
+  }
+
+  function startId(btn) {
+    btn.disabled = true; btn.textContent = 'Opening ID check…';
+    fetch('/api/identity', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: id, t: t }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (d.url) location.href = d.url; else if (d.verified) load(); else throw new Error(d.message); })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Try again'; });
+  }
+
+  function money2(c) { return money(c); }
+  // Day before pickup, e.g. "Wed, Dec 9": when an insured renter's card is charged.
+  function chargeDay(b) {
+    var d = new Date(Date.parse(b.start + 'T12:00:00Z') - 864e5);
+    return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
+  }
+  function updateCard(btn) {
+    btn.disabled = true; btn.textContent = 'Opening…';
+    fetch('/api/card', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: id, t: t }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (d.url) location.href = d.url; else throw new Error(d.message); })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Try again'; });
+  }
+  function answer(action, btn) {
+    btn.disabled = true; var old = btn.textContent; btn.textContent = 'One moment…';
+    fetch('/api/offer', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: id, t: t, action: action }) })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        if (res.ok && res.d.url) { location.href = res.d.url; return; }
+        if (res.ok) { tries = 0; load(); return; }
+        btn.disabled = false; btn.textContent = old;
+        $('tbLead').textContent = res.d.message || 'Something went wrong. Please try again.';
+      })
+      .catch(function () { btn.disabled = false; btn.textContent = old; });
+  }
+
+  function drawOffer(b) {
+    var o = b.offer, steps = $('tbSteps'); steps.innerHTML = ''; steps.hidden = false;
+    $('tbRef').hidden = false;
+    $('tbRef').textContent = 'Request ' + b.id.toUpperCase();
+    var li = document.createElement('li'); li.className = 'todo';
+    var d = document.createElement('span'); d.className = 'tb-dot'; d.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+    var s = document.createElement('strong'); s.textContent = 'What we can do';
+    var m = document.createElement('small');
+    m.textContent = o.lines.map(function (l) { return l.qty + ' x ' + l.name; }).join(', ') + '. Pickup ' + o.start + ' after 12 PM, return ' + o.end + ' before 12 PM (' + o.days + (o.days === 1 ? ' day' : ' days') + '). ' +
+      'Total ' + money2(o.dueNow) + (o.deposit ? ' including a ' + money2(o.deposit) + ' refundable deposit' : '') + '. You asked for ' + b.start + ' to ' + b.end + ' and your card hold was ' + money2(b.held_cents) + '.' +
+      (o.note ? ' Note from us: ' + o.note : '');
+    li.append(d, s, m);
+    var yes = document.createElement('button'); yes.type = 'button'; yes.className = 'sf-btn sf-btn-primary';
+    yes.textContent = o.mode === 'capture_less' ? 'Accept and confirm' : 'Accept and re-enter card';
+    yes.addEventListener('click', function () { answer('accept', yes); });
+    var no = document.createElement('button'); no.type = 'button'; no.className = 'sf-btn'; no.style.cssText = 'margin-left:8px;background:transparent;color:#f0eadf;border:1px solid #b8b8b8;min-height:48px;cursor:pointer';
+    no.textContent = 'No thanks, release my card';
+    no.addEventListener('click', function () { answer('decline', no); });
+    var row = document.createElement('div'); row.style.gridColumn = '2'; row.append(yes, no);
+    li.appendChild(row);
+    steps.appendChild(li);
+    steps.appendChild(step('done', 'fa-credit-card', 'Your card is held, not charged', b.charge_at_pickup
+      ? 'If you accept, your card stays on file and we charge ' + money2(o.dueNow) + ' the day before pickup.'
+      : o.mode === 'capture_less'
+      ? 'If you accept, we charge ' + money2(o.dueNow) + ' and release the rest of the hold.'
+      : 'This changes the total, so you’ll confirm your card once more.'));
+  }
+
+  function draw(b) {
+    var steps = $('tbSteps'); steps.innerHTML = ''; steps.hidden = false;
+    $('tbRef').hidden = false;
+    $('tbRef').textContent = 'Request ' + b.id.toUpperCase() + ' · pickup ' + b.start + ' after 12 PM · return ' + b.end + ' before 12 PM';
+    var approved = ['paid', 'picked_up', 'returned'].indexOf(b.status) > -1;
+    var confirmed = b.status === 'confirmed';
+
+    if (b.charge_at_pickup) {
+      steps.appendChild(step('done', 'fa-credit-card', (approved ? 'Card charged: ' : 'Card held: ') + money(b.total_cents),
+        approved ? 'Thank you. There is no deposit because your insurance is on file.'
+        : 'Not charged yet. No deposit, because your insurance is on file. We charge the full amount to this card the day before pickup' + (confirmed ? ' (' + chargeDay(b) + ').' : '.')));
+    } else {
+      steps.appendChild(step('done', 'fa-credit-card', 'Card held: ' + money(b.total_cents),
+        'Not charged yet. ' + (b.tax_cents ? 'Includes tax' : 'Includes') + (b.waiver_cents ? (b.tax_cents ? ', the damage waiver' : ' the damage waiver') : '') + ' and a ' + money(b.deposit_cents) + ' deposit, which is refunded after the gear comes back clean.'));
+    }
+    if (confirmed && b.charge_failed) {
+      var ub = document.createElement('button'); ub.type = 'button'; ub.className = 'sf-btn sf-btn-primary'; ub.textContent = 'Update my card';
+      ub.addEventListener('click', function () { updateCard(ub); });
+      steps.appendChild(step('todo', 'fa-triangle-exclamation', 'We couldn’t charge your card', 'Your bank declined it or needs a new card. Add a different card (nothing is charged now) so we can charge it before pickup and keep your booking.', ub));
+    }
+
+    if (b.identity_status === 'verified') {
+      steps.appendChild(step('done', 'fa-circle-check', 'ID verified', 'Thank you. Bring the same ID to pickup.'));
+    } else {
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'sf-btn sf-btn-primary';
+      btn.textContent = b.identity_status === 'failed' ? 'Try the ID check again' : 'Verify my ID';
+      btn.addEventListener('click', function () { startId(btn); });
+      steps.appendChild(step('todo', 'fa-id-card', 'Verify your ID',
+        b.identity_status === 'failed' ? 'We couldn’t read that ID. Try again with good light and the whole card in frame.'
+        : b.identity_status === 'pending' ? 'Almost there. If you closed the check, you can reopen it.'
+        : 'Takes about two minutes: a photo of your driver’s license or passport and a quick selfie. It speeds up your approval.', btn));
+    }
+
+    steps.appendChild(b.has_coi
+      ? step('done', 'fa-circle-check', 'Insurance certificate received', approved || confirmed ? 'Thank you. It’s on file.' : 'We’ll review it before approving.')
+      : step('done', 'fa-shield', 'Damage waiver applied', 'No insurance on file, so the waiver and larger deposit cover you.'));
+
+    steps.appendChild(confirmed
+      ? step('done', 'fa-circle-check', 'Confirmed', 'Your dates are locked in. Pickup is in Aurora / Denver, any time after 12 PM on your pickup day. Return before 12 PM on your return day. We’ll email the address.')
+      : approved
+      ? step('done', 'fa-circle-check', 'Confirmed and charged', 'Pickup is in Aurora / Denver, any time after 12 PM on your pickup day. Return before 12 PM on your return day. We’ll email the address.')
+      : step('todo', 'fa-hourglass-half', 'We’re confirming availability', 'We check the gear against our calendar and ShareGrid, usually within 24 hours. We email you either way. If we can’t, the hold on your card is released.'));
+  }
+
+  function load() {
+    fetch('/api/booking?id=' + encodeURIComponent(id) + '&t=' + encodeURIComponent(t))
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        if (!res.ok) { $('tbTitle').textContent = 'Booking not found.'; $('tbLead').textContent = 'Check the link in your email, or contact us and we’ll sort it out.'; return; }
+        var b = res.d;
+        if (b.status === 'pending' && tries++ < 15) { // waiting on Stripe to confirm the hold
+          $('tbTitle').textContent = 'Confirming your card…';
+          $('tbLead').textContent = 'This usually takes a few seconds.';
+          return setTimeout(load, 2000);
+        }
+        if (b.status === 'declined') {
+          $('tbTitle').textContent = 'We couldn’t confirm these dates.';
+          $('tbLead').textContent = (b.decline_reason ? b.decline_reason + ' ' : '') + 'Your card was not charged and the hold is released. Try different dates or email us.';
+          return;
+        }
+        if (b.status === 'pending' || b.status === 'expired' || b.status === 'cancelled') {
+          $('tbTitle').textContent = b.status === 'expired' ? 'This request expired.' : 'We haven’t received your card yet.';
+          $('tbLead').textContent = 'You haven’t been charged. Start a new request from the checkout.';
+          return;
+        }
+        if (b.status === 'offered' && b.offer) {
+          $('tbTitle').textContent = 'We have a change for you.';
+          $('tbLead').textContent = 'We can’t do everything exactly as requested. Here’s what we can do.';
+          return drawOffer(b);
+        }
+        var approved = ['paid', 'picked_up', 'returned'].indexOf(b.status) > -1;
+        var confirmed = b.status === 'confirmed';
+        $('tbTitle').textContent = confirmed && b.charge_failed ? 'We couldn’t charge your card.' : approved || confirmed ? 'You’re booked.' : 'Request received.';
+        $('tbLead').textContent = confirmed && b.charge_failed ? 'Please add a new card so your booking stays confirmed.'
+          : confirmed ? 'Your dates are confirmed. We’ll charge your card the day before pickup (' + chargeDay(b) + ').'
+          : approved ? 'Your card has been charged. Pickup details below.' : 'Verify your ID now so we can approve it faster.';
+        draw(b);
+      })
+      .catch(function () { $('tbLead').textContent = 'We couldn’t load your booking. Refresh to try again.'; });
+  }
+  load();
+})();
+</script>
+</body>
 </html>

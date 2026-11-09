@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Shop Bookings</title>
+<style>
+  :root { --bg:#242528; --panel:#2c2d31; --line:#46474c; --text:#f0eadf; --muted:#b8b8b8; --gold:#b89b43; --teal:#368a81; --warn:#e2a07a; --ok:#81c784; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 'Geist', system-ui, sans-serif; }
+  main { max-width:1100px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-size:1.3rem; font-weight:500; margin:0 0 16px; }
+  .mono { font-family:'Geist Mono', ui-monospace, monospace; }
+  .bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+  input, button, select { font:inherit; color:var(--text); background:var(--panel); border:1px solid var(--line); padding:10px 12px; min-height:44px; border-radius:0; }
+  button { cursor:pointer; } button:hover { border-color:var(--teal); }
+  button.primary { background:var(--teal); border-color:var(--teal); }
+  button.danger { border-color:var(--warn); color:var(--warn); }
+  .card { background:var(--panel); border:1px solid var(--line); padding:16px; margin-bottom:12px; }
+  .card.past { opacity:.7; }
+  .head { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .head strong { font-weight:500; }
+  .tag { display:inline-block; font-size:.75rem; padding:2px 8px; border:1px solid var(--line); margin-right:6px; text-transform:uppercase; letter-spacing:.05em; }
+  .tag.ok { color:var(--ok); border-color:var(--ok); } .tag.warn { color:var(--warn); border-color:var(--warn); } .tag.gold { color:var(--gold); border-color:var(--gold); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:8px 24px; margin:12px 0; font-size:.9rem; }
+  .grid dt { color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
+  .grid dd { margin:0 0 6px; }
+  .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .msg { color:var(--warn); min-height:1.4em; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Shop bookings</h1>
+  <form class="bar" id="login">
+    <input type="password" id="token" placeholder="Admin token" autocomplete="current-password" aria-label="Admin token">
+    <button class="primary" type="submit">Open</button>
+  </form>
+  <div id="blocksWrap" class="card" hidden>
+    <strong>Block dates</strong> <span style="color:var(--muted)">(ShareGrid bookings, shoots, repairs. Blocking an item also blocks packages that contain it.)</span>
+    <form class="bar" id="blockForm" style="margin:12px 0 0">
+      <select id="blockItem" aria-label="Item"></select>
+      <input type="date" id="blockStart" aria-label="Pickup day" title="Pickup day">
+      <input type="date" id="blockEnd" aria-label="Return day" title="Return day (before noon)">
+      <input id="blockNote" placeholder="Note (e.g. ShareGrid)" aria-label="Note">
+      <button class="primary" type="submit">Block</button>
+    </form>
+    <div id="blockList"></div>
+  </div>
+  <div class="bar" id="tools" hidden>
+    <label><input type="checkbox" id="all"> show unpaid / expired</label>
+    <button id="reload" type="button">Refresh</button>
+  </div>
+  <p class="msg" id="msg" role="alert"></p>
+  <div id="list"></div>
+</main>
+<script>
+(function () {
+  var $ = function (i) { return document.getElementById(i); };
+  var money = function (c) { return '$' + (c / 100).toFixed(2); };
+  var token = '';
+  try { token = sessionStorage.getItem('shop_admin') || ''; } catch (e) {}
+  if (token) $('token').value = token;
+
+  function api(path, opts) {
+    opts = opts || {}; opts.headers = Object.assign({ authorization: 'Bearer ' + token }, opts.headers || {});
+    return fetch(path, opts);
+  }
+  function tag(text, cls) { return '<span class="tag ' + (cls || '') + '">' + text + '</span>'; }
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+  function card(b) {
+    var items = Object.keys(b.items).map(function (k) { return b.items[k] + ' x ' + k; }).join(', ');
+    var depLeft = b.deposit_cents - b.deposit_refunded_cents;
+    var idTag = b.identity_status === 'verified' ? tag('ID verified', 'ok') : b.identity_status === 'failed' ? tag('ID failed', 'warn') : tag('ID ' + b.identity_status, 'gold');
+    var nameFlag = b.identity_name && b.identity_name !== 'Checked in person' && b.identity_name.toLowerCase().replace(/\s+/g, ' ') !== b.name.toLowerCase().replace(/\s+/g, ' ')
+      ? ' ' + tag('name differs: ' + esc(b.identity_name), 'warn') : '';
+    var ins = b.has_coi ? tag('insurance on file', 'ok') : tag('no insurance · waiver', 'gold');
+    var waiting = b.status === 'requested';
+    var toCharge = b.status === 'confirmed';
+    var chargeDay = new Date(Date.parse(b.start_date + 'T12:00:00Z') - 864e5).toISOString().slice(0, 10); // the day before pickup
+    var offer = b.offer_json ? JSON.parse(b.offer_json) : null;
+    var respondBy = waiting && b.expires_at ? ' ' + tag('respond by ' + b.expires_at.slice(0, 10), 'warn') : '';
+    var h = '<div class="card' + (['returned', 'cancelled', 'expired', 'declined'].indexOf(b.status) > -1 ? ' past' : '') + '" data-id="' + b.id + '"' + (waiting ? ' style="border-color:var(--gold)"' : '') + '>' +
+      '<div class="head"><strong>' + esc(b.name) + ' <span class="mono" style="color:var(--muted)">' + b.id.toUpperCase() + '</span></strong>' +
+      '<span class="mono">' + b.start_date + ' to ' + b.end_date + ' (' + b.days + 'd)</span></div>' +
+      '<div style="margin-top:8px">' + tag(waiting ? 'awaiting approval' : b.status === 'offered' ? 'waiting on renter' : toCharge ? 'confirmed · charge ' + chargeDay : b.status, b.status === 'paid' ? 'ok' : waiting || toCharge || b.status === 'offered' ? 'gold' : '') + (toCharge && b.charge_error ? tag('card declined: ' + esc(b.charge_error), 'warn') : '') + respondBy + idTag + nameFlag + ins + '</div>' +
+      '<dl class="grid">' +
+      '<div><dt>Contact</dt><dd>' + esc(b.email) + (b.phone ? '<br>' + esc(b.phone) : '') + '</dd></div>' +
+      '<div><dt>Gear</dt><dd>' + esc(items) + '</dd></div>' +
+      '<div><dt>' + (b.paid_at ? 'Charged' : toCharge ? 'To charge (saved card)' : 'Held on card') + '</dt><dd class="mono">' + money(b.total_cents) + '<br>rental ' + money(b.subtotal_cents) + (b.waiver_cents ? ' + waiver ' + money(b.waiver_cents) : '') + (b.tax_cents ? ' + tax ' + money(b.tax_cents) : '') + (b.deposit_cents ? '<br>deposit ' + money(b.deposit_cents) + ' (refunded ' + money(b.deposit_refunded_cents) + ')' : '<br>no deposit (insured)') + '</dd></div>' +
+      (b.notes ? '<div><dt>Renter notes</dt><dd>' + esc(b.notes) + '</dd></div>' : '') +
+      '<div><dt>My note</dt><dd><input data-note value="' + esc(b.admin_note || '').replace(/"/g, '&quot;') + '" placeholder="Damage, late fee…" style="width:100%"></dd></div>' +
+      (offer ? '<div><dt>Offer sent</dt><dd class="mono">' + esc(offer.start + ' to ' + offer.end) + ' · ' + money(offer.dueNow) + '<br>' + esc(Object.keys(offer.items).map(function (k) { return offer.items[k] + ' x ' + (names[k] || k); }).join(', ')) + '</dd></div>' : '') +
+      (b.decline_reason ? '<div><dt>Decline reason</dt><dd>' + esc(b.decline_reason) + '</dd></div>' : '') +
+      '</dl><div class="actions">' +
+      (waiting ? '<button class="primary" data-a="approve">' + (b.has_coi ? 'Approve (charge ' + money(b.total_cents) + ' the day before pickup)' : 'Approve and charge ' + money(b.total_cents)) + '</button><button data-a="amend">Change dates / items…</button><button class="danger" data-a="decline">Decline (release hold)…</button>' : '') +
+      (b.status === 'offered' ? '<button data-a="amend">Revise offer…</button><button class="danger" data-a="decline">Cancel and release hold…</button>' : '') +
+      (toCharge ? '<button class="primary" data-a="charge">Charge ' + money(b.total_cents) + ' now</button>' : '') +
+      (b.has_coi ? '<button data-a="coi">View insurance</button>' : '') +
+      (b.identity_status !== 'verified' ? '<button data-a="id_in_person">ID checked in person</button>' : '') +
+      (b.status === 'paid' ? '<button data-a="picked_up">Picked up</button>' : '') +
+      (b.status === 'picked_up' ? '<button data-a="returned">Returned</button>' : '') +
+      (depLeft > 0 && b.paid_at ? '<button class="primary" data-a="refund_deposit">Refund deposit ' + money(depLeft) + '</button><button data-a="refund_part">Refund part of deposit…</button>' : '') +
+      (b.paid_at ? '<button class="danger" data-a="refund_other">Refund rental (cancel)…</button>' : '') +
+      '<button data-a="note">Save note</button>' +
+      (['confirmed', 'paid', 'picked_up'].indexOf(b.status) > -1 ? '<button class="danger" data-a="cancel">Mark cancelled</button>' : '') +
+      '</div></div>';
+    return h;
+  }
+
+  function load() {
+    $('msg').textContent = '';
+    api('/api/admin/bookings' + ($('all').checked ? '?all=1' : '')).then(function (r) {
+      if (r.status === 401) { $('msg').textContent = 'Wrong token.'; $('tools').hidden = true; return null; }
+      return r.json();
+    }).then(function (d) {
+      if (!d) return;
+      try { sessionStorage.setItem('shop_admin', token); } catch (e) {}
+      $('tools').hidden = false; $('blocksWrap').hidden = false;
+      var order = function (b) { return b.status === 'requested' ? 0 : b.status === 'offered' ? 1 : b.status === 'confirmed' ? 2 : 3; };
+      d.bookings.sort(function (a, b) { return order(a) - order(b); });
+      d.bookings.forEach(function (b) { cache[b.id] = b; });
+      loadBlocks();
+      $('list').innerHTML = d.bookings.length ? d.bookings.map(card).join('') : '<p class="msg" style="color:var(--muted)">No bookings yet.</p>';
+    }).catch(function () { $('msg').textContent = 'Could not reach the server.'; });
+  }
+
+  function act(id, body) {
+    return api('/api/admin/booking', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(Object.assign({ id: id }, body)) })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok) { var e = new Error(d.message || d.error); e.conflicts = d.conflicts; throw e; } return d; }); });
+  }
+
+  $('list').addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-a]'); if (!btn) return;
+    var c = btn.closest('.card'), id = c.dataset.id, a = btn.dataset.a, body = { action: a };
+    if (a === 'coi') {
+      api('/api/admin/coi?id=' + id).then(function (r) { if (!r.ok) throw new Error('No file'); return r.blob(); })
+        .then(function (b) { window.open(URL.createObjectURL(b), '_blank'); })
+        .catch(function (e) { $('msg').textContent = e.message; });
+      return;
+    }
+    if (a === 'refund_part' || a === 'refund_other') {
+      var amt = prompt(a === 'refund_other' ? 'Refund how many dollars of the rental (not the deposit)?' : 'Refund how many dollars of the deposit?');
+      if (!amt) return;
+      body = { action: a === 'refund_part' ? 'refund_deposit' : 'refund_other', amountCents: Math.round(parseFloat(amt) * 100) };
+    } else if (a === 'amend') {
+      return openAmend(c, id);
+    } else if (a === 'decline') {
+      var why = prompt('Reason to show the renter (optional, e.g. "Booked on ShareGrid those days"):');
+      if (why === null) return;
+      body.reason = why;
+    } else if (a === 'approve') {
+      var bk = cache[id];
+      if (!confirm(bk && bk.has_coi ? 'Confirm this booking? Nothing is charged now. The saved card is charged when you press Charge, the day before pickup.' : 'Charge the held card now and confirm this booking?')) return;
+    } else if (a === 'charge') {
+      if (!confirm('Charge the renter’s saved card ' + money(cache[id].total_cents) + ' now?')) return;
+    } else if (a === 'refund_deposit') {
+      if (!confirm('Refund the remaining deposit to the renter’s card?')) return;
+    } else if (a === 'note') {
+      body.note = c.querySelector('[data-note]').value;
+    } else if (a === 'cancel' && !confirm('Mark this booking cancelled? This does not refund anything.')) return;
+    btn.disabled = true;
+    act(id, body).then(load).catch(function (e) {
+      if (e.conflicts && confirm('Heads up: ' + e.message + '\n\nConflicts: ' + e.conflicts.join(', ') + '\n\nApprove and charge anyway?')) {
+        body.force = true;
+        return act(id, body).then(load).catch(function (e2) { $('msg').textContent = e2.message; btn.disabled = false; });
+      }
+      if (!e.conflicts) $('msg').textContent = e.message;
+      btn.disabled = false;
+    });
+  });
+
+  var catalog = null, names = {}, pricing = null, cache = {};
+
+  // ---- amend: change dates/items, preview the price with the same code the server uses, send as an offer
+  function openAmend(card, id) {
+    var b = cache[id]; if (!b || !catalog || !pricing) { $('msg').textContent = 'Still loading, try again in a second.'; return; }
+    var old = card.querySelector('.amend'); if (old) { old.remove(); return; }
+    var qty = Object.assign({}, b.offer_json ? JSON.parse(b.offer_json).items : b.items);
+    var offer = b.offer_json ? JSON.parse(b.offer_json) : null;
+    var box = document.createElement('div'); box.className = 'amend card'; box.style.marginTop = '12px';
+    box.innerHTML = '<strong>Change this request</strong><p style="color:var(--muted);margin:4px 0 12px;font-size:.85rem">The renter gets an email with your changes and accepts or declines in one tap. Their card, ID and insurance stay on file.</p>' +
+      '<div class="bar"><label>Pickup <input type="date" data-s></label><label>Return <input type="date" data-e></label></div>' +
+      '<div data-rows></div><div class="bar"><select data-add></select><button type="button" data-addbtn>Add item</button></div>' +
+      '<input data-note style="width:100%;margin:8px 0" placeholder="Note to the renter (e.g. Generator is out Friday)">' +
+      '<div class="mono" data-preview style="margin:8px 0"></div><div class="actions"><button class="primary" data-send>Send changes to renter</button><button data-cancel type="button">Close</button></div>';
+    card.appendChild(box);
+    box.querySelector('[data-s]').value = offer ? offer.start : b.start_date;
+    box.querySelector('[data-e]').value = offer ? offer.end : b.end_date;
+    box.querySelector('[data-note]').value = offer ? offer.note || '' : '';
+    box.querySelector('[data-add]').innerHTML = catalog.groups.map(function (g) {
+      return '<optgroup label="' + esc(g.group) + '">' + g.items.map(function (i) { return '<option value="' + i.id + '">' + esc(i.name) + '</option>'; }).join('') + '</optgroup>';
+    }).join('');
+    function draw() {
+      box.querySelector('[data-rows]').innerHTML = Object.keys(qty).filter(function (k) { return qty[k] > 0; }).map(function (k) {
+        return '<div class="head" style="margin:4px 0"><span>' + esc(names[k] || k) + '</span><span><button type="button" data-d="-1" data-k="' + k + '">−</button> <span class="mono">' + qty[k] + '</span> <button type="button" data-d="1" data-k="' + k + '">+</button></span></div>';
+      }).join('');
+      var q = pricing.quote(catalog, { items: qty, start: box.querySelector('[data-s]').value, end: box.querySelector('[data-e]').value, hasCoi: !!b.has_coi, today: pricing.todayDenver() });
+      box.querySelector('[data-preview]').innerHTML = q.ok
+        ? q.days + ' day(s) · rental ' + money(q.subtotal) + (q.waiver ? ' + waiver ' + money(q.waiver) : '') + (q.tax ? ' + tax ' + money(q.tax) : '') + (q.deposit ? ' + deposit ' + money(q.deposit) : '') + ' = <strong>' + money(q.dueNow) + '</strong><br>Held on card: ' + money(b.total_cents) + ' → ' + (q.dueNow <= b.total_cents ? (q.deferred ? 'renter just taps accept, we charge the new total the day before pickup' : 'we capture the lower amount, renter just taps accept') : 'costs more than the hold, renter re-enters their card once')
+        : '<span style="color:var(--warn)">' + esc(q.errors[0].message) + '</span>';
+      box.q = q;
+    }
+    box.addEventListener('input', draw);
+    box.addEventListener('click', function (ev) {
+      var t = ev.target;
+      if (t.dataset.d) { qty[t.dataset.k] = Math.max(0, (qty[t.dataset.k] || 0) + Number(t.dataset.d)); draw(); }
+      if (t.matches('[data-addbtn]')) { var k = box.querySelector('[data-add]').value; qty[k] = (qty[k] || 0) + 1; draw(); }
+      if (t.matches('[data-cancel]')) box.remove();
+      if (t.matches('[data-send]')) {
+        if (!box.q || !box.q.ok) return;
+        var items = {}; Object.keys(qty).forEach(function (k) { if (qty[k] > 0) items[k] = qty[k]; });
+        var body = { action: 'amend', id: id, items: items, start: box.querySelector('[data-s]').value, end: box.querySelector('[data-e]').value, note: box.querySelector('[data-note]').value };
+        t.disabled = true;
+        var go = function () { return act(id, body).then(load); };
+        go().catch(function (e) {
+          if (e.conflicts && confirm('Heads up: ' + e.message + '\n\nConflicts: ' + e.conflicts.join(', ') + '\n\nSend this offer anyway?')) { body.force = true; return go(); }
+          $('msg').textContent = e.message; t.disabled = false;
+        }).catch(function (e2) { $('msg').textContent = e2.message; t.disabled = false; });
+      }
+    });
+    draw();
+  }
+  function loadBlocks() {
+    if (!catalog) {
+      import('/pricing.js').then(function (m) { pricing = m; });
+      fetch('/catalog.json').then(function (r) { return r.json(); }).then(function (c) {
+        catalog = c;
+        $('blockItem').innerHTML = c.groups.map(function (g) {
+          return '<optgroup label="' + esc(g.group) + '">' + g.items.map(function (i) { names[i.id] = i.name; return '<option value="' + i.id + '">' + esc(i.name) + '</option>'; }).join('') + '</optgroup>';
+        }).join('');
+        loadBlocks();
+      });
+      return;
+    }
+    api('/api/admin/blocks').then(function (r) { return r.json(); }).then(function (d) {
+      $('blockList').innerHTML = d.blocks.map(function (b) {
+        return '<div class="head" style="margin-top:8px;font-size:.9rem"><span>' + esc(names[b.item_id] || b.item_id) + ' <span class="mono" style="color:var(--muted)">' + b.start_date + ' to ' + b.end_date + '</span> ' + esc(b.note) + '</span><button data-block="' + b.id + '">Remove</button></div>';
+      }).join('');
+    });
+  }
+  $('blockForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    api('/api/admin/blocks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ item_id: $('blockItem').value, start: $('blockStart').value, end: $('blockEnd').value, note: $('blockNote').value }) })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.message); }); })
+      .then(function () { $('blockNote').value = ''; loadBlocks(); })
+      .catch(function (e) { $('msg').textContent = e.message; });
+  });
+  $('blockList').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button[data-block]'); if (!b) return;
+    api('/api/admin/blocks?id=' + b.dataset.block, { method: 'DELETE' }).then(loadBlocks);
+  });
+
+  $('login').addEventListener('submit', function (ev) { ev.preventDefault(); token = $('token').value.trim(); load(); });
+  $('reload').addEventListener('click', load);
+  $('all').addEventListener('change', load);
+  if (token) load();
+})();
+</script>
+</body>
+</html>

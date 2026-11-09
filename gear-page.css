@@ -1,0 +1,267 @@
+/* Gear page and rental-home additions. Uses the existing Shop light theme. */
+#sf-embed .gear-hero { padding: 5rem 0 4rem; border-bottom: 1px solid #888; }
+#sf-embed .gear-hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: center; }
+#sf-embed .gear-hero h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -.055em; margin: 1.25rem 0 1.5rem; }
+#sf-embed .gear-hero-copy > p { max-width: 520px; font-size: 1.05rem; line-height: 1.7; }
+#sf-embed .gear-hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+#sf-embed .gear-hero-actions .sf-btn { min-height: 48px; font-size: .75rem; }
+#sf-embed .gear-hero-copy .gear-hero-note { font-size: .75rem; margin-top: 1.5rem; }
+#sf-embed .gear-hero-image { margin: 0; position: relative; }
+#sf-embed .gear-hero-image img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+#sf-embed .gear-hero-image figcaption { margin-top: .75rem; font: .7rem 'Geist Mono', monospace; color: var(--text-muted); }
+#sf-embed .sf-how-strip { padding: 4rem 0; border-bottom: 1px solid #888; scroll-margin-top: 7rem; }
+#sf-embed .sf-how-header { margin-bottom: 2rem; }
+#sf-embed .sf-how-header h2, #sf-embed .sf-gear-section h2, #sf-embed .home-packages h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+#sf-embed .sf-how-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+#sf-embed .sf-how-num { font: .7rem 'Geist Mono', monospace; text-transform: uppercase; margin-bottom: .7rem; color: var(--text-muted); }
+#sf-embed .sf-how-step h3 { font-size: 1.15rem; margin-bottom: .6rem; }
+#sf-embed .sf-how-step p { font-size: .9rem; }
+#sf-embed .sf-how-step a { text-decoration: underline; cursor: pointer; }
+#sf-embed .sf-gear-section { padding: 4rem 0; scroll-margin-top: 7rem; }
+#sf-embed .sf-gear-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+#sf-embed .sf-filter-btn { font: .75rem 'Geist Mono', monospace; padding: .7rem 1.2rem; min-height: 48px; border: 1px solid #888; color: var(--text-main); background: transparent; cursor: pointer; }
+#sf-embed .sf-filter-btn.active { background: var(--text-main); color: var(--bg-dark); }
+#sf-embed .sf-gear-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+#sf-embed .sf-gear-card { min-width: 0; border: 1px solid #888; background: var(--bg-panel); display: flex; flex-direction: column; scroll-margin-top: 7rem; }
+#sf-embed .sf-gear-card.sf-hidden { display: none; }
+/* Spotlight backdrop from the old gear page: cream radial gradient + soft drop-shadow gives the product depth */
+#sf-embed .sf-gear-img-wrap { position: relative; aspect-ratio: 16 / 10; padding: 1.5rem; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle at center, #f4efe6 0%, #e5ddd0 100%); border-bottom: 1px solid #888; overflow: hidden; }
+#sf-embed .sf-gear-img-wrap img { max-height: 180px; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(41, 40, 36, .18)); transition: transform .5s ease; }
+#sf-embed .sf-gear-card:hover .sf-gear-img-wrap img { transform: scale(1.05); }
+#sf-embed .sf-gear-info { display: flex; flex-direction: column; flex: 1; padding: 1.5rem; }
+#sf-embed .sf-gear-tag-row { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+#sf-embed .sf-gear-category { font: .65rem 'Geist Mono', monospace; text-transform: uppercase; color: var(--text-muted); }
+#sf-embed .sf-gear-badge { font: .8rem 'Geist Mono', monospace; color: var(--text-main); }
+#sf-embed .sf-gear-title { font-size: 1.1rem; line-height: 1.35; margin-bottom: 1rem; }
+#sf-embed .sf-gear-desc-block { margin-bottom: 1.25rem; }
+#sf-embed .sf-gear-desc-block p { font-size: .9rem; }
+#sf-embed .sf-gear-desc-title { font: .7rem 'Geist Mono', monospace; margin-bottom: .75rem; text-transform: uppercase; }
+#sf-embed .sf-gear-kit-list { list-style: none; display: grid; gap: .4rem; padding-top: 1rem; border-top: 1px solid #888; margin-bottom: 1.25rem; }
+#sf-embed .sf-gear-kit-list li { font-size: .8rem; color: var(--text-muted); }
+#sf-embed .sf-gear-kit-list strong { font: .75rem 'Geist Mono', monospace; }
+#sf-embed .sf-gear-book-link { display: flex; justify-content: space-between; gap: 1rem; align-items: center; min-height: 48px; margin-top: auto; padding-top: 1rem; border-top: 1px solid #888; font: .7rem 'Geist Mono', monospace; text-transform: uppercase; }
+#sf-embed .sf-inventory-cta { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #888; }
+#sf-embed .sf-inventory-cta-text { max-width: 600px; }
+#sf-embed .sf-inventory-cta h3 { font-size: 1.3rem; margin-bottom: .75rem; }
+#sf-embed .sf-inventory-cta p { font-size: .95rem; }
+#sf-embed .sf-testimonial-strip { padding: 4rem 0; border-top: 1px solid #888; background: var(--bg-panel); text-align: center; }
+#sf-embed .sf-testimonial-wrap { position: relative; max-width: 850px; margin: 0 auto; min-height: 150px; display: flex; align-items: center; justify-content: center; }
+#sf-embed .sf-testimonial-item { position: absolute; opacity: 0; pointer-events: none; width: 100%; }
+#sf-embed .sf-testimonial-item.active { position: relative; opacity: 1; pointer-events: auto; }
+#sf-embed .sf-testimonial-quote { font-size: 1.1rem; margin-bottom: 1rem; }
+#sf-embed .sf-testimonial-rented, #sf-embed .sf-testimonial-author { display: block; font: .7rem 'Geist Mono', monospace; color: var(--text-muted); margin-top: .75rem; }
+#sf-embed .home-packages { padding: 4rem 0; border-bottom: 1px solid #888; }
+#sf-embed .home-packages-head { margin-bottom: 2.5rem; max-width: 650px; }
+#sf-embed .home-packages-head h2 { margin-bottom: .75rem; }
+#sf-embed .home-package-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+#sf-embed .home-package { display: flex; flex-direction: column; align-items: flex-start; border-top: 2px solid #888; padding-top: 1.5rem; gap: .75rem; }
+#sf-embed .home-package:last-child { border-top-color: #888; }
+#sf-embed .home-package h3 { font-size: 1.3rem; }
+#sf-embed .home-package .home-package-price { font: 500 2.3rem 'Geist Mono', monospace; color: var(--text-main); }
+#sf-embed .home-package-price span { font-size: .8rem; }
+#sf-embed .home-package-week { font: .75rem 'Geist Mono', monospace; }
+#sf-embed .home-package > p { font-size: .95rem; }
+#sf-embed .home-package-link { display: flex; justify-content: space-between; gap: 1rem; width: 100%; margin-top: auto; padding: 1.2rem 0 .5rem; font: .75rem 'Geist Mono', monospace; text-decoration: underline; text-underline-offset: .3em; }
+#sf-embed .basecamp-section { padding: 4rem 0; border-bottom: 1px solid #888; }
+#sf-embed .basecamp-section-heading { max-width: 680px; margin-bottom: 2rem; }
+#sf-embed .basecamp-section-heading h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+#sf-embed .basecamp-section-heading p { margin-top: .5rem; color: var(--text-muted); }
+#sf-embed .basecamp-package { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; min-width: 0; border: 1px solid #888; background: var(--bg-panel); }
+#sf-embed .basecamp-package-image,
+#sf-embed .basecamp-product-image { box-sizing: border-box; width: 100%; min-width: 0; aspect-ratio: 16 / 10; padding: 1.5rem; display: flex; justify-content: center; align-items: center; overflow: hidden; background: radial-gradient(circle at center, #f0eadf 0%, #c5bcad 100%); }
+#sf-embed .basecamp-package-image,
+#sf-embed .basecamp-product-image { margin: 0; }
+#sf-embed .basecamp-package-image { height: 100%; }
+#sf-embed .basecamp-package-image img,
+#sf-embed .basecamp-product-image img { display: block; width: 100%; max-width: 100%; height: 100%; max-height: 260px; object-fit: contain; filter: drop-shadow(0 10px 18px rgba(27, 28, 31, .18)); }
+/* A real on-set photo fills the well instead of floating on bone. */
+#sf-embed .basecamp-package-image--photo { padding: 0; }
+#sf-embed .basecamp-package-image--photo img { max-height: none; object-fit: cover; object-position: 62% center; filter: none; }
+#sf-embed .basecamp-package-info { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; padding: 2rem; }
+#sf-embed .basecamp-package-info h3 { margin: .5rem 0 1rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+#sf-embed .basecamp-price { margin-bottom: 1rem; font: 500 2rem 'Geist Mono', monospace; }
+#sf-embed .basecamp-price span { font-size: .8rem; }
+#sf-embed .basecamp-package-info p { margin-bottom: 1.5rem; }
+#sf-embed .basecamp-package-info .sf-btn,
+#sf-embed .basecamp-product-cta { min-height: 48px; }
+#sf-embed .basecamp-product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+#sf-embed .basecamp-product-card { min-width: 0; border: 1px solid #888; background: var(--bg-panel); display: flex; flex-direction: column; }
+#sf-embed .basecamp-product-image { border-bottom: 1px solid #888; }
+/* Every product well is the same box so the cards line up. */
+#sf-embed .basecamp-product-image { aspect-ratio: 8 / 7; }
+#sf-embed .basecamp-product-image img { max-height: 390px; }
+#sf-embed .basecamp-product-info { display: flex; flex: 1; flex-direction: column; padding: 1.25rem; }
+#sf-embed .basecamp-product-tag { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; font: .7rem 'Geist Mono', monospace; text-transform: uppercase; }
+#sf-embed .basecamp-product-tag span:first-child { color: var(--text-muted); }
+#sf-embed .basecamp-product-info h3 { margin-bottom: .75rem; font-size: 1.1rem; line-height: 1.35; }
+#sf-embed .basecamp-product-info p { margin-bottom: 1rem; font-size: .9rem; }
+#sf-embed .basecamp-product-specs { display: grid; gap: .35rem; margin: 0 0 1rem; padding: 0; list-style: none; color: var(--text-muted); font-size: .82rem; }
+#sf-embed .basecamp-product-cta { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: auto; padding-top: .8rem; border-top: 1px solid #888; font: .7rem 'Geist Mono', monospace; text-transform: uppercase; }
+#sf-embed a.basecamp-product-cta { color: var(--text-main); text-decoration: none; font-size: .8rem; }
+#sf-embed a.basecamp-product-cta:hover { color: #766137; }
+#sf-embed .gear-hero a:focus-visible, #sf-embed .sf-gear-section :focus-visible, #sf-embed .basecamp-section a:focus-visible, #sf-embed .home-package:focus-visible { outline: 2px solid #b89b43; outline-offset: 4px; }
+.rental-home #sf-embed .sf-hero { min-height: 65vh; }
+@media (max-width: 900px) {
+  #sf-embed .gear-hero { padding: 2.5rem 0 3rem; }
+  #sf-embed .gear-hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+  #sf-embed .gear-hero h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
+  #sf-embed .gear-hero-image img { aspect-ratio: 16 / 9; max-height: 340px; }
+  #sf-embed .sf-gear-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+  #sf-embed .basecamp-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #sf-embed .basecamp-package { grid-template-columns: minmax(0, 1fr); }
+  #sf-embed .basecamp-package-image { height: auto; }
+  #sf-embed .sf-how-steps, #sf-embed .home-package-grid { grid-template-columns: 1fr; gap: 2rem; }
+  #sf-embed .sf-how-step { border-top: 1px solid #888; padding-top: 1.25rem; }
+  #sf-embed .sf-inventory-cta { flex-direction: column; align-items: flex-start; }
+  .gear-page #sf-embed .sf-nav-link span, .rental-home #sf-embed .sf-nav-link span, .basecamp-page #sf-embed .sf-nav-link span { display: inline; }
+  .gear-page #sf-embed .sf-nav-link i, .rental-home #sf-embed .sf-nav-link i, .basecamp-page #sf-embed .sf-nav-link i { display: none; }
+  .gear-page #sf-embed .sf-nav-link, .rental-home #sf-embed .sf-nav-link, .basecamp-page #sf-embed .sf-nav-link { font-size: .68rem; min-height: 44px; }
+  .gear-page #sf-embed .sf-nav-menu, .rental-home #sf-embed .sf-nav-menu, .basecamp-page #sf-embed .sf-nav-menu { gap: 1rem; flex-wrap: wrap; }
+  .gear-page #sf-embed .sf-nav-inner, .rental-home #sf-embed .sf-nav-inner, .basecamp-page #sf-embed .sf-nav-inner { gap: .3rem; }
+  .gear-page #nav-placeholder, .rental-home #nav-placeholder, .basecamp-page #nav-placeholder { background: var(--bg-dark); }
+  .gear-page #sf-embed .sf-floating-contact, .rental-home #sf-embed .sf-floating-contact, .basecamp-page #sf-embed .sf-floating-contact { position: static; border-radius: 0; box-shadow: none; margin: 0; min-height: 44px; width: 100%; justify-content: center; border: 0; border-bottom: 1px solid #888; }
+}
+@media (max-width: 540px) {
+  #sf-embed .sf-container { padding-left: 1.25rem; padding-right: 1.25rem; }
+  #sf-embed .sf-gear-grid { grid-template-columns: 1fr; }
+  #sf-embed .basecamp-product-grid { grid-template-columns: 1fr; }
+  #sf-embed .basecamp-package-info { padding: 1.25rem; }
+  #sf-embed .gear-hero-actions { flex-direction: column; align-items: stretch; }
+  #sf-embed .gear-hero-actions .sf-btn { width: 100%; }
+  #sf-embed .rental-package, #sf-embed #packages, #sf-embed #inventory { scroll-margin-top: 12rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sf-embed .reveal { opacity: 1; transform: none; transition: none; }
+  #sf-embed *, #sf-embed *::before, #sf-embed *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Individual gear and step 1: one pair of matching buttons (filled + outline), same size and type */
+#sf-embed .sf-gear-actions { margin-top: auto; padding-top: 1rem; border-top: 1px solid #888; display: grid; gap: .6rem; }
+#sf-embed .sf-gear-actions .sf-gear-add,
+#sf-embed .sf-gear-actions .sf-gear-book-link,
+#sf-embed .sf-how-actions .sf-btn {
+  display: flex; align-items: center; justify-content: center; gap: .6rem;
+  width: 100%; min-height: 48px; margin: 0; padding: .75rem 1rem; box-sizing: border-box;
+  font: 500 .85rem 'Geist Mono', monospace; letter-spacing: .02em; text-transform: uppercase; text-align: center;
+  text-decoration: none; border-radius: 0; cursor: pointer;
+}
+#sf-embed .sf-gear-actions .sf-gear-book-link span { font: inherit; }
+#sf-embed .sf-gear-actions .sf-gear-book-link,
+#sf-embed .sf-how-actions .sf-btn-outline { background: transparent; color: #f2ede3; border: 1px solid #888; }
+#sf-embed .sf-gear-actions .sf-gear-book-link:hover,
+#sf-embed .sf-how-actions .sf-btn-outline:hover { border-color: #b89b43; }
+#sf-embed .sf-gear-add.is-added { background: transparent; border: 1px solid #b89b43; color: #f2ede3; }
+
+/* From kit to set: step actions and date inputs */
+#sf-embed .sf-how-actions { display: grid; gap: .6rem; margin-top: 1rem; }
+#sf-embed .sf-how-actions[hidden] { display: none; }
+#sf-embed .sf-how-dates { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: 1rem; }
+#sf-embed .sf-how-dates label { display: block; font: .72rem 'Geist Mono', monospace; letter-spacing: .06em; text-transform: uppercase; color: #c8c3b7; }
+#sf-embed .sf-how-dates input { display: block; width: 100%; min-height: 48px; box-sizing: border-box; margin-top: .4rem; padding: .6rem .7rem; background: #242528; color: #f2ede3; border: 1px solid #888; border-radius: 0; font: inherit; color-scheme: dark; }
+#sf-embed .sf-how-dates input:focus-visible { outline: 2px solid #766137; outline-offset: 0; }
+@media (max-width: 420px) { #sf-embed .sf-how-dates { grid-template-columns: 1fr; } }
+
+/* Basecamp package: existing equipment photos share one square, warm backdrop. */
+#sf-embed .basecamp-package-mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  align-self: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  background: radial-gradient(ellipse at 35% 25%, #f0eadf, #c5bcad);
+}
+#sf-embed .basecamp-package-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 1.1rem .75rem .75rem;
+  border: 1px solid rgba(98, 96, 88, .12);
+}
+#sf-embed .basecamp-package-tile img {
+  width: 100%;
+  height: 0;
+  flex: 1;
+  min-height: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 7px 9px rgba(27, 28, 31, .18));
+}
+#sf-embed .basecamp-package-tile figcaption {
+  width: 100%;
+  min-height: 2.6em;
+  margin-top: .35rem;
+  color: var(--text-main);
+  text-align: center;
+  font: .7rem/1.4 'Geist Mono', monospace;
+}
+#sf-embed .basecamp-quantity {
+  position: absolute;
+  top: .6rem;
+  right: .6rem;
+  z-index: 1;
+  padding: .15rem .4rem;
+  background: #f4efe6;
+  border: 1px solid #927a47;
+  color: #252629;
+  font: 600 .85rem 'Geist Mono', monospace;
+}
+#sf-embed .basecamp-package-includes {
+  padding-left: 1.15rem;
+  margin: 0 0 1.25rem;
+  color: var(--text-muted);
+}
+#sf-embed .basecamp-package-includes li { margin-bottom: .45rem; }
+#sf-embed .basecamp-upgrade { font-size: .9rem; }
+#sf-embed .basecamp-options li {
+  display: flex;
+  flex-direction: column;
+  padding: .55rem 0;
+  border-top: 1px solid var(--border-color);
+}
+#sf-embed .basecamp-options strong { color: var(--text-main); font-weight: 500; }
+#sf-embed .basecamp-product-image--jug img { width: 56%; height: 56%; }
+#sf-embed .basecamp-product-info .basecamp-product-cta,
+#sf-embed .basecamp-package-info > .sf-btn {
+  display: flex;
+  justify-content: center;
+  gap: .6rem;
+  width: 100%;
+  min-height: 48px;
+  padding: .8rem 1rem;
+  margin-top: auto;
+  font: 500 .85rem 'Geist Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  border-radius: 0;
+}
+#sf-embed .basecamp-product-info .basecamp-product-cta span { font: inherit; }
+#sf-embed .basecamp-selector {
+  display: grid;
+  gap: .4rem;
+  margin: 0 0 1rem;
+  color: var(--text-main);
+  font: .75rem 'Geist Mono', monospace;
+}
+#sf-embed .basecamp-selector select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: .65rem .5rem;
+  border: 1px solid #927a47;
+  border-radius: 0;
+  background: #f4efe6;
+  color: #252629;
+  font: inherit;
+}
+#sf-embed .basecamp-reference-photo { mix-blend-mode: multiply; }
+#sf-embed #tableImage.basecamp-reference-photo { width: 70%; height: 70%; }
+@media (max-width: 380px) {
+  #sf-embed .basecamp-package-tile { padding: .5rem; }
+  #sf-embed .basecamp-package-tile figcaption { font-size: .6rem; }
+}

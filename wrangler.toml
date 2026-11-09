@@ -1,0 +1,18 @@
+name = "sweetfly-shop"
+compatibility_date = "2026-06-22"
+pages_build_output_dir = "."
+
+# Create these once (see CHECKOUT-SETUP.md), then paste the D1 id below:
+#   npx wrangler d1 create sweetfly-shop
+#   npx wrangler r2 bucket create sweetfly-shop-private     (keep it PRIVATE - no public URL)
+[[d1_databases]]
+binding = "DB"
+database_name = "sweetfly-shop"
+database_id = "238aac7d-8d23-489a-9f16-3552911ca501"
+
+[[r2_buckets]]
+binding = "DOCS"
+bucket_name = "sweetfly-shop-private"
+
+# Secrets (never commit): STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, ADMIN_TOKEN
+# Optional: NOTIFY_WEBHOOK_URL + NOTIFY_WEBHOOK_SECRET (n8n), TURNSTILE_SECRET

@@ -1,0 +1,640 @@
+/* Shared light system for Home, Gear, Basecamp and Cart. */
+html body:is(.rental-home, .gear-page, .basecamp-page) {
+  background: #e9e2d6;
+  border-color: #e9e2d6;
+}
+
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed {
+  --bg-dark: #e9e2d6;
+  --bg-panel: #f4efe6;
+  --text-main: #252629;
+  --text-muted: #626058;
+  --border-color: #b7ad9d;
+  --accent: #a58c55;
+  --accent-hover: #dbcdb2;
+  --gold: #a58c55;
+  --shop-focus: #766137;
+  --shop-button-rule: #927a47;
+  --shop-selected: #e5d8bf;
+  color-scheme: light;
+}
+
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-navbar {
+  background: rgba(244, 239, 230, .98);
+  border-bottom-color: var(--border-color);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-link,
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-link i {
+  color: var(--text-main);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-link:hover {
+  color: var(--shop-focus);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-cart .sf-cart-dates {
+  color: var(--text-muted);
+}
+html body #sf-embed .cart-control-hidden {
+  display: none !important;
+}
+html body #sf-embed .cart-paused-note {
+  display: block;
+  padding: 8rem 0 6rem;
+}
+html body #sf-embed .cart-paused-note .sf-container {
+  max-width: 46rem;
+}
+html body #sf-embed .cart-paused-note p {
+  color: var(--text-muted);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-cart .sf-cart-count {
+  background: #e5d8bf;
+  color: #252629;
+  border: 1px solid #766137;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-shop-core img {
+  filter: brightness(0) !important;
+}
+
+/* Product imagery sits in the hero itself, like a quiet equipment collage. */
+html body.rental-home #sf-embed .sf-hero {
+  min-height: 0;
+  background: #e9e2d6;
+  border-bottom: 1px solid #b7ad9d;
+}
+html body.rental-home #sf-embed .sf-hero-grid {
+  position: relative;
+  display: block;
+  min-height: 400px;
+}
+html body.rental-home #sf-embed .sf-hero-content {
+  padding: 3rem 0;
+}
+html body.rental-home #sf-embed .sf-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 50%;
+}
+html body.rental-home #sf-embed .sf-hero-copy h1 {
+  margin-bottom: 1.25rem;
+  color: #252629 !important;
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -.04em;
+}
+html body.rental-home #sf-embed .sf-hero-copy > .reveal:first-child .sf-label {
+  color: #766137 !important;
+}
+html body.rental-home #sf-embed .sf-hero-copy > p {
+  color: #626058;
+}
+html body.rental-home #sf-embed .sf-hero-category-line {
+  color: #766137;
+  font: .72rem 'Geist Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+html body.rental-home #sf-embed .sf-hero-actions .sf-btn-ghost {
+  border-color: #927a47;
+  color: #252629 !important;
+}
+html body.rental-home #sf-embed .sf-hero-actions .sf-btn-ghost:hover {
+  background: #e5d8bf;
+  border-color: #766137;
+  color: #252629 !important;
+}
+html body.rental-home #sf-embed .sf-hero-gear {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 0 48%;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 68% 52%, rgba(244, 239, 230, .9) 0%, rgba(233, 226, 214, 0) 70%);
+}
+html body.rental-home #sf-embed .sf-hero-gear-card {
+  position: absolute;
+  display: block;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+html body.rental-home #sf-embed .sf-hero-gear-card:nth-child(1) {
+  left: 1%;
+  top: 17%;
+  width: 42%;
+  height: 66%;
+  z-index: 2;
+}
+html body.rental-home #sf-embed .sf-hero-gear-card:nth-child(2) {
+  left: 37%;
+  top: 2%;
+  width: 39%;
+  height: 63%;
+  z-index: 1;
+}
+html body.rental-home #sf-embed .sf-hero-gear-card:nth-child(3) {
+  right: 0;
+  bottom: 1%;
+  width: 48%;
+  height: 61%;
+  z-index: 3;
+}
+html body.rental-home #sf-embed .sf-hero-gear-well {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background: transparent;
+}
+html body.rental-home #sf-embed .sf-hero-gear-well img {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: contain;
+  filter: sepia(.08) saturate(.9) drop-shadow(0 12px 16px rgba(41, 40, 36, .22));
+}
+html body.rental-home #sf-embed .sf-hero-gear-card > span {
+  position: absolute;
+  left: 0;
+  bottom: .1rem;
+  padding: .35rem .5rem;
+  border-left: 2px solid #a58c55;
+  background: rgba(244, 239, 230, .88);
+  color: #252629;
+  font: .62rem 'Geist Mono', monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero {
+  min-height: 0;
+  padding: 3rem 0 3.5rem;
+  background: #e9e2d6;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero-grid {
+  position: relative;
+  display: block;
+  min-height: 370px;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 50%;
+  padding: 1.5rem 0;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero h1 {
+  color: #252629;
+  font-size: clamp(3rem, 6vw, 4.8rem);
+  line-height: 1.05;
+  letter-spacing: -.05em;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero-copy > p {
+  color: #626058;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero .sf-hero-gear {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 0 48%;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 68% 52%, rgba(244, 239, 230, .9) 0%, rgba(233, 226, 214, 0) 70%);
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .sf-hero-gear-card {
+  position: absolute;
+  display: block;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .sf-hero-gear-card:nth-child(1) {
+  left: 1%;
+  top: 17%;
+  width: 42%;
+  height: 66%;
+  z-index: 2;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .sf-hero-gear-card:nth-child(2) {
+  left: 37%;
+  top: 2%;
+  width: 39%;
+  height: 63%;
+  z-index: 1;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .sf-hero-gear-card:nth-child(3) {
+  right: 0;
+  bottom: 1%;
+  width: 48%;
+  height: 61%;
+  z-index: 3;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .sf-hero-gear-well {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background: transparent;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .sf-hero-gear-well img {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: contain;
+  filter: sepia(.08) saturate(.9) drop-shadow(0 12px 16px rgba(41, 40, 36, .22));
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .sf-hero-gear-card > span {
+  position: absolute;
+  left: 0;
+  bottom: .1rem;
+  padding: .35rem .5rem;
+  border-left: 2px solid #a58c55;
+  background: rgba(244, 239, 230, .88);
+  color: #252629;
+  font: .62rem 'Geist Mono', monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+html body #sf-embed .shop-paths {
+  padding: .85rem 0 1.25rem;
+  border-bottom: 1px solid #b7ad9d;
+  background: #e9e2d6;
+}
+html body #sf-embed .shop-paths-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .65rem;
+}
+html body #sf-embed .shop-path-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .75rem 1rem;
+  border: 1px solid #b7ad9d;
+  background: #f4efe6;
+  color: #252629;
+  text-decoration: none;
+  transition: background-color .18s ease, border-color .18s ease;
+}
+html body #sf-embed .shop-path-card:hover {
+  background: #e5d8bf;
+  border-color: #766137;
+}
+html body #sf-embed .shop-path-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  font-size: .95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+html body #sf-embed .shop-path-title i {
+  color: #766137;
+  font-size: .75rem;
+}
+@media (max-width: 900px) {
+  html body.rental-home #sf-embed .sf-hero-grid {
+    min-height: 460px;
+  }
+  html body.rental-home #sf-embed .sf-hero-content {
+    padding: 2.5rem 0;
+  }
+  html body.rental-home #sf-embed .sf-hero-copy {
+    max-width: 82%;
+  }
+  html body.rental-home #sf-embed .sf-hero-gear {
+    inset: 0 0 0 18%;
+    opacity: .28;
+  }
+  html body.rental-home #sf-embed .sf-hero-copy h1 {
+    font-size: clamp(3rem, 10vw, 4.5rem);
+  }
+  html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero {
+    padding: 2.5rem 0 3rem;
+  }
+  html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero-grid {
+    min-height: 460px;
+  }
+  html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero-copy {
+    max-width: 82%;
+  }
+  html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero .sf-hero-gear {
+    inset: 0 0 0 18%;
+    opacity: .28;
+  }
+}
+@media (max-width: 380px) {
+  html body.rental-home #sf-embed .sf-hero-grid,
+  html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero-grid {
+    min-height: 500px;
+  }
+  html body.rental-home #sf-embed .sf-hero-copy,
+  html body:is(.gear-page, .basecamp-page) #sf-embed .gear-hero-copy {
+    max-width: 100%;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-hero-gear {
+    inset: 5% 0 0 0;
+    opacity: .2;
+  }
+}
+@media (max-width: 460px) {
+  html body #sf-embed .shop-paths-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 900px) {
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: .5rem;
+    text-align: left;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-menu {
+    width: auto;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: .8rem;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-link {
+    min-height: 44px;
+    font-size: .66rem;
+    white-space: nowrap;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-link i {
+    display: none;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-link span {
+    display: inline;
+  }
+}
+@media (max-width: 380px) {
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-shop-brand {
+    width: 112px;
+    gap: 3px;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-shop-core {
+    width: 70px;
+    flex-basis: 70px;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-shop-brand .sf-shop-core > img {
+    width: 99px;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-shop-badge {
+    width: 36px;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-menu {
+    gap: .45rem;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-nav-link {
+    font-size: .6rem;
+  }
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .rental-packages {
+  --rental-ground: #e9e2d6;
+  --rental-text: #252629;
+  --rental-muted: #626058;
+  --rental-rule: #b7ad9d;
+  --rental-gold: #a58c55;
+  background: linear-gradient(#dfd5c5 0, var(--rental-ground) 8rem);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.rent-strip, .home-packages, .sf-how-strip, .sf-testimonial-strip) {
+  background-color: var(--bg-panel);
+}
+html body.gear-page #sf-embed :is(.gear-hero, .sf-gear-section) {
+  background-color: var(--bg-dark);
+}
+html body.gear-page #sf-embed .gear-hero {
+  --text-main: #252629;
+  --text-muted: #626058;
+  color: var(--text-main);
+  border-bottom-color: var(--border-color);
+}
+html body.basecamp-page #sf-embed .gear-hero {
+  --text-main: #252629;
+  --text-muted: #626058;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  border-bottom-color: var(--border-color);
+}
+html body:is(.rental-home, .gear-page) #sf-embed :is(.rent-card, .rent-mini, .sf-gear-card) {
+  border-color: var(--border-color);
+}
+html body.basecamp-page #sf-embed :is(.basecamp-section, .basecamp-package, .basecamp-product-card) {
+  border-color: var(--border-color);
+}
+html body.basecamp-page #sf-embed :is(.basecamp-package, .basecamp-product-card) {
+  background: var(--bg-panel);
+}
+html body.rental-home #sf-embed .rent-card-body {
+  background: var(--bg-panel);
+}
+
+/* Option C: neutral fill and a fine brass outline, including secondary actions. */
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.sf-btn, .sf-filter-btn, .rental-tier-tile, .rental-package-cta, .sf-gear-book-link, .basecamp-product-cta) {
+  background: #f4efe6;
+  border: 1px solid var(--shop-button-rule);
+  color: #252629 !important;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.sf-hero, .gear-hero) .sf-btn {
+  background: #f4efe6;
+  border: 1px solid var(--shop-button-rule);
+  color: #252629 !important;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.sf-btn, .sf-filter-btn, .rental-tier-tile, .rental-package-cta, .sf-gear-book-link, .basecamp-product-cta):hover {
+  background: #e9dfce;
+  border-color: #766137;
+  color: #252629 !important;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.sf-hero, .gear-hero) .sf-btn:hover {
+  background: #e9dfce;
+  border-color: #766137;
+  color: #252629 !important;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.sf-filter-btn.active, .rental-tier-tile.is-active, .sf-gear-add.is-added, .rental-package-cta.is-added) {
+  background: var(--shop-selected);
+  border-color: var(--shop-focus);
+  box-shadow: inset 0 0 0 1px var(--shop-focus);
+  color: #252629 !important;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-how-dates label {
+  color: var(--text-muted);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-how-dates input {
+  background: var(--bg-panel);
+  color: var(--text-main);
+  border-color: #8b816f;
+  color-scheme: light;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :focus-visible {
+  outline: 2px solid var(--shop-focus);
+  outline-offset: 4px;
+}
+html body.rental-home #sf-embed .sf-hero :focus-visible {
+  outline-color: #e5d8bf;
+}
+
+/* Quiet supporting areas; photography wells and drop shadows are inherited. */
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-footer {
+  background: #dfd5c5;
+  color: var(--text-muted);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.sf-footer-title, .sf-footer-brand p, .sf-footer-links a, .sf-testimonial-quote) {
+  color: var(--text-main) !important;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed :is(.sf-footer-bottom, .sf-testimonial-rented, .sf-testimonial-author) {
+  color: var(--text-muted);
+  border-color: var(--border-color);
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .sf-cart-count {
+  background: #e5d8bf;
+  color: #252629;
+  border: 1px solid #766137;
+}
+
+/* One header template: the Shop establishes type, spacing and single-image scale. */
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-grid {
+  min-height: 400px;
+}
+html body:is(.gear-page, .basecamp-page) #sf-embed .shop-page-hero {
+  padding: 3rem 0;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-copy {
+  padding: 0;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -.04em;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-label {
+  color: #766137 !important;
+}
+html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .gear-hero-actions .sf-btn {
+  min-height: 48px;
+  font-size: .75rem;
+}
+@media (max-width: 900px) {
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-grid {
+    min-height: 460px;
+  }
+  html body:is(.gear-page, .basecamp-page) #sf-embed .shop-page-hero {
+    padding: 2.5rem 0;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero h1 {
+    font-size: clamp(3rem, 10vw, 4.5rem);
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-gear {
+    inset: 0 0 0 18%;
+    opacity: 1;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-gear-card:first-child {
+    top: 50%;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-gear-card > span {
+    display: none;
+  }
+}
+@media (max-width: 540px) {
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .gear-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .gear-hero-actions .sf-btn {
+    width: 100%;
+  }
+}
+@media (max-width: 380px) {
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-grid {
+    min-height: 500px;
+  }
+  html body:is(.rental-home, .gear-page, .basecamp-page) #sf-embed .shop-page-hero .sf-hero-gear {
+    inset: 5% 0 0 0;
+  }
+}
+
+/* Primary booking actions use a stronger brass state; browsing actions stay Option C. */
+html body.basecamp-page #sf-embed .basecamp-package-info a[href*="add=set-ready"] {
+  background: #766137;
+  border-color: #766137;
+  color: #f4efe6 !important;
+}
+html body.basecamp-page #sf-embed .basecamp-package-info a[href*="add=set-ready"]:hover {
+  background: #66522a;
+  border-color: #66522a;
+  color: #f4efe6 !important;
+}
+
+/* Cart form surfaces, selected states and price hierarchy follow the same palette. */
+html body.basecamp-page #sf-embed .co-panel {
+  background: var(--bg-panel);
+  border-color: var(--border-color);
+}
+html body.basecamp-page #sf-embed :is(.co-panel .co-sub, .co-field label, .co-item-rate, .co-choice span, .co-hint, .co-total-note, .co-meta, .co-note, .co-steps) {
+  color: var(--text-muted);
+}
+html body.basecamp-page #sf-embed .co-field :is(input:not([type=file]):not([type=radio]):not([type=checkbox]), textarea),
+html body.basecamp-page #sf-embed .co-file input,
+html body.basecamp-page #sf-embed .co-qty button {
+  background: #e9e2d6;
+  color: var(--text-main);
+  border-color: var(--border-color);
+  color-scheme: light;
+}
+html body.basecamp-page #sf-embed :is(.co-field input:focus, .co-field textarea:focus, :focus-visible) {
+  outline: 2px solid var(--shop-focus);
+  outline-offset: 3px;
+}
+html body.basecamp-page #sf-embed :is(.co-group, .co-details > summary, .co-terms a) {
+  color: #766137;
+}
+html body.basecamp-page #sf-embed .co-lines .co-empty {
+  color: var(--text-muted);
+}
+html body.basecamp-page #sf-embed :is(.co-details, .co-item, .co-lines li) {
+  border-color: var(--border-color);
+}
+html body.basecamp-page #sf-embed :is(.co-details > summary::after, .co-group-count, .co-item.is-unavail .co-item-name) {
+  color: var(--text-main);
+}
+html body.basecamp-page #sf-embed .co-item-flag,
+html body.basecamp-page #sf-embed .co-error {
+  color: #66522a;
+}
+html body.basecamp-page #sf-embed .co-choice {
+  border-color: var(--border-color);
+}
+html body.basecamp-page #sf-embed :is(.co-choice input, .co-terms input) {
+  accent-color: #766137;
+}
+html body.basecamp-page #sf-embed .co-choice:has(input:checked) {
+  background: #e5d8bf;
+  border-color: #766137;
+}
+html body.basecamp-page #sf-embed .co-file input {
+  border-style: dashed;
+}
+html body.basecamp-page #sf-embed .co-notice {
+  background: #e9e2d6;
+  border-left-color: #766137;
+  color: var(--text-main);
+}
+html body.basecamp-page #sf-embed .co-total {
+  border-top-color: #a58c55;
+}
+html body.basecamp-page #sf-embed .co-submit {
+  background: #766137;
+  border: 1px solid #766137;
+  color: #f4efe6 !important;
+}
+html body.basecamp-page #sf-embed .co-submit:hover:not([disabled]) {
+  background: #66522a;
+  border-color: #66522a;
+}
+html body.basecamp-page #sf-embed .co-submit[disabled] {
+  opacity: .6;
+}

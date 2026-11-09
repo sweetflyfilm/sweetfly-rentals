@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Now | Sweet Flypaper Film</title>
+<title>Book Gear | The Shop</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -148,29 +148,6 @@
   #sf-embed .step-title { font-size: 2.5rem; margin: 0 0 10px; font-weight: 600; letter-spacing: -0.02em; }
   #sf-embed .step-desc { max-width: 650px; margin: 0 auto; color: var(--text-muted) !important;}
 
-  /* ── LEAN STUDIO CARDS ── */
-  #sf-embed .lean-studio-grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
-  #sf-embed .lean-studio-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 6px; padding: 20px 25px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-  #sf-embed .lean-studio-card:hover { border-color: var(--text-muted); transform: translateY(-2px); }
-  #sf-embed .lean-studio-card.selected { border-color: var(--booking-accent); background: rgba(255, 255, 255, 0.03); }
-  
-  #sf-embed .lsc-left { display: flex; align-items: flex-start; gap: 20px; flex: 1;}
-  #sf-embed .lsc-radio { margin-top: 2px; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
-  #sf-embed .lean-studio-card.selected .lsc-radio { border-color: var(--booking-accent); background: var(--booking-accent); }
-  #sf-embed .lean-studio-card.selected .lsc-radio::after { content: ''; width: 8px; height: 8px; background: var(--bg-dark); border-radius: 50%; }
-  
-  #sf-embed .lsc-info h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main) !important;}
-  #sf-embed .lsc-bullets { list-style: none; padding: 0; margin: 0; }
-  #sf-embed .lsc-bullets li { font-size: 0.85rem; color: var(--text-muted) !important; position: relative; padding-left: 12px; margin-bottom: 4px; }
-  #sf-embed .lsc-bullets li::before { content: '•'; position: absolute; left: 0; color: var(--booking-accent); }
-  
-  #sf-embed .lsc-price { font-size: 1.5rem; font-weight: 700; color: var(--booking-accent); white-space: nowrap; }
-
-  @media(max-width: 600px) {
-      #sf-embed .lean-studio-card { flex-direction: column; align-items: flex-start; }
-      #sf-embed .lsc-price { align-self: flex-end; font-size: 1.25rem; margin-top: -10px; }
-  }
-
   /* ── RICH SALES CARDS (GEAR & KITS) ── */
   #sf-embed .alc-section { margin-bottom: 60px; transition: opacity 0.3s; }
   #sf-embed .alc-section.dimmed { opacity: 0.3; pointer-events: none; filter: grayscale(50%); }
@@ -249,8 +226,9 @@
       box-shadow: 0 0 20px rgba(212, 175, 55, 0.3) !important;
   }
 </style>
+<link rel="stylesheet" href="/light.css?v=dark-20261104">
 </head>
-<body>
+<body class="rental-home">
 
 <div id="sf-embed">
 
@@ -259,13 +237,13 @@
   <div id="sf-booking-app">
 
       <div class="checkout-hero">
-          <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=2056&auto=format&fit=crop" class="checkout-hero-bg" alt="Production Studio Setup">
+          <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=2056&auto=format&fit=crop" class="checkout-hero-bg" alt="Camera gear setup">
           <div class="checkout-hero-glow"></div>
           <div class="checkout-hero-overlay"></div>
 
           <div class="checkout-hero-content">
               <h1>Book Now.</h1>
-              <p>Bypass the middleman. Claim your space and build your gear package direct.</p>
+              <p>Bypass the middleman. Build your gear package and book direct.</p>
           </div>
       </div>
 
@@ -286,63 +264,31 @@
 
                   <div class="wizard-step active" id="step-gateway">
                       <div class="step-header">
-                          <span class="sf-label" style="text-align: center;">Sweet Flypaper Film</span>
-                          <h1 class="step-title">How do you want to build your shoot?</h1>
-                          <p class="step-desc">Select an option below to begin customizing your booking flow.</p>
-                      </div>
+                          <span class="sf-label" style="text-align: center;">                          The Shop</span>
+                                                    <h1 class="step-title">How do you want to build your rental?</h1>
+                                                    <p class="step-desc">Pick a fast, pre-made bundle or hand-pick every item yourself.</p>
+                                                </div>
                       
-                      <div class="mode-cards" style="max-width: 1000px; margin: 0 auto;">
-                          <div class="rich-card" onclick="startFlow('full')" style="text-align: center; align-items: center;">
-                              <div style="background: rgba(255,255,255,0.05); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-film" style="font-size: 2rem;"></i></div>
-                              <h3 style="font-size: 1.3rem; margin-bottom: 10px;">I Need Space & Gear</h3>
-                              <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Book the studio and build a custom equipment package. The ultimate production experience.</p>
-                          </div>
+                                                <div class="mode-cards" style="max-width: 1000px; margin: 0 auto;">
+                                                    <div class="rich-card" onclick="startFlow('kits')" style="text-align: center; align-items: center;">
+                                                        <div style="background: rgba(255,255,255,0.05); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-box-open" style="font-size: 2rem;"></i></div>
+                                                        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">Curated Kits</h3>
+                                                        <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Turn-key bundles ready to shoot.</p>
+                                                    </div>
                           
-                          <div class="rich-card" onclick="startFlow('studio')" style="text-align: center; align-items: center;">
-                              <div style="background: rgba(255,255,255,0.05); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-warehouse" style="font-size: 2rem;"></i></div>
-                              <h3 style="font-size: 1.3rem; margin-bottom: 10px;">I Just Need Space</h3>
-                              <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Secure a Half-Day, Full-Day, or Full Access studio block without building a gear list.</p>
-                          </div>
+                                                    <div class="rich-card" onclick="startFlow('alacarte')" style="text-align: center; align-items: center;">
+                                                        <div style="background: rgba(255,255,255,0.05); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-screwdriver-wrench" style="font-size: 2rem;"></i></div>
+                                                        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">Build A-La-Carte</h3>
+                                                        <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Hand-pick exactly what you need.</p>
+                                                    </div>
 
-                          <div class="rich-card" onclick="window.open('https://www.sharegrid.com/p/sweetfly', '_blank')" style="text-align: center; align-items: center; border-style: dashed;">
-                              <div style="background: rgba(255,255,255,0.02); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 2rem; color:var(--text-muted);"></i></div>
-                              <h3 style="font-size: 1.3rem; margin-bottom: 10px;">I Just Need Gear</h3>
-                              <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Taking our equipment off-site? Browse our entire inventory directly on Sharegrid.</p>
-                          </div>
-                      </div>
-
-                      <div style="text-align: center; margin-top: 20px;">
-                          <button class="sf-btn header-btn-text-muted" style="padding: 10px 15px; border-radius: 6px; text-transform: none; font-size: 0.85rem;" onclick="quickJumpToKits()">Pro? Jump straight to Pre-Made Kits <i class="fa-solid fa-arrow-right"></i></button>
-                      </div>
-                  </div>
-
-                  <div class="wizard-step" id="step-studio">
-                      <div class="step-header">
-                          <h1 class="step-title">Pick Your Studio Block</h1>
-                          <p class="step-desc">All bookings include access to the main stage, sound-treated editing suite, and client area.</p>
-                      </div>
-                      
-                      <div class="lean-studio-grid" id="grid-studio"></div>
-                  </div>
-
-                  <div class="wizard-step" id="step-gear-mode">
-                      <div class="step-header">
-                          <h1 class="step-title">How do you want to handle gear?</h1>
-                          <p class="step-desc">Pick a fast, pre-made bundle or hand-pick every item yourself.</p>
-                      </div>
-                      <div class="mode-cards" style="max-width: 800px; margin: 0 auto; grid-template-columns: 1fr 1fr;">
-                          <div class="rich-card" onclick="selectGearMode('kits')" style="align-items: center; text-align: center;">
-                              <i class="fa-solid fa-box-open" style="font-size: 3rem; margin-bottom: 15px; color: var(--text-main);"></i>
-                              <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Curated Kits</h3>
-                              <p style="color: var(--text-muted) !important; margin: 0;">Turn-key bundles ready to shoot.</p>
-                          </div>
-                          <div class="rich-card" onclick="selectGearMode('alacarte')" style="align-items: center; text-align: center;">
-                              <i class="fa-solid fa-screwdriver-wrench" style="font-size: 3rem; margin-bottom: 15px; color: var(--text-main);"></i>
-                              <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Build A-La-Carte</h3>
-                              <p style="color: var(--text-muted) !important; margin: 0;">Hand-pick exactly what you need.</p>
-                          </div>
-                      </div>
-                  </div>
+                                                    <div class="rich-card" onclick="window.open('https://www.sharegrid.com/p/sweetfly', '_blank')" style="text-align: center; align-items: center; border-style: dashed;">
+                                                        <div style="background: rgba(255,255,255,0.02); width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 2rem; color:var(--text-muted);"></i></div>
+                                                        <h3 style="font-size: 1.3rem; margin-bottom: 10px;">Browse on Sharegrid</h3>
+                                                        <p style="color: var(--text-muted) !important; margin: 0; font-size: 0.9rem;">Prefer a marketplace checkout? Browse our entire inventory directly on Sharegrid.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                   <div class="wizard-step" id="step-kits">
                       <div class="step-header">
@@ -412,7 +358,7 @@
                                       <option value="21">21 Days (10% Off Week Rate)</option>
                                       <option value="28">28 Days (20% Off Week Rate)</option>
                                   </select>
-                                  <p style="font-size: 0.75rem; color: var(--text-muted) !important; margin-top: 8px;"><i class="fa-solid fa-circle-info"></i> Standard studio weekends & holidays subject to availability.</p>
+                                  <p style="font-size: 0.75rem; color: var(--text-muted) !important; margin-top: 8px;"><i class="fa-solid fa-circle-info"></i> Weekends & holidays subject to availability.</p>
                               </div>
                           </div>
                       </div>
@@ -423,13 +369,13 @@
 
           <div class="sidebar" id="sidebarCart">
               <div class="sidebar-header">
-                  <h2><i class="fa-solid fa-clipboard-list"></i> Your Shoot</h2>
-                  <button class="close-sidebar-btn" onclick="document.getElementById('sidebarCart').classList.remove('mobile-open')"><i class="fa-solid fa-xmark"></i></button>
+                  <h2><i class="fa-solid fa-clipboard-list"></i> Your Rental</h2>
+                  <button class="close-sidebar-btn" aria-label="Close cart" onclick="document.getElementById('sidebarCart').classList.remove('mobile-open')"><i class="fa-solid fa-xmark"></i></button>
               </div>
               
               <div class="sidebar-body" id="cartItems">
                   <div style="text-align:center; color: var(--text-muted); margin-top: 40px; font-style: italic;">
-                      Your cart is empty.<br>Select a studio block to begin.
+                      Your cart is empty.<br>Select gear to begin.
                   </div>
               </div>
 
@@ -448,7 +394,7 @@
                       <div class="cart-sg-savings" id="sgSavingsText">You saved an estimated $0 by booking direct</div>
                   </div>
                   
-                  <button class="sf-btn btn-standard-checkout" id="btnSidebarNext" style="width: 100%; padding: 18px;" onclick="navNext()">Select Space to Continue</button>
+                  <button class="sf-btn btn-standard-checkout" id="btnSidebarNext" style="width: 100%; padding: 18px;" onclick="navNext()">Continue to Checkout</button>
               </div>
           </div>
 
@@ -457,7 +403,7 @@
                   <div class="mct-label">Cart Total <i class="fa-solid fa-chevron-up" style="margin-left: 4px; font-size: 10px;"></i></div>
                   <div class="mct-total" id="mobileCartTotal">$0</div>
               </div>
-              <button class="sf-btn btn-standard-checkout" id="btnMobileNext" style="padding: 10px 20px;" onclick="navNext()">Select Space</button>
+              <button class="sf-btn btn-standard-checkout" id="btnMobileNext" style="padding: 10px 20px;" onclick="navNext()">Checkout</button>
           </div>
 
       </div>
@@ -467,13 +413,6 @@
 
 </div> <script>
   // --- BULLETED DATA MODELS ---
-  const studios = [
-    { id: 'stu_half', name: 'Half-Day Block', price: 250, features: ['4 Hours of Studio Use', 'Bring Your Own Gear', 'Sound-Treated Edit Suite Included'] },
-    { id: 'stu_full', name: 'Full-Day Block', price: 400, features: ['8 Hours of Studio Use', 'Bring Your Own Gear', 'Sound-Treated Edit Suite Included'] },
-    { id: 'stu_srv', name: 'The All-Access Pass (Indie)', price: 560, features: ['8 Hours of Studio Use', 'All Studio Gear & Lighting Included', 'Blackmagic 6K Pro Included', 'Studio Manager On-site'] },
-    { id: 'stu_srv_comm', name: 'The All-Access Pass (Cinema)', price: 750, features: ['8 Hours of Studio Use', 'All Studio Gear & Lighting Included', 'RED Dragon 6K Included', 'Studio Manager On-site'] }
-  ];
-
   const packages = [
     { id: 'pkg_interview', name: 'Interview Kit', price: 95, items: ['cam_bmpcc', 'lens_set', 'light_gvm_pro3', 'grip_pyro'], image: '/images/bm.svg' },
     { id: 'pkg_doc', name: 'Documentary Kit', price: 196, items: ['cam_bmpcc', 'lens_set', 'light_ap_80c', 'light_gvm_pro3', 'grip_pyro'], image: '/images/80.svg' },
@@ -517,11 +456,9 @@
   let historyTracker = []; 
 
   let cart = {
-      studio: null,
       activePackage: null,
       items: new Set(),
-      days: 1,
-      isSpaceOnly: false
+      days: 1
   };
 
   // --- NAVIGATION CONTROLLER ---
@@ -539,7 +476,6 @@
 
   function resetToGateway() {
       historyTracker = [];
-      cart.studio = null;
       cart.activePackage = null;
       cart.items.clear();
       cart.days = 1;
@@ -558,9 +494,8 @@
       else navHeader.style.display = 'flex';
 
       const stepText = document.getElementById('stepIndicator');
-      if(currentStep === 'studio') stepText.innerText = 'Step 1: Space';
-      if(currentStep === 'gear-mode' || currentStep === 'alacarte' || currentStep === 'kits') stepText.innerText = 'Step 2: Gear';
-      if(currentStep === 'review') stepText.innerText = 'Step 3: Dates';
+      if(currentStep === 'alacarte' || currentStep === 'kits') stepText.innerText = 'Step 1: Gear';
+      if(currentStep === 'review') stepText.innerText = 'Step 2: Dates';
 
       const sidebar = document.getElementById('sidebarCart');
       const appContainer = document.getElementById('appContainer');
@@ -577,7 +512,6 @@
           sidebar.classList.remove('mobile-open');
       }
 
-      if(currentStep === 'studio') renderStudio();
       if(currentStep === 'alacarte') renderAlacarte();
       if(currentStep === 'kits') renderKits();
       
@@ -585,45 +519,21 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function startFlow(type) {
-      cart.studio = null;
+  function startFlow(step) {
       cart.items.clear();
       cart.activePackage = null;
       historyTracker = ['gateway']; 
       document.getElementById('shootDate').valueAsDate = new Date();
-      
-      if(type === 'studio') cart.isSpaceOnly = true;
-      else cart.isSpaceOnly = false;
-      
-      navigateTo('studio');
-  }
-
-  function quickJumpToKits() {
-      cart.studio = null;
-      cart.items.clear();
-      cart.activePackage = null;
-      historyTracker = ['gateway'];
-      cart.isSpaceOnly = false;
-      navigateTo('kits');
+      navigateTo(step);
   }
 
   function navNext() {
-      if(currentStep === 'studio') {
-          const isFullService = cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm';
-          if(isFullService || cart.isSpaceOnly) navigateTo('review');
-          else navigateTo('gear-mode');
-      } 
-      else if(currentStep === 'gear-mode' || currentStep === 'alacarte' || currentStep === 'kits') {
+      if(currentStep === 'alacarte' || currentStep === 'kits') {
           navigateTo('review');
       }
       else if(currentStep === 'review') {
           requestBooking();
       }
-  }
-
-  function selectGearMode(mode) {
-      if(mode === 'alacarte') navigateTo('alacarte');
-      if(mode === 'kits') navigateTo('kits');
   }
 
   function switchToAlacarte() {
@@ -646,9 +556,6 @@
           params.append('date', dateVal);
       }
 
-      const s = studios.find(x => x.id === cart.studio);
-      params.append('studio', s ? s.name : 'None');
-      
       let gearList = [];
       if(cart.activePackage) {
           const pkg = packages.find(p => p.id === cart.activePackage);
@@ -670,48 +577,6 @@
   }
 
   // --- VIEW RENDERERS ---
-
-  function renderStudio() {
-      const container = document.getElementById('grid-studio');
-      container.innerHTML = '';
-      
-      studios.forEach(item => {
-          const isSelected = cart.studio === item.id;
-          const featuresList = item.features.map(f => `<li>${f}</li>`).join('');
-          
-          const card = document.createElement('div');
-          card.className = `lean-studio-card ${isSelected ? 'selected' : ''}`;
-          card.innerHTML = `
-              <div class="lsc-left">
-                  <div class="lsc-radio"></div>
-                  <div class="lsc-info">
-                      <h3>${item.name}</h3>
-                      <ul class="lsc-bullets">${featuresList}</ul>
-                  </div>
-              </div>
-              <div class="lsc-price">$${item.price}</div>
-          `;
-          card.onclick = () => {
-              if (cart.studio === item.id) {
-                  cart.studio = null; 
-              } else {
-                  if ((item.id === 'stu_srv' || item.id === 'stu_srv_comm') && (cart.items.size > 0 || cart.activePackage)) {
-                      if(!confirm("Switching to an All-Access Pass will clear your current gear selections (since gear is included). Continue?")) {
-                          return;
-                      }
-                  }
-                  cart.studio = item.id;
-                  if(cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm') {
-                      cart.items.clear();
-                      cart.activePackage = null;
-                  }
-              }
-              renderStudio(); 
-              updateCart();
-          };
-          container.appendChild(card);
-      });
-  }
 
   function renderKits() {
       const grid = document.getElementById('grid-kits');
@@ -911,16 +776,7 @@
       cart.days = isNaN(durVal) ? 1 : durVal;
 
       // Update button state based on Step
-      if(currentStep === 'studio') {
-          btnNext.disabled = !cart.studio;
-          const isFullService = cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm';
-          
-          if (!cart.studio) btnNext.innerText = "Select Space to Continue";
-          else if (isFullService || cart.isSpaceOnly) btnNext.innerText = "Continue to Checkout";
-          else btnNext.innerText = "Continue to Gear";
-          
-          btnNext.className = "sf-btn btn-standard-checkout";
-      } else if (currentStep === 'review') {
+      if (currentStep === 'review') {
           btnNext.disabled = false;
           btnNext.innerText = "Request Booking";
           btnNext.className = "sf-btn gold-checkout-btn"; // Applies the Gold UI
@@ -937,7 +793,7 @@
           btnMobileNext.className = btnNext.className;
       }
 
-      if(!cart.studio && cart.items.size === 0 && !cart.activePackage) {
+      if(cart.items.size === 0 && !cart.activePackage) {
           sBody.innerHTML = '<div style="text-align:center; color: var(--text-muted); margin-top: 40px; font-style: italic;">Your cart is empty.</div>';
           document.getElementById('cartTotalUs').innerText = '$0';
           document.getElementById('sgSavingsText').innerHTML = '';
@@ -947,38 +803,12 @@
       }
 
       let html = '';
-      let dailyStudio = 0;
       let dailyGear = 0;
       let gearCount = 0;
 
-      const isFullService = cart.studio === 'stu_srv' || cart.studio === 'stu_srv_comm';
       const hasCamBody = [...cart.items].some(id => cameras.some(c => c.id === id));
 
-      if(cart.studio) {
-          const s = studios.find(x => x.id === cart.studio);
-          dailyStudio += s.price;
-          const sBullets = s.features.map(f => `<li>${f}</li>`).join('');
-          html += `
-              <div class="cart-item">
-                  <div class="cart-item-info">
-                      <h4 style="color:var(--text-main);"><i class="fa-solid ${s.icon}"></i> ${s.name}</h4>
-                      <ul>${sBullets}</ul>
-                  </div>
-                  <div class="cart-item-price">$${s.price}</div>
-              </div>
-          `;
-      }
-
-      if(isFullService) {
-          const includedCam = cart.studio === 'stu_srv_comm' ? "RED Dragon 6K" : "Blackmagic 6K Pro";
-          html += `
-              <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 20px 0 10px;">All-Access Manifest</div>
-              <div class="cart-item" style="padding-bottom: 8px; border-bottom: none; margin-bottom: 0;"><div class="cart-item-info"><h4><i class="fa-solid fa-video"></i> ${includedCam}</h4></div><div class="cart-item-price free">INCLUDED</div></div>
-              <div class="cart-item" style="padding-bottom: 8px; border-bottom: none; margin-bottom: 0;"><div class="cart-item-info"><h4><i class="fa-solid fa-layer-group"></i> Rokinon 3-Lens Kit</h4></div><div class="cart-item-price free">INCLUDED</div></div>
-              <div class="cart-item" style="padding-bottom: 8px; border-bottom: none; margin-bottom: 0;"><div class="cart-item-info"><h4><i class="fa-solid fa-lightbulb"></i> All Studio Lighting</h4></div><div class="cart-item-price free">INCLUDED</div></div>
-              <div class="cart-item" style="padding-bottom: 15px;"><div class="cart-item-info"><h4><i class="fa-solid fa-arrows-left-right"></i> All Grip & Support</h4></div><div class="cart-item-price free">INCLUDED</div></div>
-          `;
-      } else {
+      {
           if (cart.activePackage) {
               const pkg = packages.find(p => p.id === cart.activePackage);
               dailyGear += pkg.price;
@@ -1039,9 +869,7 @@
       const tracker = document.getElementById('discountTracker');
       let discountedDailyGear = dailyGear;
       
-      if (isFullService) {
-          tracker.innerHTML = `<i class="fa-solid fa-check-circle" style="color:var(--color-success);"></i> <div style="line-height:1.3;"><strong style="color:var(--text-main); display:block;">Maximum Value</strong><span style="color:var(--text-muted) !important;">Gear closet unlocked.</span></div>`;
-      } else if (cart.activePackage) {
+      if (cart.activePackage) {
           tracker.innerHTML = `<i class="fa-solid fa-box-open"></i> <div style="line-height:1.3;"><strong style="color:var(--text-main); display:block;">Kit Discount Applied</strong><span style="color:var(--text-muted) !important;">Bundles are pre-discounted.</span></div>`;
       } else {
           let bundlePct = 0;
@@ -1066,7 +894,7 @@
           }
       }
 
-      const totalDaily = dailyStudio + discountedDailyGear;
+      const totalDaily = discountedDailyGear;
       const durationMath = calculateDurationPricing(totalDaily, cart.days);
 
       const sgPlatformFee = Math.round(durationMath.finalTotal * 0.12);

@@ -82,7 +82,7 @@ body {
  
 /* FOOTER */
 #sf-embed .sf-footer { background-color: var(--bg-panel); border-top: 1px solid var(--border-color); padding: 5rem 0 3rem 0; color: var(--text-muted); font-size: 0.9rem; }
-#sf-embed .sf-footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr) 1.2fr; gap: 3rem; align-items: start; }
+#sf-embed .sf-footer-grid { display: grid; grid-template-columns: 2fr repeat(2, 1fr); gap: 3rem; align-items: start; }
 #sf-embed .sf-footer-brand p { max-width: 320px; color: var(--text-muted) !important; font-size: 0.85rem; line-height: 1.5; margin-top: 1.25rem; }
 #sf-embed .sf-footer-title { font-family: 'Geist Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-main) !important; margin-bottom: 1.25rem; }
 #sf-embed .sf-footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
@@ -233,3 +233,59 @@ body {
     transform: translateY(-150%);
   }
 }
+
+/* SweetFly Shop mark: the only logo on every page (nav + footer). White artwork, never inverted. */
+#sf-embed .sf-nav-text-logo.sf-shop-wordmark { width: min(164px, 14.3vw); height: auto; max-height: 27px; filter: none; }
+#sf-embed .sf-footer-brand img.sf-shop-wordmark { display: block; width: min(100%, 210px); height: auto; filter: none; }
+@media (max-width: 900px) { #sf-embed .sf-nav-text-logo.sf-shop-wordmark { width: min(122px, 34.4vw); max-height: 20px; } }
+
+/* Shared family signature: original framed SWEETFLY artwork + three brass shades.
+   Crop the existing raster at the frame; retain the original file unchanged. */
+html body #sf-embed .sf-shop-brand {
+  display: inline-flex; align-items: center; gap: 5px;
+  width: 174px; height: 32px; flex-shrink: 0;
+}
+html body #sf-embed .sf-shop-core {
+  position: relative; display: block; overflow: hidden;
+  width: 120px; height: 29px; flex: 0 0 120px;
+}
+html body #sf-embed .sf-shop-brand .sf-shop-core > img {
+  position: absolute; left: -1px; top: -1px;
+  width: 170px; height: auto; max-width: none;
+  filter: none !important;
+}
+html body #sf-embed .sf-shop-badge {
+  position: relative; display: flex;
+  align-items: center; justify-content: center;
+  width: 44px; height: 26px; margin: 0;
+  background: linear-gradient(112deg, #c6b283 0%, #a58c55 54%, #766137 100%);
+  color: #252629;
+  border: 1px solid #8e7748;
+  border-radius: 7px;
+  box-shadow: inset 0 1px 0 rgba(255, 248, 226, .72), inset 0 -2px 0 rgba(75, 58, 28, .22), 0 1px 2px rgba(41, 40, 36, .12);
+  font: 700 14px/1 'Geist', sans-serif; letter-spacing: .01em;
+}
+@media (max-width: 900px) {
+  html body #sf-embed .sf-shop-brand { width: 132px; height: 24px; gap: 4px; }
+  html body #sf-embed .sf-shop-core { width: 85px; height: 21px; flex-basis: 85px; }
+  html body #sf-embed .sf-shop-brand .sf-shop-core > img { width: 120px; }
+  html body #sf-embed .sf-shop-badge { width: 39px; height: 21px; border-radius: 6px; font-size: 11px; }
+}
+
+/* Cart link in the nav: count next to the label, dates underneath. */
+#sf-embed .sf-nav-cart { flex-direction: column; align-items: flex-start; justify-content: center; gap: .1rem; }
+#sf-embed .sf-nav-cart { display: none !important; }
+#sf-embed .sf-nav-cart .sf-cart-row { display: flex; align-items: center; gap: .5rem; }
+#sf-embed .sf-nav-cart .sf-cart-label { display: inline; }
+#sf-embed .sf-nav-cart .sf-cart-count { display: inline-flex; align-items: center; justify-content: center; min-width: 1.5rem; height: 1.5rem; padding: 0 .4rem; background: #a58c55; color: #252629; border-radius: 999px; font: 600 .75rem 'Geist Mono', monospace; letter-spacing: 0; text-transform: none; }
+#sf-embed .sf-nav-cart .sf-cart-count[hidden], #sf-embed .sf-nav-cart .sf-cart-dates[hidden] { display: none; }
+#sf-embed .sf-nav-cart .sf-cart-dates { font: 400 .68rem 'Geist Mono', monospace; letter-spacing: .02em; text-transform: none; color: #c8c3b7; white-space: nowrap; }
+@media (max-width: 900px) {
+  #sf-embed .sf-nav-cart { align-items: center; }
+  #sf-embed .sf-nav-cart .sf-cart-label { display: inline; }
+}
+
+/* Keyboard skip link: hidden until focused */
+#sf-embed .sf-skip-link { position: absolute; left: -9999px; top: .5rem; z-index: 10001; padding: .75rem 1rem; background: #f2ede3; color: #242528; font-weight: 600; border-radius: 4px; transition: none; }
+#sf-embed .sf-skip-link:focus { left: .75rem; outline: 3px solid #b89b43; outline-offset: 2px; }
+#sf-embed [tabindex="-1"]:focus { outline: none; }

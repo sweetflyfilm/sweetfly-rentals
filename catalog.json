@@ -1,0 +1,111 @@
+{
+  "_readme": "Single source of truth for the checkout page AND the server. Prices are dollars. Edit here only. 'deposit' amounts and which items are 'highValue' (need a certificate of insurance) are starting guesses - confirm them. Basecamp has three tents (10x10 open, 10x10 covered, 10x20), two tables (6 ft and 8 ft), and eight chairs. Online booking is paused; contact us to confirm tent type. A 10x20 swap in the Basecamp package adds $20/day.",
+  "taxRate": 0,
+  "waiverRate": 0.12,
+  "noInsuranceDepositMultiplier": 2,
+  "maxDays": 30,
+  "pickupTime": "12 PM",
+  "returnTime": "12 PM",
+  "holdMinutes": 30,
+  "contactEmail": "grant@sweetflyfilm.com",
+  "turnstileSiteKey": "",
+  "stock": {
+    "generator": 1, "canopy": 3, "tables": 2, "chairs": 8, "jug": 1, "airpot": 1,
+    "stinger-25": 1, "stinger-50": 1, "stinger-100": 1,
+    "bmpcc": 1, "cage": 1, "matte": 1, "ff-mini": 1, "vmount": 1, "filters": 1, "dp4": 1, "pdmovie": 1, "npf": 1, "sdi": 1, "red": 1,
+    "remus": 1, "ef135": 1, "ef2470": 1, "ef70200": 1,
+    "ls600d": 1, "c300d": 1, "storm80": 1, "sd500b": 1, "gvm-pro3": 1, "b200c": 1,
+    "dana": 1, "lowboy": 1, "rails": 1, "cstand": 5, "sandbag": 5, "flag-black": 1, "flag-silk": 1, "muslin": 1,
+    "pyro": 1
+  },
+  "groups": [
+    {
+      "group": "Basecamp",
+      "items": [
+        { "id": "set-ready", "name": "Basecamp", "note": "Generator, 10x10 open tent + 10x10 covered tent, 6 ft + 8 ft tables, all 8 chairs, 100 ft stinger. 10x20 tent swap +$20/day by request.", "rate": 110, "unit": "day", "week": 330, "deposit": 200, "uses": { "generator": 1, "canopy": 2, "tables": 2, "chairs": 8, "stinger-100": 1 } },
+        { "id": "generator", "name": "FIRMAN Tri-Fuel Generator, 6,300 Running Watts", "note": "T06373; 7,850 starting watts", "rate": 50, "unit": "day", "deposit": 150, "uses": { "generator": 1 } },
+        { "id": "canopy", "name": "10 x 10 Pop-Up Canopy", "note": "Eurmax", "rate": 35, "unit": "day", "deposit": 50, "uses": { "canopy": 1 } },
+        { "id": "tables", "name": "Folding Table", "note": "One 6 ft and one 8 ft available; $20/day per table", "rate": 20, "unit": "day", "deposit": 20, "uses": { "tables": 1 } },
+        { "id": "chairs", "name": "Folding Chairs, Set of 8", "note": "$20/day covers all eight chairs", "rate": 20, "unit": "day", "deposit": 20, "uses": { "chairs": 8 } },
+        { "id": "jug", "name": "Igloo 5 Gal Beverage Jug", "note": "", "rate": 5, "unit": "week", "deposit": 10, "uses": { "jug": 1 } },
+        { "id": "airpot", "name": "Coffee Airpot", "note": "102 oz with pump", "rate": 5, "unit": "week", "deposit": 10, "uses": { "airpot": 1 } },
+        { "id": "stinger-25", "name": "Stinger, 25 ft", "note": "12/3 with GFCI block", "rate": 8, "unit": "day", "deposit": 20, "uses": { "stinger-25": 1 } },
+        { "id": "stinger-50", "name": "Stinger, 50 ft", "note": "12/3 with GFCI block", "rate": 10, "unit": "day", "deposit": 30, "uses": { "stinger-50": 1 } },
+        { "id": "stinger-100", "name": "Stinger, 100 ft", "note": "12/3 with GFCI block", "rate": 15, "unit": "day", "deposit": 40, "uses": { "stinger-100": 1 } }
+      ]
+    },
+    {
+      "group": "Gear Packages",
+      "items": [
+        { "id": "pkg-run-gun", "name": "Indie Run-and-Gun", "note": "BMPCC 6K G2 kit, zoom, GVM 3-light kit · $405 / 3-day week", "rate": 135, "unit": "day", "week": 405, "deposit": 450, "highValue": true, "uses": { "bmpcc": 1, "cage": 1, "matte": 1, "ff-mini": 1, "vmount": 1, "filters": 1, "ef2470": 1, "gvm-pro3": 1 } },
+        { "id": "pkg-camera", "name": "Ready, Set, Go (Camera, Blackmagic)", "note": "BMPCC 6K G2 kit, Blazar Remus 4-lens set, Hollyland Pyro S, SmallHD DP4 · $795 / 7 days", "rate": 265, "unit": "day", "week": 795, "deposit": 500, "highValue": true, "uses": { "bmpcc": 1, "remus": 1, "pyro": 1, "dp4": 1 } },
+        { "id": "pkg-camera-red", "name": "Ready, Set, Pro (Camera, RED)", "note": "RED Epic Dragon 6K, Blazar Remus 4-lens set, Hollyland Pyro S, SmallHD DP4 · $930 / 7 days", "rate": 310, "unit": "day", "week": 930, "deposit": 800, "highValue": true, "uses": { "red": 1, "remus": 1, "pyro": 1, "dp4": 1 } },
+        { "id": "pkg-light-gvm", "name": "Lights, Grip, Go (GVM)", "note": "GVM 5-light production kit, 5 C-stands, 5 sandbags, flags, stinger · $570 / 7 days", "rate": 190, "unit": "day", "week": 570, "deposit": 300, "uses": { "gvm-pro3": 1, "sd500b": 1, "b200c": 1, "cstand": 5, "sandbag": 5, "flag-black": 1, "flag-silk": 1, "stinger-50": 1 } },
+        { "id": "pkg-light", "name": "Lights, Grip, Pro (Aputure)", "note": "600d Pro, C300d II, STORM 80c, 5 C-stands, 5 sandbags, flags, stinger · $705 / 7 days", "rate": 235, "unit": "day", "week": 705, "deposit": 400, "highValue": true, "uses": { "ls600d": 1, "c300d": 1, "storm80": 1, "cstand": 5, "sandbag": 5, "flag-black": 1, "flag-silk": 1, "stinger-50": 1 } },
+        { "id": "pkg-dolly", "name": "Dana Dolly Movement Kit", "note": "Dana Dolly, 2 Low Boy stands, 2 speed rails · $168 / 7 days", "rate": 56, "unit": "day", "week": 168, "deposit": 300, "highValue": true, "uses": { "dana": 1, "lowboy": 1, "rails": 1 } },
+        { "id": "pkg-full-go", "name": "Lights, Camera, Go (Full, Blackmagic + GVM)", "note": "BMPCC 6K G2 camera set, GVM 5-light kit, grip, Dana Dolly · $1,533 / 7 days", "rate": 511, "unit": "day", "week": 1533, "deposit": 1000, "highValue": true, "uses": { "bmpcc": 1, "remus": 1, "pyro": 1, "dp4": 1, "gvm-pro3": 1, "sd500b": 1, "b200c": 1, "cstand": 5, "sandbag": 5, "flag-black": 1, "flag-silk": 1, "stinger-50": 1, "dana": 1, "lowboy": 1, "rails": 1 } },
+        { "id": "pkg-full-pro", "name": "Lights, Camera, Pro (Full, RED + Aputure)", "note": "RED Epic Dragon 6K camera set, Aputure lighting, grip, Dana Dolly · $1,803 / 7 days", "rate": 601, "unit": "day", "week": 1803, "deposit": 1300, "highValue": true, "uses": { "red": 1, "remus": 1, "pyro": 1, "dp4": 1, "ls600d": 1, "c300d": 1, "storm80": 1, "cstand": 5, "sandbag": 5, "flag-black": 1, "flag-silk": 1, "stinger-50": 1, "dana": 1, "lowboy": 1, "rails": 1 } }
+      ]
+    },
+    {
+      "group": "Cameras and Accessories",
+      "items": [
+        { "id": "bmpcc-body", "name": "Blackmagic Pocket Cinema Camera 6K G2", "note": "Body, Canon EF mount", "rate": 91, "unit": "day", "deposit": 300, "highValue": true, "uses": { "bmpcc": 1 } },
+        { "id": "bmpcc-indie", "name": "BMPCC 6K G2 Indie Ready-to-Shoot Kit", "note": "Cage, rails, V-mount, mini follow focus, matte box, filters, 2 CFast cards", "rate": 91, "unit": "day", "deposit": 400, "highValue": true, "uses": { "bmpcc": 1, "cage": 1, "matte": 1, "ff-mini": 1, "vmount": 1, "filters": 1 } },
+        { "id": "red-dragon", "name": "RED Epic Dragon 6K Package", "note": "EF/PL mounts, REDMAG SSDs, touch monitor, EVF, batteries", "rate": 190, "unit": "day", "deposit": 600, "highValue": true, "uses": { "red": 1 } },
+        { "id": "smallhd-dp4", "name": "SmallHD DP4 Field Monitor", "note": "4.3 in on-camera, HDMI pass-through", "rate": 15, "unit": "day", "deposit": 75, "uses": { "dp4": 1 } },
+        { "id": "filters", "name": "Schneider 4 x 5.65 Filter Kit", "note": "NDs and polarizer", "rate": 18, "unit": "day", "deposit": 150, "uses": { "filters": 1 } },
+        { "id": "matte-box", "name": "Tilta Mini Matte Box", "note": "MB-T15 with top flag", "rate": 10, "unit": "day", "deposit": 60, "uses": { "matte": 1 } },
+        { "id": "cage-kit", "name": "SmallRig BMPCC 6K Cage Kit", "note": "Cage, top handle, SSD holder", "rate": 12, "unit": "day", "deposit": 50, "uses": { "cage": 1 } },
+        { "id": "follow-focus", "name": "Tilta Mini Follow Focus", "note": "FF-T06 with hard stops and whip", "rate": 10, "unit": "day", "deposit": 50, "uses": { "ff-mini": 1 } },
+        { "id": "pdmovie", "name": "PDMovie Remote Air 4", "note": "Wireless follow focus with handheld controller", "rate": 33, "unit": "day", "deposit": 150, "uses": { "pdmovie": 1 } },
+        { "id": "vmount", "name": "Neewer 99Wh Mini V-Mount Battery", "note": "D-Tap and USB", "rate": 15, "unit": "day", "deposit": 75, "uses": { "vmount": 1 } },
+        { "id": "npf-kit", "name": "Sony NP-F Battery Kit", "note": "With dual-bay charger", "rate": 10, "unit": "day", "deposit": 50, "uses": { "npf": 1 } },
+        { "id": "sdi-converter", "name": "HDMI to SDI Converter", "note": "Micro converter, bidirectional", "rate": 8, "unit": "day", "deposit": 40, "uses": { "sdi": 1 } }
+      ]
+    },
+    {
+      "group": "Lenses",
+      "items": [
+        { "id": "remus", "name": "Blazar Remus 1.5x Anamorphic Set", "note": "35, 45, 65, 100 mm, EF and PL mounts, hard case", "rate": 110, "unit": "day", "deposit": 800, "highValue": true, "uses": { "remus": 1 } },
+        { "id": "ef135", "name": "Canon EF 135mm f/2L", "note": "Portrait telephoto prime", "rate": 55, "unit": "day", "deposit": 250, "uses": { "ef135": 1 } },
+        { "id": "ef2470", "name": "Canon EF 24-70mm f/2.8L", "note": "Standard zoom", "rate": 35, "unit": "day", "deposit": 250, "highValue": true, "uses": { "ef2470": 1 } },
+        { "id": "ef70200", "name": "Canon EF 70-200mm f/2.8L IS", "note": "Image-stabilized telephoto zoom", "rate": 40, "unit": "day", "deposit": 300, "highValue": true, "uses": { "ef70200": 1 } }
+      ]
+    },
+    {
+      "group": "Lighting",
+      "items": [
+        { "id": "ls600d", "name": "Aputure Light Storm LS 600d Pro", "note": "600W daylight, Bowens, case, F10 Fresnel", "rate": 51, "unit": "day", "deposit": 400, "highValue": true, "uses": { "ls600d": 1 } },
+        { "id": "c300d", "name": "Aputure Light Storm LS C300d II", "note": "300W daylight, Bowens, ballast", "rate": 40, "unit": "day", "deposit": 300, "highValue": true, "uses": { "c300d": 1 } },
+        { "id": "storm80c", "name": "Aputure STORM 80c", "note": "80W full color, CF4 Fresnel", "rate": 30, "unit": "day", "deposit": 200, "uses": { "storm80": 1 } },
+        { "id": "aputure-3", "name": "Aputure 3-Light Commercial Package", "note": "600d Pro, C300d II, STORM 80c", "rate": 121, "unit": "day", "deposit": 700, "highValue": true, "uses": { "ls600d": 1, "c300d": 1, "storm80": 1 } },
+        { "id": "gvm-sd500b", "name": "GVM SD500B Bi-Color Monolight", "note": "500W with 36 in softbox", "rate": 24, "unit": "day", "deposit": 120, "uses": { "sd500b": 1 } },
+        { "id": "gvm-pro3", "name": "GVM Pro 3 LED Light Kit", "note": "SD200B, 2 x SD80D, softbox, 2 lanterns, case", "rate": 24, "unit": "day", "deposit": 120, "uses": { "gvm-pro3": 1 } },
+        { "id": "gvm-b200c", "name": "GVM B200C RGB Light Panel", "note": "Barn doors and diffusion", "rate": 28, "unit": "day", "deposit": 120, "uses": { "b200c": 1 } },
+        { "id": "gvm-5", "name": "GVM 5-Light Kit", "note": "Pro 3 kit, SD500B, B200C", "rate": 76, "unit": "day", "deposit": 300, "uses": { "gvm-pro3": 1, "sd500b": 1, "b200c": 1 } }
+      ]
+    },
+    {
+      "group": "Grip and Movement",
+      "items": [
+        { "id": "dana-dolly", "name": "Dana Dolly Kit", "note": "Carriage, Mitchell mount, bowl adapters, case", "rate": 35, "unit": "day", "deposit": 250, "highValue": true, "uses": { "dana": 1 } },
+        { "id": "lowboy", "name": "Matthews Low Boy Combo Stands (pair)", "note": "For the Dana Dolly or heavy fixtures", "rate": 20, "unit": "day", "deposit": 150, "uses": { "lowboy": 1 } },
+        { "id": "rails", "name": "6 ft Speed Rail (pair)", "note": "1-1/4 in aluminum", "rate": 10, "unit": "day", "deposit": 40, "uses": { "rails": 1 } },
+        { "id": "cstand", "name": "C-Stand with Grip Arm and Head", "note": "40 in, each", "rate": 10, "unit": "day", "deposit": 30, "uses": { "cstand": 1 } },
+        { "id": "cstand-5", "name": "C-Stand Set of 5", "note": "Grip arms and heads", "rate": 40, "unit": "day", "deposit": 120, "uses": { "cstand": 5 } },
+        { "id": "sandbag", "name": "Saddle Sandbag", "note": "15 to 25 lb, each", "rate": 6, "unit": "day", "deposit": 10, "uses": { "sandbag": 1 } },
+        { "id": "sandbag-4", "name": "Saddle Sandbags, set of 4", "note": "", "rate": 20, "unit": "day", "deposit": 40, "uses": { "sandbag": 4 } },
+        { "id": "flag-black", "name": "Black Flag 24 x 36", "note": "Duvetyne", "rate": 8, "unit": "day", "deposit": 30, "uses": { "flag-black": 1 } },
+        { "id": "flag-silk", "name": "Silk Flag 24 x 36", "note": "Open-end diffusion", "rate": 8, "unit": "day", "deposit": 30, "uses": { "flag-silk": 1 } },
+        { "id": "muslin", "name": "Unbleached Muslin", "note": "Warm bounce", "rate": 8, "unit": "day", "deposit": 30, "uses": { "muslin": 1 } }
+      ]
+    },
+    {
+      "group": "Wireless Video",
+      "items": [
+        { "id": "pyro-s", "name": "Hollyland Pyro S Wireless Kit", "note": "4K, HDMI and SDI, 1,300 ft, cables included", "rate": 31, "unit": "day", "deposit": 250, "uses": { "pyro": 1 } }
+      ]
+    }
+  ]
+}

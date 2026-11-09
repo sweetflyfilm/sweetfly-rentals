@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Shop | Gear &amp; Basecamp Rentals in Colorado</title>
+<meta name="description" content="Rent cinema gear, generators and Basecamp equipment from SweetFly Shop in Denver and Aurora, Colorado.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/styles.css">
+
+<script async src="https://tally.so/widgets/embed.js"></script>
+<script src="/script.js?v=rental-cart-v1" defer></script>
+
+<style>
+  #sf-embed .sf-hero { position: relative; width: 100%; overflow: hidden; border-bottom: 1px solid var(--border-color); background-color: var(--bg-dark); }
+  #sf-embed .sf-hero-content { position: relative; z-index: 20; width: 100%; padding: 4.5rem 0; }
+  #sf-embed .sf-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  #sf-embed .rent-section { padding: 6rem 0; }
+  #sf-embed .rent-section-head { margin-bottom: 3rem; }
+  #sf-embed .rent-section-head h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+  #sf-embed .rent-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  #sf-embed .rent-step { border-top: 1px solid var(--text-main); padding-top: 1.25rem; }
+  #sf-embed .rent-step h3 { font-size: 1.1rem; margin: 0.5rem 0; }
+  #sf-embed .rent-step p { font-size: 0.9rem; }
+  @media (max-width: 900px) {
+    #sf-embed .rent-section { padding: 4rem 0; }
+    #sf-embed .rent-steps { grid-template-columns: 1fr; }
+    #sf-embed .sf-hero-content { padding: 3rem 0; }
+  }
+</style>
+<link rel="stylesheet" href="/light.css?v=dark-20261104">
+<link rel="stylesheet" href="/rental-packages.css?v=6">
+<link rel="stylesheet" href="/gear-page.css?v=16-basecamp">
+<link rel="stylesheet" href="/showroom.css?v=20261109-contact-us">
+</head>
+<body class="rental-home">
+
+<div id="sf-embed">
+
+  <div id="nav-placeholder"></div>
+
+  <section class="sf-hero shop-page-hero">
+    <div class="sf-hero-content">
+      <div class="sf-container sf-hero-grid">
+        <div class="sf-hero-copy">
+        <div class="reveal">
+          <span class="sf-label">Denver &middot; Aurora &middot; The Springs &middot; Boulder</span>
+        </div>
+        <h1 class="reveal reveal-d1">The Shop</h1>
+        <div class="gear-hero-actions reveal reveal-d2">
+          <a href="#packages" class="sf-btn sf-btn-primary">Rental Packages <span aria-hidden="true">&rarr;</span></a>
+          <a href="/basecamp.html" class="sf-btn sf-btn-ghost">Basecamp <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        </div>
+        <div class="sf-hero-gear" aria-label="Featured camera equipment">
+          <article class="sf-hero-gear-card">
+            <div class="sf-hero-gear-well"><img src="/images/bm.svg" alt="Blackmagic cinema camera kit" fetchpriority="high"></div>
+            <span>Camera</span>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rental-packages" id="packages" aria-labelledby="rental-packages-title">
+    <div class="sf-container">
+      <div class="rental-packages-heading">
+        <span class="rental-eyebrow">Equipment rentals &middot; Aurora / Denver</span>
+        <h2 id="rental-packages-title">Packages</h2>
+      </div>
+      <div class="rental-package-grid">
+        <article class="rental-package" id="package-camera" data-package>
+          <span class="rental-eyebrow">01 / Camera</span>
+          <h3>Camera</h3>
+          <div class="rental-tier" role="radiogroup" aria-label="Camera tier">
+            <button type="button" class="rental-tier-tile is-active" role="radio" aria-checked="true" data-id="pkg-camera" data-day="265" data-week="795" data-name="Ready, Set, Go">
+              <span class="rental-tier-name">Ready, Set, Go</span>
+              <span class="rental-tier-kit">Blackmagic 6K G2</span>
+              <span class="rental-tier-price">$265<small>/ day</small></span>
+            </button>
+            <button type="button" class="rental-tier-tile" role="radio" aria-checked="false" data-id="pkg-camera-red" data-day="310" data-week="930" data-name="Ready, Set, Pro">
+              <span class="rental-tier-name">Ready, Set, Pro</span>
+              <span class="rental-tier-kit">RED Epic Dragon 6K</span>
+              <span class="rental-tier-price">$310<small>/ day</small></span>
+            </button>
+          </div>
+          <p class="rental-package-price"><span data-role="day">$265</span> <span>/ day</span></p>
+          <p class="rental-package-week" data-role="week">$795 / 7 days</p>
+          <ul class="rental-tier-list" data-tier="pkg-camera">
+            <li>Blackmagic Pocket Cinema Camera 6K G2</li>
+            <li>SmallRig cage and top handle</li>
+            <li>2 &times; 128GB CFast cards</li>
+            <li>15mm rails and rail riser</li>
+            <li>Neewer 99Wh V-mount battery and plate</li>
+            <li>Tilta Mini Follow Focus and mini matte box</li>
+            <li>Schneider 4 &times; 5.65-inch filters</li>
+          </ul>
+          <ul class="rental-tier-list" data-tier="pkg-camera-red" hidden>
+            <li>RED Epic Dragon 6K, EF mount</li>
+            <li>128GB REDMAG SSD and 2 &times; 64GB REDMAG SSDs</li>
+            <li>5.0-inch RED touch monitor and REDBOMB EVF</li>
+            <li>2 &times; V-mount batteries and 2 &times; Lemo cables</li>
+            <li>Tilta Nano Focus</li>
+          </ul>
+          <details>
+            <summary>Both include</summary>
+            <ul>
+              <li>Blazar Remus 1.5&times; lenses: 35, 45, 65 and 100mm, configured for EF</li>
+              <li>Hollyland Pyro S transmitter and receiver</li>
+              <li>SmallHD DP4 monitor</li>
+              <li>NP-F power, charger, HDMI and SDI cables for monitoring</li>
+            </ul>
+          </details>
+          <button type="button" class="rental-package-cta cart-control-hidden" data-role="rent">Add to Cart <span aria-hidden="true">&rarr;</span></button>
+          <a class="rental-package-cta" href="https://tally.so/r/ODPpg7" data-tally-open="ODPpg7" data-tally-hide-title="1" data-tally-emoji-text="👋🏾" data-tally-emoji-animation="wave">Contact Us <span aria-hidden="true">&rarr;</span></a>
+        </article>
+        <article class="rental-package" id="package-lighting-grip" data-package>
+          <span class="rental-eyebrow">02 / Lights &amp; Grip</span>
+          <h3>Lights &amp; Grip</h3>
+          <div class="rental-tier" role="radiogroup" aria-label="Lights &amp; Grip tier">
+            <button type="button" class="rental-tier-tile is-active" role="radio" aria-checked="true" data-id="pkg-light-gvm" data-day="190" data-week="570" data-name="Lights, Grip, Go">
+              <span class="rental-tier-name">Lights, Grip, Go</span>
+              <span class="rental-tier-kit">GVM 5-light kit</span>
+              <span class="rental-tier-price">$190<small>/ day</small></span>
+            </button>
+            <button type="button" class="rental-tier-tile" role="radio" aria-checked="false" data-id="pkg-light" data-day="235" data-week="705" data-name="Lights, Grip, Pro">
+              <span class="rental-tier-name">Lights, Grip, Pro</span>
+              <span class="rental-tier-kit">Aputure 3-light kit</span>
+              <span class="rental-tier-price">$235<small>/ day</small></span>
+            </button>
+          </div>
+          <p class="rental-package-price"><span data-role="day">$190</span> <span>/ day</span></p>
+          <p class="rental-package-week" data-role="week">$570 / 7 days</p>
+          <ul class="rental-tier-list" data-tier="pkg-light-gvm">
+            <li>GVM Pro 3 kit: SD200B, 2 &times; SD80D, softbox, 2 space lanterns and rolling case</li>
+            <li>GVM SD500B monolight with softbox</li>
+            <li>GVM B200C RGB panel</li>
+          </ul>
+          <ul class="rental-tier-list" data-tier="pkg-light" hidden>
+            <li>Aputure LS 600d Pro with F10 Fresnel</li>
+            <li>Aputure LS C300d Mark II</li>
+            <li>Aputure STORM 80c with CF4 Fresnel</li>
+          </ul>
+          <details>
+            <summary>Both include</summary>
+            <ul>
+              <li>5 C-stands with grip heads and arms</li>
+              <li>5 sandbags</li>
+              <li>Black flag and silk diffusion flag, 24 &times; 36-inch</li>
+              <li>50 ft stinger</li>
+              <li>Fixture power supplies and extension cords</li>
+            </ul>
+          </details>
+          <button type="button" class="rental-package-cta cart-control-hidden" data-role="rent">Add to Cart <span aria-hidden="true">&rarr;</span></button>
+          <a class="rental-package-cta" href="https://tally.so/r/ODPpg7" data-tally-open="ODPpg7" data-tally-hide-title="1" data-tally-emoji-text="👋🏾" data-tally-emoji-animation="wave">Contact Us <span aria-hidden="true">&rarr;</span></a>
+        </article>
+        <article class="rental-package" id="package-full" data-package>
+          <span class="rental-eyebrow">03 / Full</span>
+          <h3>Full</h3>
+          <div class="rental-tier" role="radiogroup" aria-label="Full tier">
+            <button type="button" class="rental-tier-tile is-active" role="radio" aria-checked="true" data-id="pkg-full-go" data-day="511" data-week="1533" data-name="Lights, Camera, Go">
+              <span class="rental-tier-name">Lights, Camera, Go</span>
+              <span class="rental-tier-kit">Blackmagic + GVM</span>
+              <span class="rental-tier-price">$511<small>/ day</small></span>
+            </button>
+            <button type="button" class="rental-tier-tile" role="radio" aria-checked="false" data-id="pkg-full-pro" data-day="601" data-week="1803" data-name="Lights, Camera, Pro">
+              <span class="rental-tier-name">Lights, Camera, Pro</span>
+              <span class="rental-tier-kit">RED + Aputure</span>
+              <span class="rental-tier-price">$601<small>/ day</small></span>
+            </button>
+          </div>
+          <p class="rental-package-price"><span data-role="day">$511</span> <span>/ day</span></p>
+          <p class="rental-package-week" data-role="week">$1,533 / 7 days</p>
+          <ul class="rental-tier-list" data-tier="pkg-full-go">
+            <li>Blackmagic Pocket Cinema Camera 6K G2 kit: cage, rails, CFast cards, V-mount power, follow focus, matte box and filters</li>
+            <li>GVM 5-light kit: Pro 3 kit, SD500B with softbox and B200C RGB panel</li>
+          </ul>
+          <ul class="rental-tier-list" data-tier="pkg-full-pro" hidden>
+            <li>RED Epic Dragon 6K kit: REDMAG media, 5.0-inch monitor, REDBOMB EVF, V-mount batteries and Tilta Nano Focus</li>
+            <li>Aputure 3-light kit: LS 600d Pro with F10 Fresnel, LS C300d Mark II and STORM 80c with CF4 Fresnel</li>
+          </ul>
+          <details>
+            <summary>Both include</summary>
+            <ul>
+              <li>Blazar Remus 1.5&times; lenses, Hollyland Pyro S and SmallHD DP4</li>
+              <li>5 C-stands, 5 sandbags, black and silk flags and a 50 ft stinger</li>
+              <li>Dana Dolly with 2 Matthews lowboy stands and 2 &times; 6-foot speed rails</li>
+            </ul>
+          </details>
+          <button type="button" class="rental-package-cta cart-control-hidden" data-role="rent">Add to Cart <span aria-hidden="true">&rarr;</span></button>
+          <a class="rental-package-cta" href="https://tally.so/r/ODPpg7" data-tally-open="ODPpg7" data-tally-hide-title="1" data-tally-emoji-text="👋🏾" data-tally-emoji-animation="wave">Contact Us <span aria-hidden="true">&rarr;</span></a>
+        </article>
+      </div>
+      <div class="rental-package-terms">
+        <p>Rental rates. Seven days for the price of three; weekends count as one rental day. Pickup in Aurora / Denver. Delivery is available for an additional fee.</p>
+        <p>Contact Us with your dates and equipment needs. We’ll confirm availability and delivery options. Crew, sound equipment and camera tripod are separate.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rent-section">
+    <div class="sf-container">
+      <div class="rent-section-head reveal">
+        <h2>Gear &amp; Basecamp</h2>
+      </div>
+      <div class="rent-grid-2">
+        <a href="/gear.html" class="rent-card reveal">
+          <div class="rent-card-img"><img src="/images/red.svg" alt="Camera package for rental"></div>
+          <div class="rent-card-body">
+            <span class="sf-label" style="margin:0;">Gear</span>
+            <h3>Camera, Lighting &amp; Grip</h3>
+            <p>Blackmagic and RED cameras, Blazar lenses, Aputure lighting, wireless video and grip. Choose a package or build your own kit.</p>
+            <div class="rent-card-link"><span>Browse Gear</span><i class="fa-solid fa-arrow-right"></i></div>
+          </div>
+        </a>
+        <a href="/basecamp.html" class="rent-card reveal reveal-d1">
+          <div class="rent-card-img"><img src="/images/generator-basecamp.png?v=2" alt="Portable generator for location production"></div>
+          <div class="rent-card-body">
+            <span class="sf-label" style="margin:0;">Basecamp</span>
+            <h3>Generators &amp; Basecamp</h3>
+            <p>Generator, canopy, tables, chairs and drink stations for location shoots.</p>
+            <div class="rent-card-link"><span>See Basecamp</span><i class="fa-solid fa-arrow-right"></i></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <div id="footer-placeholder"></div>
+
+</div>
+
+
+<script>
+  /* CART: package tiers, Add to Cart buttons, step-2 dates (runs after script.js defines SFCart) */
+  window.addEventListener("DOMContentLoaded", function () {
+  const cart = window.SFCart;
+  const money0 = (n) => '$' + Number(n).toLocaleString('en-US');
+
+  document.querySelectorAll('#sf-embed [data-package]').forEach((card) => {
+    const tiles = [...card.querySelectorAll('.rental-tier-tile')];
+    const rent = card.querySelector('[data-role="rent"]');
+    const selected = () => card.querySelector('.rental-tier-tile.is-active');
+    function paint() {
+      const t = selected();
+      card.querySelector('[data-role="day"]').textContent = money0(t.dataset.day);
+      card.querySelector('[data-role="week"]').textContent = money0(t.dataset.week) + ' / 7 days';
+      const inCart = cart.has(t.dataset.id);
+      if (rent) {
+        rent.innerHTML = inCart ? 'In your cart &middot; View Cart <span aria-hidden="true">&rarr;</span>' : 'Add to Cart <span aria-hidden="true">&rarr;</span>';
+        rent.classList.toggle('is-added', inCart);
+      }
+      card.querySelectorAll('[data-tier]').forEach((ul) => { ul.hidden = ul.dataset.tier !== t.dataset.id; });
+    }
+    tiles.forEach((t) => t.addEventListener('click', () => {
+      tiles.forEach((o) => { const on = o === t; o.classList.toggle('is-active', on); o.setAttribute('aria-checked', on ? 'true' : 'false'); });
+      paint();
+    }));
+    rent?.addEventListener('click', () => {
+      const t = selected();
+      if (cart.has(t.dataset.id)) { location.href = '/checkout.html'; return; }
+      // one package per column: choosing Pro swaps out Go
+      tiles.forEach((o) => { if (o !== t) cart.remove(o.dataset.id); });
+      cart.add(t.dataset.id, 1);
+    });
+    window.addEventListener('sfcart', paint);
+    paint();
+  });
+
+  (function dates() {
+    const a = document.getElementById('gearStart'), b = document.getElementById('gearEnd');
+    const actions = document.getElementById('dateActions');
+    if (!a || !b) return;
+    const today = cart.todayDenver();
+    a.min = today; b.min = cart.nextDay(today);
+    const show = () => { actions.hidden = !(a.value && b.value); };
+    const load = () => { const c = cart.read(); a.value = c.s; b.value = c.e; if (c.s) b.min = cart.nextDay(c.s); show(); };
+    load();
+    const save = () => {
+      if (a.value) b.min = cart.nextDay(a.value);
+      if (a.value && b.value && b.value <= a.value) b.value = cart.nextDay(a.value);
+      cart.setDates(a.value, b.value);
+      show();
+    };
+    a.addEventListener('change', save); b.addEventListener('change', save);
+    window.addEventListener('sfcart', () => { const c = cart.read(); if (a.value !== c.s) a.value = c.s; if (b.value !== c.e) b.value = c.e; show(); });
+  })();
+  });
+</script>
+
+</body>
+</html>

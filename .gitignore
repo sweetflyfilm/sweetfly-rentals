@@ -1,0 +1,7 @@
+.dev.vars
+.wrangler/
+node_modules/
+.shop-secrets.local.txt
+# Local planning documents, not application source or public assets.
+Sweet Flypaper of Film - Master Gear Inventory & Rate Card.docx
+Sweet Flypaper of Film - Master Gear Inventory & Rate Card.md
