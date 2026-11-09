@@ -66,7 +66,7 @@
 #sf-embed .basecamp-section-heading { max-width: 680px; margin-bottom: 2rem; }
 #sf-embed .basecamp-section-heading h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
 #sf-embed .basecamp-section-heading p { margin-top: .5rem; color: var(--text-muted); }
-#sf-embed .basecamp-package { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; min-width: 0; border: 1px solid #888; background: var(--bg-panel); }
+#sf-embed .basecamp-package { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; min-width: 0; padding-inline: 1rem; border: 1px solid #888; background: var(--bg-panel); }
 #sf-embed .basecamp-package-image,
 #sf-embed .basecamp-product-image { box-sizing: border-box; width: 100%; min-width: 0; aspect-ratio: 16 / 10; padding: 1.5rem; display: flex; justify-content: center; align-items: center; overflow: hidden; background: radial-gradient(circle at center, #f0eadf 0%, #c5bcad 100%); }
 #sf-embed .basecamp-package-image,
