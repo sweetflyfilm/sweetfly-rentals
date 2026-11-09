@@ -259,7 +259,10 @@
   color: #252629;
   font: inherit;
 }
-#sf-embed .basecamp-reference-photo { mix-blend-mode: multiply; }
+#sf-embed .basecamp-reference-photo {
+  mix-blend-mode: multiply;
+  filter: brightness(1.05) contrast(1.05) !important;
+}
 #sf-embed #tableImage.basecamp-reference-photo { width: 70%; height: 70%; }
 @media (max-width: 380px) {
   #sf-embed .basecamp-package-tile { padding: .5rem; }
